@@ -10,8 +10,7 @@ def test_mock_request2(capsys):
     with capsys.disabled():
         if verbose:
             print(response , type(response))
-            print(response.text)
-            inspect(response)
+
     assert isinstance(response, requests.models.Response)
 
 def test_report2():
