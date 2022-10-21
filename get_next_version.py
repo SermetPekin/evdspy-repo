@@ -92,6 +92,8 @@ def get_previous():
     # p = Path() / "__version__.py"
     if p.is_file():
         c = Read(p)
+        c = c.replace("version", "")
+        c = c.replace("=", "").strip()
     else:
         raise "Version not found"
     return c

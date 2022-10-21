@@ -98,8 +98,8 @@ class SetupOptions:
 
     def get_develop_version(self):
         if stable or STABLE_FORCE:
-            self.version = version = self.get_stable_version()
-            return version
+            self.version =  self.get_stable_version()
+            return self.version
         version = datetime.now().strftime("%d.%b_%H.%M")
         version = f"{root_version}.bd.{version}"
         self.version = version
@@ -148,7 +148,7 @@ menu()
         file_name = Path() / parent / "evdspy" / "EVDSlocal" / "version__.py"
         file_name2 = Path() / parent / "evdspy" / "__version__.py"
 
-        self.write(file_name, f"# {self.get_develop_version()}")
+        self.write(file_name, f"#{self.get_develop_version()}")
         self.write(file_name2, f"#{self.get_develop_version()}")
 
     def write(self, file_name, content):
