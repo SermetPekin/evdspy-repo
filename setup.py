@@ -157,16 +157,16 @@ setup_options = SetupOptions()
 # --------------------------------------------------------------------------------------
 # the setup
 setup(
-        name='evdspy',
+        name='evdspy-repo',
         version=setup_options.version,
-        description='evdspy',
+        description='evdspy-repo',
         long_description=setup_options.long_des,
         long_description_content_type="text/markdown",
         url='',
         author='Sermet Pekin',
         author_email='sermet.pekin@gmail.com',
         license='MIT',
-        keywords='evds, evdspy',
+        keywords='evds, evdspy evdspy-repo',
         # package_dir={"": "evdspy"},
         packages=find_packages(
                 exclude=('scratches', 'logs', 'docs', 'env', 'index.py', 'options.py')
