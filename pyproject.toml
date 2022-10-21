@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "evdspy"
+name = "evdspy-repo"
 homepage = "https://github.com/SermetPekin/evdspy-repo"
 documentation = "https://github.com/SermetPekin/evdspy-repo"
 version = "1.0.17.5"
