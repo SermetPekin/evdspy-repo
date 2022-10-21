@@ -3,7 +3,7 @@ from pathlib import Path
 from dataclasses import dataclass
 from datetime import datetime
 
-from get_next_version import get_next_version
+from setup_get_next_version import get_next_version
 
 # from setup_config import root_version, test_environment, cmd_file, package_name
 STABLE_FORCE = True
