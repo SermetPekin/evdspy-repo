@@ -5,8 +5,15 @@ import sys
 import builtins as __builtin__
 from evdspy.EVDSlocal.initial.start_options import *
 
+    """_summary_
+        Overloads print if debug option is True to see 
+        std.outs
+    """
 if DEBUG_PRINT :
-
+    """
+        Here we will overload print
+        see inital.start_options.py
+    """
 
     def debugInfo(s="", *args, **kw):
         caller = getframeinfo(stack()[2][0])
@@ -15,10 +22,7 @@ if DEBUG_PRINT :
 
 
 
-    """
-        Here we will overload print
-        see inital.start_options.py
-    """
+
 
 
     def print(*args, **kwargs):

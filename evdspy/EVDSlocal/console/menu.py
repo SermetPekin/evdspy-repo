@@ -143,12 +143,3 @@ def test_f():
     m = MenuMaker(menu_items=[t1, t2, t3])
     m.display()
 
-
-# Todo
-"""
-    cron jobs 
-    graph
-    evdsplot
-    
-"""
-# test_f()

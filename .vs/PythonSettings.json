@@ -1,0 +1,4 @@
+{
+  "TestFramework": "Pytest",
+  "SuppressEnvironmentCreationPrompt": true
+}

@@ -131,7 +131,7 @@ ___________________
         if hasattr(result, "text"):
             self.csv = result.text
             return result.text
-        from rich import inspect
+        
         return False
 
     @staticmethod

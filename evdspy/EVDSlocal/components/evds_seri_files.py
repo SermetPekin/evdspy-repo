@@ -67,6 +67,9 @@ class EvdsSeriesRequest:
         self.update_url_instance()
 
     def update_url_instance(self):
+        """_summary_
+        update_url_instance
+        """
         # SingletonOptions().get_valid_value("default_cache")
         # SingletonOptions().get_valid_value("default_start_date")
         # SingletonOptions().get_valid_value("default_end_date")
@@ -108,7 +111,7 @@ class EvdsSeriesRequestWrapper():
     name: str
     subject: str
     EvdsSeriesRequest_: EvdsSeriesRequest
-    bfs: BucketFromSeriesFile = null_BucketFromSeriesFile  # some extra info for naming excel files
+    bfs: BucketFromSeriesFile = null_BucketFromSeriesFile  
 
     def __post_init__(self):
         self.EvdsSeriesRequest_.bfs = self.bfs

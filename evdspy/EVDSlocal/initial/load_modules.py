@@ -199,6 +199,7 @@ class LoadModulesClass():
         ----------------------------------------------------
         Folders created          :      {folders_ok}
         Series file was created  :      {series_file_was_created} {indent} {ps.input_file_name}
+        Options file was created :      {series_file_was_created} {indent} {ps.input_file_name}
         Api key was set          :      {api_key_is_ok} {indent} {hiddenok}
         {options_display}
                 """
