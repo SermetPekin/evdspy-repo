@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import datetime
 # from setup_config import root_version, test_environment, cmd_file, package_name
 STABLE_FORCE = True
-STABLE_VERSION = "1.0.17.6rc2"
+STABLE_VERSION = "1.0.17.6rc2A"
 USER = ""
 if USER =="author" :
     # from setup_config import *
@@ -63,10 +63,12 @@ def create_env_folder(test_environment_):
         import os
         os.makedirs(path)
 
-create_env_folder(test_environment)
-nick_name_for_env = Path(test_environment).parts[-1]
-cmd_file = f"{cmd_file}-{nick_name_for_env}.cmd"
-
+if test_environment : 
+    create_env_folder(test_environment)
+    nick_name_for_env = Path(test_environment).parts[-1]
+    cmd_file = f"{cmd_file}-{nick_name_for_env}.cmd"
+def get_test_env():
+    return test_environment
 
 @dataclass
 class SetupOptions:
@@ -76,7 +78,8 @@ class SetupOptions:
 
     def __post_init__(self):
         self.main()
-        self.create_run_command()
+        if get_test_env() : 
+            self.create_run_command()
 
     def get_stable_version(self):
         return STABLE_VERSION
@@ -129,8 +132,12 @@ menu()
     def main(self):
         print(f"building ... version:{self.get_develop_version()}")
         parent = Path(__file__).parent
+        self.read_me_file()
         file_name = Path() / parent / "evdspy" / "EVDSlocal" / "version__.py"
+        file_name2 = Path() / parent / "evdspy" / "__version__.py"
+        
         self.write(file_name, f"# {self.get_develop_version()}")
+        self.write(file_name2, f"version= '{self.get_develop_version()}'")
 
     def write(self, file_name, content):
         with open(file_name, 'w') as f:
@@ -157,9 +164,9 @@ setup_options = SetupOptions()
 # --------------------------------------------------------------------------------------
 # the setup
 setup(
-        name='evdspy-repo',
+        name='evdspy',
         version=setup_options.version,
-        description='evdspy-repo',
+        description='evdspy',
         long_description=setup_options.long_des,
         long_description_content_type="text/markdown",
         url='',
