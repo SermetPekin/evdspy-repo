@@ -8,6 +8,7 @@ API*/
 API*.*
 arch.txt
 *h.txt
+ignore*.*
 
 SeriesData/
 logs/
