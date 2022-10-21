@@ -33,7 +33,7 @@ from evdspy.EVDSlocal.components.api_params import Series, DateStart, DateEnd
 current_state = CurrentState()
 
 
-class DfColumnsDoesNotMatch(Exception):
+class DfColumnsDoesNotMatch(BaseException):
     """DfColumnsDoesNotMatch"""
 
 
