@@ -8,8 +8,8 @@ from setup_get_next_version import get_next_version
 # from setup_config import root_version, test_environment, cmd_file, package_name
 STABLE_FORCE = True
 STABLE_VERSION = get_next_version(
-    increment=False,
-    next_status_pre_release=True )  # "1.0.17.6rc2"
+    increment=True,
+    pre_release=False )  # "1.0.17.6rc2"
 print("Getting next version", STABLE_VERSION)
 
 USER = ""

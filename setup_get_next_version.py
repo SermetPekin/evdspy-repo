@@ -24,7 +24,7 @@ class VersionParts:
     patch: int
     patch2: int
     extra: int = 0
-    next_status_pre_release: bool = True
+    pre_release: bool = True
     version = ""
 
     def __post_init__(self):
@@ -33,14 +33,12 @@ class VersionParts:
 
     def combine(self, status_pre=None):
         if status_pre is None:
-            status_pre = self.next_status_pre_release
+            status_pre = self.pre_release
         if status_pre:
             pre = "rc"
             self.version = f"{self.major}.{self.minor}.{self.patch}.{self.patch2}{pre}{self.extra}"
             return
         self.version = f"{self.major}.{self.minor}.{self.patch}.{self.patch2}"
-
-
 
     def increment(self, next_status=True):
         major = self.major
@@ -49,18 +47,12 @@ class VersionParts:
         patch2 = self.patch2
         extra = self.extra
 
-        if self.next_status_pre_release:
-            if next_status:
-                extra = self.extra + 1
-            else:
-                patch2 = self.patch2 + 1
-                extra = 0
-
+        if next_status:
+            extra = self.extra + 1
         else:
-            if next_status:
-                extra = self.extra + 1
-            else:
-                patch2 = self.patch2 + 1
+            patch2 = self.patch2
+            extra = 0
+
         # self.combine(next_status)
 
         new_element = VersionParts(major, minor, patch, patch2, extra, next_status)
@@ -82,7 +74,8 @@ def create_version_instance(version: str):
 
 
     else:
-        major, minor, patch, patch2, status_pre, extra, = version.split(".")
+        status_pre = False
+        major, minor, patch, patch2, extra, = version.split(".")
     return VersionParts(major, minor, patch, patch2, extra, status_pre)
 
 
@@ -103,12 +96,12 @@ def get_prev_version_instance():
     return create_version_instance(get_previous())
 
 
-def get_next_version(increment=True, next_status_pre_release=True):
+def get_next_version(increment=True, pre_release=True):
     """ M A I N   F U N C """
     e = get_prev_version_instance()
     if not increment:
         return e
-    return e.increment(next_status_pre_release)
+    return e.increment(pre_release)
 
 # v2 = get_next_version()
 # print(v2)

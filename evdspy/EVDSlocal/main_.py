@@ -54,5 +54,5 @@ assert callable(menu)
 menu_onload()
 EV = help_
 
-# menu()
+menu()
 # help_()
