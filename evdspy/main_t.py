@@ -1,2 +1,2 @@
-from evdspy.main import *
+from evdspy import *
 menu()

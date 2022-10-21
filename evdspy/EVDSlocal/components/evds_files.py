@@ -2,6 +2,7 @@
 import pandas as pd
 from evdspy.EVDSlocal.config.config import *
 from evdspy.EVDSlocal.components.excel_class import *
+from ..requests_.request_error_classes import Internal
 from ..utils.utils_general import *
 from ..requests_.my_cache import MyCache
 from ..components.options_class import Options
@@ -131,7 +132,7 @@ ___________________
         if hasattr(result, "text"):
             self.csv = result.text
             return result.text
-        
+
         return False
 
     @staticmethod
@@ -230,7 +231,12 @@ ___________________
     def get_items_csv(self):
         will_be_requested = self.create_url()
         for item in will_be_requested:
-            df = self.convert_csv_df(self.get_csv(item))
+            try:
+                df = self.convert_csv_df(self.get_csv(item))
+            except DfColumnsDoesNotMatch:
+                continue
+            except Internal:
+                continue
             if isinstance(df, pd.DataFrame):
                 return df
         return False

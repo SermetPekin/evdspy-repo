@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import datetime
 # from setup_config import root_version, test_environment, cmd_file, package_name
 STABLE_FORCE = True
-STABLE_VERSION = "1.0.17.6rc2A"
+STABLE_VERSION = "1.0.17.6rc4"
 USER = ""
 if USER =="author" :
     # from setup_config import *

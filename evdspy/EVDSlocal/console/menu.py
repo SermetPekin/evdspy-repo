@@ -58,6 +58,7 @@ class MenuMaker:
 
     def __post_init__(self):
         self.add_exit_item()
+        Screen().clear()
 
     def exit(self):
         self.exit_ = True

@@ -194,6 +194,35 @@ from typing import List
 from evdspy.EVDSlocal.common.folder_name_checks import check_remove_back_slash
 
 
+# -------------- GOES to Utils  ------------------------
+# split_items: any = lambda text : list(
+#         text.translate(text.maketrans({x: "-" for x in "[,-/\n;]~"})).split("-"))
+def split_items_multi(series_list: Union[str, List, Tuple]) -> str:
+
+
+    """ 1.1 """
+
+    def split_items(series_list) -> tuple:
+        if isinstance(series_list, tuple([list, tuple])):
+            return series_list
+        return tuple(series_list.translate(series_list.maketrans({x: "-" for x in "[,-/\n;]~"})).split("-"))
+
+    """ 1 """
+    if isinstance(series_list, str):
+        if not series_list.strip():
+            series_list: list = default_answers_series
+        else:
+            series_list: list = list(split_items(series_list))
+    if isinstance(series_list, tuple([list, tuple])):
+        series_list_str: str = "\n".join(series_list)
+    else:
+        series_list_str: str = "\n".join(list(split_items(series_list)))
+
+    return series_list_str
+
+
+# -------------- GOES to Utils  ------------------------
+
 def content_from_SetupInputsSeries(SI: SetupInputsSeries):
     """ S E R I E S """
     """
@@ -201,20 +230,13 @@ def content_from_SetupInputsSeries(SI: SetupInputsSeries):
 
     """
 
-    def create_content(folder, subject, prefix, series_list: Tuple):
+    def create_content(folder, subject, prefix, series_list: Union[Tuple, List, str]):
         folder_path = check_remove_back_slash(folder)
         # folder_path_series = str(Path().absolute() / folder / 'series.txt')
         abs_path = str(Path().absolute() / folder_path)
-        if isinstance(series_list, str) and not series_list.strip():
-            series_list = default_answers_series
 
-        if isinstance(series_list, str) and not len(series_list.strip()):
-            split_items: Tuple = lambda text: tuple(
-                    text.translate(text.maketrans({x: "-" for x in "[,-/\n;]~"})).split("-"))
+        series_list_str: str = split_items_multi(series_list)
 
-            series_list: Tuple = split_items(series_list)
-
-        series_list_str: str = "\n".join(series_list)
         r = f"""{mainSepBegin}
 foldername : {folder_path}
 abs_path : {abs_path} # will check again before saving requests from the server it may be replaced by ...WD.../DataSeries/{folder_path}

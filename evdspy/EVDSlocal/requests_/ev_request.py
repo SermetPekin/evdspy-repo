@@ -1,4 +1,6 @@
 # ------------------------------------------------------------------------------
+import requests as requests
+
 from evdspy.EVDSlocal.utils.utils_general import *
 from evdspy.EVDSlocal.requests_.my_cache import MyCache, save_pickle_for_test, lru_cache_patched, load_test_pickle
 from evdspy.EVDSlocal.components.options_class import Options

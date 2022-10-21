@@ -2,7 +2,7 @@
 name = "evdspy"
 homepage = "https://github.com/SermetPekin/evdspy-repo"
 documentation = "https://github.com/SermetPekin/evdspy-repo"
-version = "1.0.17.6rc2A"
+version = "1.0.17.6rc2"
 description = "Get data from EVDS API and organize your local work environment with systematical approach. Using caching facility, this package makes less request from the server."
 authors = ["Sermet Pekin <sermet.pekin@gmail.com>"]
 license = "MIT"

@@ -120,7 +120,7 @@ default_answer_subject = 'SubjectNotGiven'
 default_answers_series = [f"{default_prefix}Data",
                           default_answer_subject,
                           default_prefix,
-                          example_codes_str,
+                          example_codes,
                           default_freq,
                           default_formulas_,
                           default_AggregateType_]
@@ -128,9 +128,9 @@ check_funcs_series = [folder_format_check,
                       TrueFunc,
                       TrueFunc,
                       TrueFunc,
-                      TrueFunc,
-                      TrueFunc,
-                      TrueFunc]
+                      check_valid_answer_freq,
+                      check_valid_answer_formulas_,
+                      check_valid_answer_aggr]
 # import string
 # x = "aa,ab-ac"
 # s = x.split()
@@ -143,7 +143,7 @@ from typing import Tuple
 # import re
 # split_items = lambda x: re.split("[,-/\n;]+", x)
 split_items = lambda text: tuple(text.translate(text.maketrans({x: "-" for x in "[,-/\n;]~"})).split("-"))
-""" Default answers if user go with '' Empty answer """
+""" Default answers if the user goes with an Empty answer """
 
 
 def get_default_for_question(answer, question):
@@ -157,7 +157,12 @@ def get_default_for_question(answer, question):
             "subject": default_answer_subject
     }
     if not answer.strip():
+        """ default returns here """
         return obj.get(question, answer)
+
+    if question == "series":
+        """item1,item2\nitem3"""
+        return split_items(answer)
     return answer.strip()
 
 
