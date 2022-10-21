@@ -40,8 +40,7 @@ class VersionParts:
             return
         self.version = f"{self.major}.{self.minor}.{self.patch}.{self.patch2}"
 
-    def next_version(self):
-        ...
+
 
     def increment(self, next_status=True):
         major = self.major
