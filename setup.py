@@ -2,14 +2,21 @@ from setuptools import setup, find_packages
 from pathlib import Path
 from dataclasses import dataclass
 from datetime import datetime
+
+from get_next_version import get_next_version
+
 # from setup_config import root_version, test_environment, cmd_file, package_name
 STABLE_FORCE = True
-STABLE_VERSION = "1.0.17.6rc4"
+STABLE_VERSION = get_next_version(
+    increment=False,
+    next_status_pre_release=True )  # "1.0.17.6rc2"
+print("Getting next version", STABLE_VERSION)
+
 USER = ""
-if USER =="author" :
+if USER == "author":
     # from setup_config import *
     ...
-else :
+else:
     from setup_config_pub import *
 # --------------------------------------------------------------------------------------
 #   get command line args
@@ -48,7 +55,7 @@ args_dict = arg_acc()
 folder = args_dict.get("folder", None)
 stable_param = args_dict.get("stable", None)
 stable = True if stable_param == "True" else False
-if STABLE_FORCE  :
+if STABLE_FORCE:
     stable = True
 
 if folder:
@@ -57,18 +64,23 @@ if folder:
 print(test_environment)
 print(sys.argv)
 
+
 def create_env_folder(test_environment_):
-    path =Path(test_environment)
+    path = Path(test_environment)
     if not path.is_dir():
         import os
         os.makedirs(path)
 
-if test_environment : 
+
+if test_environment:
     create_env_folder(test_environment)
     nick_name_for_env = Path(test_environment).parts[-1]
     cmd_file = f"{cmd_file}-{nick_name_for_env}.cmd"
+
+
 def get_test_env():
     return test_environment
+
 
 @dataclass
 class SetupOptions:
@@ -78,14 +90,14 @@ class SetupOptions:
 
     def __post_init__(self):
         self.main()
-        if get_test_env() : 
+        if get_test_env():
             self.create_run_command()
 
     def get_stable_version(self):
         return STABLE_VERSION
 
     def get_develop_version(self):
-        if stable or STABLE_FORCE :
+        if stable or STABLE_FORCE:
             self.version = version = self.get_stable_version()
             return version
         version = datetime.now().strftime("%d.%b_%H.%M")
@@ -135,9 +147,9 @@ menu()
         self.read_me_file()
         file_name = Path() / parent / "evdspy" / "EVDSlocal" / "version__.py"
         file_name2 = Path() / parent / "evdspy" / "__version__.py"
-        
+
         self.write(file_name, f"# {self.get_develop_version()}")
-        self.write(file_name2, f"version= '{self.get_develop_version()}'")
+        self.write(file_name2, f"#{self.get_develop_version()}")
 
     def write(self, file_name, content):
         with open(file_name, 'w') as f:
@@ -164,40 +176,40 @@ setup_options = SetupOptions()
 # --------------------------------------------------------------------------------------
 # the setup
 setup(
-        name='evdspy',
-        version=setup_options.version,
-        description='evdspy',
-        long_description=setup_options.long_des,
-        long_description_content_type="text/markdown",
-        url='',
-        author='Sermet Pekin',
-        author_email='sermet.pekin@gmail.com',
-        license='MIT',
-        keywords='evds, evdspy evdspy-repo',
-        # package_dir={"": "evdspy"},
-        packages=find_packages(
-                exclude=('scratches', 'logs', 'docs', 'env', 'index.py', 'options.py')
-        ),
-        include_package_data=True,
-        install_requires=[
-                "rich",
-                "pandas",
-                "requests",
-                "numpy",
-                "openpyxl",
-                "psutil",
-                "pytest",
+    name='evdspy',
+    version=setup_options.version,
+    description='evdspy',
+    long_description=setup_options.long_des,
+    long_description_content_type="text/markdown",
+    url='',
+    author='Sermet Pekin',
+    author_email='sermet.pekin@gmail.com',
+    license='MIT',
+    keywords='evds, evdspy evdspy-repo',
+    # package_dir={"": "evdspy"},
+    packages=find_packages(
+        exclude=('scratches', 'logs', 'docs', 'env', 'index.py', 'options.py')
+    ),
+    include_package_data=True,
+    install_requires=[
+        "rich",
+        "pandas",
+        "requests",
+        "numpy",
+        "openpyxl",
+        "psutil",
+        "pytest",
 
-        ],
-        exclude_package_data={
+    ],
+    exclude_package_data={
 
-        },
+    },
 
-        extras_require={
-                'dev': [],
-                'docs': [],
-                'testing': [],
-        },
-        classifiers=[],
+    extras_require={
+        'dev': [],
+        'docs': [],
+        'testing': [],
+    },
+    classifiers=[],
 )
 # --------------------------------------------------------------------------------------
