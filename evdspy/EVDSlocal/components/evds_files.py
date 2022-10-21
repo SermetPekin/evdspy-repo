@@ -34,7 +34,7 @@ current_state = CurrentState()
 
 
 class DfColumnsDoesNotMatch(BaseException):
-    """DfColumnsDoesNotMatch"""
+    """DfColumnsDoNotMatch"""
 
 
 from evdspy.EVDSlocal.messages.error_classes import ApiKeyNotSetError
