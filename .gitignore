@@ -1,19 +1,51 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-#ENVS --------------------------------
-.vs*
-#/ ENVS --------------------------------
 
 *.py[cod]
 *$py.class
+
+#API KEY --------------------------------
 APIKEY_FOLDER/
 APIKEY*/
 API*/
 API*.*
-arch.txt
-*h.txt
-ignore*.*
+api_key.txt
+apikey.txt
 
+
+#IGNORED NAME FORMATS --------------------------------
+ignore*.*
+---/
+--*.*
+--*/
+*ignore*/
+*ignore*.*
+ignore_*.*
+ignore_*/
+ignore/
+ignore*
+
+
+#PY PACKAGES --------------------------------
+
+#Poetry
+#----------------------------------------------
+*.lock
+poetry.lock
+
+#/ PY PACKAGES --------------------------------
+
+
+#ENVS --------------------------------
+
+#VSCODE
+#----------------------------------------------
+.vscode/
+
+
+
+
+#/ ENVS --------------------------------
 
 
 simulation.txt
@@ -28,23 +60,13 @@ other_tests/
 OTHER_TESTS/
 
 dev/
----/
---*.*
---*/
-*ignore*/
-*ignore*.*
-ignore_*.*
-ignore_*/
-ignore/
-ignore*
+
 *IO/
 setup_config.py
 
 p/
 tox.ini
-api_key.txt
-apikey.txt
-*.pickle
+
 *proxy*/
 
 .idea
@@ -53,7 +75,6 @@ options.cfg
 # C extensions
 *.so
 
-.vscode/
 
 
 # Distribution / packaging
@@ -77,10 +98,26 @@ share/python-wheels/
 MANIFEST
 
 
+# TEXT
+*.txt
+
+# OTHER FILES
 *.xls
 *.xlsx
 *.csv
-*.txt
+*.pdf
+*.docx
+*.doc
+*.cfg
+
+
+
+# PICKLES
+*.pickle
+!test_reg_result.pickle
+
+
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
