@@ -333,6 +333,9 @@ _________________________________
 
 --------------------------------------------------
 
+
+![image](https://user-images.githubusercontent.com/96650846/197863733-4101d52c-f55f-45b4-9ab7-a8ffd26da4b0.png)
+
                      M E N U
 
 --------------------------------------------------
@@ -375,6 +378,8 @@ _________________________________
 #### FROM THE OS COMMAND LINE
 
 (Windows Command line / Linux Terminal / Mac Terminal) ( > , $ , $ as $ )
+
+![image](https://user-images.githubusercontent.com/96650846/197863503-ec329215-78bf-42ee-bc53-b56dfc630d0d.png)
 
     $ evdspy --menu 
     --------------
