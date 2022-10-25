@@ -55,23 +55,9 @@ or
 
 ### menu()
 
-**************************************************
+![image](https://user-images.githubusercontent.com/96650846/197863123-9fee2687-bcef-4dce-b5b2-03a18beb5217.png)
 
-                    M E N U
 
-**************************************************
-
-               1. check setup
-               2. setup
-               3. create user options file
-               4. create series file
-               5. add new series group
-               6. get data
-               7. help
-               8. show api key
-               9. save api key to file
-               10. console
-    ......................... Selection ? 
 
 ## OPTION 1
 
