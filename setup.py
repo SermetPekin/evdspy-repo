@@ -244,6 +244,7 @@ setup(
         "numpy",
         "openpyxl",
         "psutil",
+        "verser",
 
     ],
     exclude_package_data={
