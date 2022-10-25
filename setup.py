@@ -3,7 +3,6 @@ from pathlib import Path
 from dataclasses import dataclass
 from datetime import datetime
 
-# from setup_get_next_version import get_next_version
 
 from verser import get_next_version, Project
 
