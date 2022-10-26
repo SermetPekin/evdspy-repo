@@ -90,7 +90,7 @@ or modify this file or delete and create a new on from menu or console using com
     #About alternative params 
     # ----------------------------------------------------------------------------------------
     
-    
+   
               Frequencies
               -----------------
     
