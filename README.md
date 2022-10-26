@@ -1,11 +1,12 @@
 [![Python package](https://github.com/SermetPekin/evdspy-repo/actions/workflows/python-package.yml/badge.svg)](https://github.com/SermetPekin/evdspy-repo/actions/workflows/python-package.yml)
 
 
-[![Downloads](https://pepy.tech/badge/evdspy/week)](https://pepy.tech/project/evdspy)
 
-[![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
-[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
-[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-310/)
+[![PyPI](https://img.shields.io/pypi/v/evdspy)](https://img.shields.io/pypi/v/evdspy)
+
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/evdspy)](https://img.shields.io/pypi/pyversions/evdspy)
+
+[![Downloads](https://pepy.tech/badge/evdspy/week)](https://pepy.tech/project/evdspy)
 
 ## evdspy
 
