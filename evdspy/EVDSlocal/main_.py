@@ -3,50 +3,42 @@
 #       main_.py
 #                           package: evdspy @2022
 # ------------------------------------------------------
-import time
-
 from .initial.start_args import *
-from evdspy.EVDSlocal.initial_setup.setup_folders import check_folders_setup_necessary
-from evdspy.EVDSlocal.initial_setup.initial_setups import SetupInitial
-from evdspy.EVDSlocal.common.files import Read
-
-test_api_key_set = False
-test_args = test_args
-
-from pathlib import Path
+import typing as t
 
 
-def get_develop_vers_main():
-    print(Path.cwd())
-    parent = Path(__file__).parent
-    v = Read(Path(parent / ".." / "__version__.py")) # EVDSlocal/ version.py
-    return v
-
-#-------------------------- version ------------------------------
-# print(f"version:{get_develop_vers_main()}")
-# time.sleep(2)
-
-deb("....setting up...")
-
-# ---------------------------------SetupInitial----setup ---------
+def register_actions(actions=None)->tuple  :
+    if actions is None:
+        actions = []
+    """register_actions"""
+    from evdspy.EVDSlocal.initial_setup.initial_setups import SetupInitial
+    actions.append(SetupInitial().setup)
+    # actions.append( SetupInitial().create_series_text_ex   )
+    return tuple(actions)
 
 
-if not check_folders_setup_necessary():
-    SetupInitial().setup()
-    # SetupInitial().create_series_text_ex()
+def do_start(actions: t.Tuple[t.Callable]):
+    """CHECK => SETUP , START ==> or => START"""
+    from evdspy.EVDSlocal.initial_setup.setup_folders import check_folders_setup_necessary
+    if not check_folders_setup_necessary():
+        for action in actions:
+            if callable(action):
+                deb(f"....setting up....starting..{action.__name__}")
+                action()
 
-# ---------------------------------SetupInitial----setup ---------
+
+def initial_checks_after_first_run():
+    """initial_checks_after_first_run"""
+    assert callable(check)
+    assert callable(get)
+    assert callable(menu)
+
+
+# --------------------------------- M A I N ---------
 
 
 
+do_start(register_actions())
 from .initial.load_commands_ import *
-
-assert callable(check)
-assert callable(get)
-assert callable(menu)
-
-menu_onload()
-EV = help_
-
-# menu()
-# help_()
+initial_checks_after_first_run()
+# --------------------------------- / M A I N ---------

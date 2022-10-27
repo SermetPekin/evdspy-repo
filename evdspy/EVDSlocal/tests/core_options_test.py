@@ -1,2 +1,2 @@
 """ Test Options """
-verbose = True
+verbose = False

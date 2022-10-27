@@ -1,8 +1,4 @@
 from ..messages.error_messages import *
-from ..initial_setup.initial_setups import *
-##### LoadModulesClass ##############
-deb("load_commands was loaded")
-
 from .load_commands_cmds_to_load import *
 
 

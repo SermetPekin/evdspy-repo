@@ -1,10 +1,8 @@
 # functions that will be loaded
 from evdspy.EVDSlocal.console.menu import MenuMaker, MenuItem
-
 from .cmd_line_classes import CommandLineCommandClass
 from evdspy.EVDSlocal.initial_setup.api_key_save import save_api_key_to_file
 from typing import Callable
-from dataclasses import dataclass
 from ..common.prog import rich_sim
 from ..messages.error_messages import *
 from ..messages.error_classes import *
@@ -12,11 +10,7 @@ from evdspy.EVDSlocal.initial.load_modules import LoadModulesClass
 from ..initial_setup.initial_setups import *
 from ..requests_.my_cache import delete_cache_folder
 from ..setup_project.user_setup import start_setup_series, start_setup_config
-from evdspy.EVDSlocal.utils.utils_general import *
 from evdspy.EVDSlocal.initial_setup.setup_folders import check_folders_setup_necessary, check_setup
-
-import sys
-
 from ..messages.help_messages import welcome_message
 from ..utils.utils_general import *
 
@@ -26,7 +20,6 @@ def check_which_command_params(params, extra_params: dict):
                                                 func=setup_series)
     help_cmd = CommandLineCommandClass(name_list=("help",),
                                        func=help_evds)
-
     create_options_cmd = CommandLineCommandClass(name_list=("create", "options",),
                                                  func=create_options_file)
     get_cmd = CommandLineCommandClass(name_list=("get",), func=get)
@@ -34,7 +27,6 @@ def check_which_command_params(params, extra_params: dict):
     menu_cmd = CommandLineCommandClass(name_list=("menu",), func=menu)
     save_cmd = CommandLineCommandClass(name_list=("save",), func=save)
     console_cmd = CommandLineCommandClass(name_list=("console",), func=console_load)
-
     menu_list = (create_series_cmd, create_options_cmd, get_cmd, setup_cmd, menu_cmd, help_cmd, save_cmd, console_cmd)
 
     def check_item_exists(element, format_cmd_list):
@@ -49,13 +41,10 @@ def check_which_command_params(params, extra_params: dict):
 
     from itertools import compress
     functions_will_apply_iter = tuple(map(check_cmd_will_apply, menu_list))
-
     functions_will_apply = list(compress(menu_list, functions_will_apply_iter))
-
     for fnc_class in functions_will_apply:
         if callable(fnc_class.func):
             fnc_class.func()
-
     return functions_will_apply
 
 
@@ -72,18 +61,13 @@ def console_main(test_args=None):
         params_command = test_args
     else:
         params_command = sys.argv[1:]
-
     params_command_as_dict = arg_acc(params_command)
-
     if not params_command:
         welcome_message()
-
     check_which_command_params(params_command, arg_acc())
 
 
 # -------------------------------- Entry point ---cmd line prompt------------------------------------
-
-
 def console_main_from_the_menu():
     welcome_message()
 
@@ -209,7 +193,6 @@ from rich import inspect
 def get_categories_main():
     if not check_if_api_set_before_get():
         return
-
     # from ..index_requests.categories import get_categories_data
     from ..index_requests.categories import display_categories
     display_categories()
@@ -297,7 +280,6 @@ def show_apikey():
     valid = apikeyobj.get_valid_api_key()
     disp = f"""
     valid api key : {valid}
-
 """
     print_with_success_style(disp)
 
@@ -345,14 +327,10 @@ def get_develop_vers_main():
 
 
 def version():
-    ...
     from evdspy.EVDSlocal.console.menu_logo_header import version_logo
     logo_version, reminder = version_logo()
-
     print_with_success_style(logo_version)
     print_with_info_style(reminder)
-    # welcome_message()
-    # config.version_display(  )
 
 
 def save(*args):
@@ -370,7 +348,6 @@ def remove_cache():
         print_with_failure_style("exited without removing the cache")
         return
     print_with_success_style("removing cache...")
-
     if delete_cache_folder():
         rich_sim(3, "processing...")
         print_with_success_style("cahce folder removed...")
@@ -416,10 +393,3 @@ def menu_onload():
 
 def show_menu():
     menu_helper()
-
-
-# ---------------------------------------------------------------MAIN LOAD
-""" MAIN LOAD """
-from evdspy.EVDSlocal.state.current_state import CurrentState
-
-current_state = CurrentState()
