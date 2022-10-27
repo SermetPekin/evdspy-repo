@@ -11,10 +11,12 @@
 # from evdspy.EVDSlocal.tests.test_categories import *
 # from evdspy.EVDSlocal.tests.test_main_cmd import *
 
-def test_load():
-    from evdspy import * 
-    assert callable(menu) 
+import evdspy
+from evdspy.EVDSlocal.main_ import *
 
+def test_check():
+    assert callable(check)
+    check()
 
 
 #-------------- not necessary for now
