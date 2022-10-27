@@ -7,8 +7,8 @@ session = get_session()
 
 def test_get_session(capsys):
     s = get_session()
-    with capsys.disabled():
-        print(f"\nSession : {s.hash}")
+    # with capsys.disabled():
+    #     print(f"\nSession : {s.hash}")
 
 
 def test_log():
