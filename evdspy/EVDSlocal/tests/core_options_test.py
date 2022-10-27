@@ -1,2 +1,0 @@
-""" Test Options """
-verbose = False
