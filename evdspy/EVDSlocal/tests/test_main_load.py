@@ -33,11 +33,3 @@ def test_valid_key():
     assert ApikeyClass().set_api_key_filetype(value="thatisfromFile") == "thatisfromFile", "get api key did not work"
     ApikeyClass().now_testing_is_key_is_valid = "thisisValid"
     # assert ApikeyClass().get_valid_api_key() == "thisisValid", "get thisisValid  key did not work"
-
-# from ..initial.load_commands_ import *
-
-# def test_create_series_file():
-#     assert evdspy.create_series_file() is True, "test_create_series_file"
-#
-
-from ..initial.start_options import *
