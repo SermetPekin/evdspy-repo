@@ -1,4 +1,4 @@
-from evdspy.EVDSlocal.tests.test_evds_classes import *
+#from evdspy.EVDSlocal.tests.test_evds_classes import *
 
 # from evdspy.EVDSlocal.tests.test_evds_classes import *
 # from evdspy.EVDSlocal.tests.test_main_load import *
@@ -11,6 +11,9 @@ from evdspy.EVDSlocal.tests.test_evds_classes import *
 # from evdspy.EVDSlocal.tests.test_categories import *
 # from evdspy.EVDSlocal.tests.test_main_cmd import *
 
+def test_load():
+    from evdspy import * 
+    assert callable(menu) 
 
 
 
