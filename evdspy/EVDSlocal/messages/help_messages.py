@@ -27,7 +27,9 @@ def display_help_messages_md():
 
 
 def display_help_messages():
-    """ Some help to show some useful commands of project """
+    from .current_menu_message import current_menu_appears
+
+    """ Some help to show some useful commands of evdspy package """
     ##############  commands #################
     msg = rf"""
 
@@ -37,33 +39,14 @@ from evdspy  import *
 
 -------------
 
------------- Below you may find some useful commands to check your installation of evdspy
-             You may modify `IO\options.py` file with your preferences
-                            `series.txt` file with your data series codes
-
 menu() :
 -------------
             Quickly setup your work environment run commands from the menu. \
             Currently you may choose one below or create your own functions and \
             add to this list following instructions on Readme.md
-            **************************************************
-                                M E N U
-            **************************************************
-                           1. check setup
-                           2. setup
-                           3. create user options file
-                           4. create series file
-                           5. add new series group
-                           6. get data
-                           7. help
-                           8. show api key
-                           9. save api key to file
-                           10. exit (from the menu)
+${current_menu_appears}
 
 
-10.exit (#Console#)
-            Choosing 10 (Exit from the menu) you may continue working with commands summarized below
-            or importing additional commands from the documentation. 
 help_evds() :
 -------------
     to see a list of initial commands  
@@ -87,7 +70,7 @@ setup_steps()   :
 
 get():
 -------------
-    # this will check for your current series.txt file 
+    # this will check for your current config_series.cfg file 
     # if proper data series codes are given it will either download them
     # or use latest cache from your local environment 
     # to provide other cache options such as nocache / daily / hourly you may change your 
@@ -98,13 +81,13 @@ get():
         or to go with default from your option file 
         get()
 
-save( key = "xxxxyyy"):
+set_apikey("MyApiKey" ):
 -------------
     # to get data quickly for this session you may set  apikey which will
     # be deleted before the session ends,  
     # if you would like to provide a file adress which has your api key 
     # see the other option setting your key globally 
-    # => change your options.py file in IO folder 
+
     set_apikey("MyApiKey")
 save():
 -------------
@@ -112,8 +95,8 @@ save():
     above 
 create_series_file():
 -------------
-    # creates example `series.txt` evdspy input file (EIF) formatted 
-    # you may modify it accordingly, you may user separator of -- between different groups  
+    # creates example `config_series.cfg` evdspy input file (EIF) formatted 
+    # you may modify it accordingly, you may user separator of `--++--` between different series groups  
 
     create_series_file()
     # or
@@ -121,22 +104,11 @@ create_series_file():
 
 menu() :
 -------------
-            Quickly setup your work environment run commands from the menu. 
-            Currently you may choose one below or create your own functions and 
-            add to this list following instructions on Readme.md
-            **************************************************
-                                M E N U
-            **************************************************
-                           1. check setup
-                           2. setup
-                           3. create user options file
-                           4. create series file
-                           5. add new series group
-                           6. get data
-                           7. help
-                           8. show api key
-                           9. save api key to file
-                           10. exit (from the menu)\
+    
+Quickly setup your work environment run commands from the menu. 
+Currently you may choose one below or create your own functions and 
+add to this list following instructions on Readme.md
+${current_menu_appears}
 
 -----------------------------------------------------------------------
 # from evdspy import *         #(if you have not imported evdspy yet )
@@ -158,42 +130,37 @@ def welcome_message():
     msg = f"""
     Welcome to evsdpy python interface...
     --------------------------------------------------------------------------------------------------
-    This message appears when you use evdspy as a command line tool. 
+    This message appears when you use evdspy as a command line prompt. 
     This welcome and help message will show up when you use `evdspy` command with no parameters...
     --------------------------------------------------------------------------------------------------
     Some parameters are listed below. If there is another command you are looking for you may check the menu option.
     
-    $ evdspy --menu 
+    $ evdspy setup
+    --------------
+        creates initial folders for your environment to save data and caches 
+        
+    $ evdspy menu 
     --------------
         Loads the menu
         
     $ evdspy create series  
     --------------
-        Creates series file (leaves untouched if exists)
-        
-    $ evdspy help
-    --------------
-        shows help and some documentation from command line 
+        Creates series file (leaves untouched if exists)       
         
     $ evdspy create options
     --------------
         creates options on the current folder 
-           
+        
+    $ evdspy save
+    --------------
+        asks for your api key to save a file in your environment named `APIKEY_FOLDER`
         
     $ evdspy get
     --------------
         makes request from EVDS API and creates excel files regarding information on your series file 
-
-    $ evdspy setup
-    --------------
-        creates initial folders for your environment to save data and caches 
         
-    $ evdspy menu
+    $ evdspy help
     --------------
-        Launces evdspy and loads the menu  
-    $ evdspy save
-    --------------
-        asks for your api key to save a file in your environment named `APIKEY_FOLDER`
-
+        shows help and some documentation from command line 
 """
     print_with_success_style(msg)

@@ -42,8 +42,7 @@ class GeneralIndexesBase(ABC):
         self.complete_url_instance.refresh_url()
         self.complete_url_instance.create_report()
 
-        print(self.complete_url_instance.url)
-        print(self.complete_url_instance.url_only_required)
+
         self.EVRequest_.URL_Instance = self.complete_url_instance
 
         # exit()

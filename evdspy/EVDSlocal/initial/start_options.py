@@ -29,7 +29,7 @@ if True:
     # options_folder_name = r"IO"
     DEBUG_LOG_CANCEL = False
     DEGUB_NOTICE = True
-    DEBUG_PRINT = False
+    DEBUG_PRINT = False # TODO less verbose debug plus conditional
     default_arch_folder_name = "APIKEY_FOLDER"
     default_arch_file_name = "arch.txt"
     default_cache = "daily"  # nocache / hourly / monthly

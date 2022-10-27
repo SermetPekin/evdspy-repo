@@ -59,8 +59,7 @@ class ContentFunctionError(BaseException):
 def get_datagroups_df(data_model_type_key="csv", content=None):
     if content is None:
         """fn () """
-        # print(data_model_type_key)
-        # print("*" * 150)
+
         content_fn = data_strategy.get(data_model_type_key, None)
         if callable(content_fn):
             content = content_fn()

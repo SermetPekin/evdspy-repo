@@ -32,10 +32,10 @@ options_ = load_options()
 
 def get_default_cache():
     obj = {
-            "daily": CacheDecider.day,
-            "hourly": CacheDecider.hour,
-            'nocache': CacheDecider.nocache,
-            'default': CacheDecider.day
+        "daily": CacheDecider.day,
+        "hourly": CacheDecider.hour,
+        'nocache': CacheDecider.nocache,
+        'default': CacheDecider.day
 
     }
     return obj.get(options_.default_cache, CacheDecider.day)
@@ -43,10 +43,10 @@ def get_default_cache():
 
 def cache_represent(choice: CacheDecider):
     obj = {
-            CacheDecider.day: "daily",
-            CacheDecider.hour: "hourly",
-            CacheDecider.nocache: 'nocache',
-            CacheDecider.default: 'daily'
+        CacheDecider.day: "daily",
+        CacheDecider.hour: "hourly",
+        CacheDecider.nocache: 'nocache',
+        CacheDecider.default: 'daily'
     }
     return obj[choice]
 
@@ -155,7 +155,7 @@ def load_pickle(file_name: str) -> Union[bool, requests.models.Response]:
     file_name_path = Path(file_name)
 
     if not file_name_path.is_file():
-        print(file_name_path)
+        # print(file_name_path)
         return False
     with open(file_name_path, "rb") as infile:
         test_dict_reconstructed: requests.models.Response = pickle.load(infile)
@@ -219,7 +219,7 @@ def save_pickle(file_name, data):
         save_pickle_helper(file_name_path, data)
     except:
 
-        print("Cache folder may be deleted.\n setup_now() inorder to create...")
+        print("Cache folder may be deleted.\n setup() in order to create...")
         # if callable("setup_now"):
         #     setup_now()
         #     save_pickle_helper(file_name_path, data)
@@ -264,8 +264,8 @@ def lru_cache_patched(maxsize=128, typed=False):
 
 
 __all__ = [
-        'lru_cache_patched',
-        'MyCache',
-        'save_pickle_for_test',
-        'load_test_pickle'
+    'lru_cache_patched',
+    'MyCache',
+    'save_pickle_for_test',
+    'load_test_pickle'
 ]

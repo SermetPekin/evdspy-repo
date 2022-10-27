@@ -80,7 +80,6 @@ class DFOperations():
     #     fn()
 
     def convert_to_df_abstract(self):
-        print(self.data_model, "self.data_model")
         from rich import inspect
         inspect(self.data_model)
         obj = {

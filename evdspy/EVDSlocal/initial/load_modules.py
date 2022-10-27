@@ -16,6 +16,7 @@ from evdspy.EVDSlocal.config.config import ConfigBase
 from evdspy.EVDSlocal.manual_requests.prepare import basic_for_test, PrepareUrl
 
 from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
+from evdspy.EVDSlocal.utils.utils_general import *
 
 
 @dataclass

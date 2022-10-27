@@ -39,11 +39,11 @@ class MenuItem:
         self.get_screen_clear_bool()
 
     def get_sleep_times(self):
-        obj = {"check": 1, "setup": 2, "get": 2}
+        obj = {"check": 4, "setup": 2, "get": 2, "get_categories_main": 6}
         self.sleeptime = obj.get(self.name, 1)
 
     def get_screen_clear_bool(self):
-        obj = {"check": False, "get": False, "help_": False}
+        obj = {"check": False, "get": False, "help_": False, "get_categories_main": False}
         self.clear = obj.get(self.name, True)
 
 
@@ -66,19 +66,72 @@ class MenuMaker:
         return
         # self.display()
 
+    def menu_header(self):
+        width = 60
+
+        def make_indent(element, num=width):
+            indent = " " * (num - len(element))
+            return f"{indent}{element}"
+
+        def make_center(element, num=width):
+            left = " " * round((num - len(element)) / 2)
+            return f"{left}{element}"
+
+        menu_title = make_center("M E N U")
+        reminder = "to get the latest version:   pip install -U evdspy"
+        reminder = make_indent(reminder)
+
+        version_line = make_indent(config.version)
+        logo = make_indent("evdspy @2022")
+
+        line_1 = "-" * width
+        print_with_info_style(reminder)
+        header = f"""
+                                                     
+{line_1}
+{version_line}  
+{line_1}   
+{logo} 
+{menu_title}                      
+{line_1}
+ 
+
+"""
+        return header
+
     def title(self):
 
         print("\n" * 2)
-        print_with_info_style("-" * 50)
-        print_with_info_style(" " * 20 + " M E N U " + " " * 21)
-        print_with_info_style("-" * 50)
+        print(self.menu_header())
 
     def add_exit_item(self):
         if self.exit_item:
             exit_menu_item = MenuItem(self.exit, "console")
             self.menu_items = tuple(list(self.menu_items) + [exit_menu_item])
 
+    def make_table(self, items):
+        from rich.console import Console
+        from rich.table import Table
+
+        table = Table(title="M E N U ")
+        table.add_column("Select", justify="right", style="cyan", no_wrap=True)
+        table.add_column("Job / Request ", style="green")
+        table.add_column("Explanation ", justify="right", style="magenta")
+
+        for index, item in enumerate(items):
+            table.add_row(f"{index + 1}", str(item.disp).upper() , "")
+
+        console = Console()
+        console.print(table)
+
     def display(self):
+
+        if self.exit_:
+            return
+        self.make_table(self.menu_items)
+        self.get_choice()
+
+    def display_old(self):
 
         if self.exit_:
             return
@@ -111,17 +164,15 @@ class MenuMaker:
             v = func()
             if v == -1:
                 self.exit_ = True
-            # print("done...returning to menu...")
             rich_sim(wait_seconds, "completing")
-            # time.sleep(wait_seconds)
         else:
             Screen().clear()
         return self.display()
 
 
 __all__ = [
-        'MenuItem',
-        'MenuMaker',
+    'MenuItem',
+    'MenuMaker',
 ]
 
 
@@ -143,4 +194,3 @@ def test_f():
     t3 = MenuItem(test_show3, "test_show3")
     m = MenuMaker(menu_items=[t1, t2, t3])
     m.display()
-

@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Callable, Protocol, List, Tuple, Union
+from typing import Callable,  List, Tuple, Union
 from datetime import datetime
 
 from .api_params_enums import *

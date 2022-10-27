@@ -251,7 +251,7 @@ or modify this file or delete and create a new on from menu or console using com
 
         get()
 
-#### save( key = "xxxxyyy"):
+#### save("MyApiKey"):
 
     Program will store your api key in your environment in a safe folder
     called APIKEY_FOLDER
@@ -260,11 +260,11 @@ or modify this file or delete and create a new on from menu or console using com
 
 .
 
-       save_apikey("MyApiKey")
+       save("MyApiKey")
 
 #### save()
 
-        When you call it with not argument program will ask for your key and do the same 
+        When you call it without any argument, program will ask for your key and do the same 
     above 
 
 #### create_series_file()  or csf() :
@@ -293,11 +293,7 @@ or modify this file or delete and create a new on from menu or console using com
 
     create_options()
 
-### cache choice ( )
-
-    # hourly :  no new request within an hour with same URL combination
-    # nocache: new request upon each call without checking cache results
-    # daily : program will use local data requested earlier if data was saved same day.    
+git pull
 
 ## OPTION 2
 
@@ -372,12 +368,15 @@ _________________________________
 #### FROM THE OS COMMAND LINE
 
 (Windows Command line / Linux Terminal / Mac Terminal) ( > , $ , $ as $ )
+![image](https://user-images.githubusercontent.com/96650846/198182696-c5bbe840-a9cd-45b5-806f-ee9b7d0e88b8.png)
 
-![image](https://user-images.githubusercontent.com/96650846/197863503-ec329215-78bf-42ee-bc53-b56dfc630d0d.png)
-
-    $ evdspy --menu 
+    $ evdspy setup
     --------------
-        Loads the menu
+        creates initial folders for your environment to save data and caches 
+        
+    $ evdspy menu
+    --------------
+        Launces evdspy and loads the menu  
         
     $ evdspy create series  
     --------------
@@ -394,14 +393,6 @@ _________________________________
     $ evdspy get
     --------------
         makes request from EVDS API and creates excel files regarding information on your series file 
-
-    $ evdspy setup
-    --------------
-        creates initial folders for your environment to save data and caches 
-        
-    $ evdspy menu
-    --------------
-        Launces evdspy and loads the menu  
 
     $ evdspy save
     --------------

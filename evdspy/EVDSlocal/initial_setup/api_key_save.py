@@ -39,7 +39,7 @@ from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
 #     return instance.check_api_key_with_simple_Wrapper()
 
 
-def save_api_key_to_file(instance , api_key_answer ):
+def save_api_key_to_file(instance, api_key_answer):
     instance.wait(1)
 
     if not api_key_folder_name.is_dir():
@@ -51,11 +51,11 @@ def save_api_key_to_file(instance , api_key_answer ):
     # test for file api key for runtime (temp)
     ApikeyClass().set_api_key_filetype(value=api_key_answer)
 
-        # ApikeyClass().now_testing_is_key_is_valid = api_key_answer
+    # ApikeyClass().now_testing_is_key_is_valid = api_key_answer
     print("your api file was saved...")
     instance.wait(1)
     # instance.set_apikey(api_key_answer)
-    api_key_from_file  = get_api_key_from_file_improved()
+    api_key_from_file = get_api_key_from_file_improved()
     return api_key_from_file
 
 
@@ -74,5 +74,10 @@ def get_api_key_from_file_improved():
 
 
 def check_api_key_on_load():
-    if api_key := get_api_key_from_file_improved():
+    """ not compatible 3.8-"""
+    # if api_key := get_api_key_from_file_improved():
+    #     ApikeyClass().set_api_key_filetype(value=api_key)
+    """changing to this"""
+    api_key = get_api_key_from_file_improved()
+    if api_key:
         ApikeyClass().set_api_key_filetype(value=api_key)

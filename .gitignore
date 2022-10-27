@@ -3,16 +3,20 @@ __pycache__/
 
 *.py[cod]
 *$py.class
+.idea/
+.eggs/
 
 #API KEY --------------------------------
 APIKEY_FOLDER/
 APIKEY*/
 API*/
 API*.*
+!api_params.py
+!api_params*.py
 api_key.txt
 apikey.txt
-
-
+!apikey_class.py
+!api_key_save.py
 #IGNORED NAME FORMATS --------------------------------
 ignore*.*
 ---/
@@ -54,8 +58,7 @@ simulation.txt
 SeriesData/
 logs/
 pickles/
-tests/
-test.py
+
 unit_tests/
 other_tests/
 OTHER_TESTS/
@@ -101,7 +104,9 @@ MANIFEST
 
 # TEXT
 *.txt
-
+!requirements.txt
+!test.proxy.txt
+!test.api.txt
 # OTHER FILES
 *.xls
 *.xlsx

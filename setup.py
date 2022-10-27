@@ -3,7 +3,6 @@ from pathlib import Path
 from dataclasses import dataclass
 from datetime import datetime
 
-
 from verser import get_next_version, Project
 
 PRE_RELEASE = True
@@ -148,11 +147,9 @@ pip uninstall {package_name}
 
 rem pip install {self.root_folder}\dist\evdspy-{self.version}-py2.py3-none-any.whl --force-reinstall --no-deps
 pip install {self.root_folder}\dist\evdspy-{self.version}-py2.py3-none-any.whl
-python
-from {package_name} import *
-version() 
-check() 
-menu()
+rem python
+rem from {package_name} import *
+
 """
 
         return content
@@ -231,31 +228,31 @@ setup(
         'Topic :: Office/Business :: Financial',
         'Programming Language :: Python :: Implementation',
         'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
     ],
     install_requires=[
-        "rich",
-        "pandas",
-        "requests",
-        "numpy",
-        "openpyxl",
-        "psutil",
-        "verser",
-
+        "rich>=12.5.1",
+        "pandas>=0.19.2",
+        "requests>=2.28.1",
+        "openpyxl>=3.0.10",
+        "numpy>=1.5.0"
     ],
     exclude_package_data={
 
     },
+    python_requires='>=3.7.*',
+
     entry_points={
         'console_scripts': [
             'evdspy=evdspy:console_main',
         ],
     },
     extras_require={
-        'dev': [],
+        'dev': ["verser"],
         'docs': [],
         'testing': [],
     },

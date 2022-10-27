@@ -9,7 +9,7 @@ import weakref
 import functools
 import os.path
 from pathlib import Path
-
+import sys
 indent = " " * 15
 ENCODING = "utf-8"
 #### 2 ###############
@@ -37,6 +37,19 @@ def URL_temizle(url: str):
     import string
     return url.translate({ord(c): None for c in string.whitespace})
 
+def arg_acc(argv=None):
+    if argv is None:
+        argv = sys.argv
+    obj = {}
+    for index, key in enumerate(argv):
+        key = str(key)
+        if key.startswith("--"):
+            value = None
+            if len(argv) > index + 1:
+                value = argv[index + 1]
+            key = key[2:]
+            obj.update({key: value})
+    return obj
 
 def get_current_dir():
     return Path(__file__).parent

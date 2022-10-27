@@ -7,6 +7,7 @@ from evdspy.EVDSlocal.tests.test_requests import *
 
 from evdspy.EVDSlocal.tests.test_apikey_checks import *
 from evdspy.EVDSlocal.tests.test_categories import *
+from evdspy.EVDSlocal.tests.test_main_cmd import *
 
 
 
