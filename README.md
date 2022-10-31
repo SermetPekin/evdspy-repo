@@ -332,7 +332,7 @@ _________________________________
 
 > > *checking*....
 
-![img.png](img.png)
+![image](https://user-images.githubusercontent.com/96650846/199029928-729f5961-7a38-4631-beea-e9ca870a9a27.png)
 
         
 ## OPTION 3
