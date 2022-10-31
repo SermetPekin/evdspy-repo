@@ -14,9 +14,9 @@
 import evdspy
 from evdspy.EVDSlocal.main_ import *
 
-def test_menu():
-    assert callable(menu)
-    menu()
+def test_check():
+    assert callable(check)
+    check()
 
 
 #-------------- not necessary for now
