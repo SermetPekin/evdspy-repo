@@ -39,6 +39,7 @@ or
     menu()
 
 or
+
     import evdspy as ev
     ev.menu()
 
@@ -48,8 +49,11 @@ or
 
 ### menu()
 
-![image](https://user-images.githubusercontent.com/96650846/197863123-9fee2687-bcef-4dce-b5b2-03a18beb5217.png)
 
+![image](https://user-images.githubusercontent.com/96650846/198966008-77302f42-f8f5-430c-962d-a988abe57bb7.png)
+
+
+![image](https://user-images.githubusercontent.com/96650846/198966318-35a8ba8b-68e9-46f9-827e-cf06377ec960.png)
 
 
 ## OPTION 1
@@ -323,43 +327,14 @@ _________________________________
 --------------------------------------------------
 
 
-![image](https://user-images.githubusercontent.com/96650846/197863733-4101d52c-f55f-45b4-9ab7-a8ffd26da4b0.png)
+![image](https://user-images.githubusercontent.com/96650846/198966008-77302f42-f8f5-430c-962d-a988abe57bb7.png)
 
-                     M E N U
-
---------------------------------------------------
-
-               1. check setup
-               2. setup
-               3. create user options file
-               4. create series file
-               5. add new series group
-               6. get data
-               7. help
-               8. show api key
-               9. save api key to file
-               10. remove cache folders
-               11. version
-               12. console
-
-                         Selection ? 1
 
 > > *checking*....
 
-        Checking installation and other setup requirements :
-        ----------------------------------------------------
-        Folders created          :      True
-        Series file was created  :      True                 config_series.cfg
-        Options file was created :      True                 options.cfg
-        Api key was set          :      True                 ok(hidden)
+![img.png](img.png)
 
-       default_cache            :  daily
-       default_cache (User)     :  daily
-       default start date       :  01-01-2010
-       default start (User)     :  01-01-2019
-       default end date         :  01-12-2030
-       default end date (User)  :  01-12-2015
-
+        
 ## OPTION 3
 
 _________________________________    
