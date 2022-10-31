@@ -1,5 +1,5 @@
 from ..common.common_imports import *
-from dataclasses import dataclass
+from dataclasses import dataclass , field
 from typing import Union
 from enum import Enum, auto
 from ..config.config import config
@@ -19,9 +19,9 @@ class ApiKeyValue:
 
 @dataclass
 class ApiKeyDict:
-    runtime_apikey: ApiKeyValue = ApiKeyValue("runtime", False, ApiKeyType.runtime)
-    from_file_apikey: ApiKeyValue = ApiKeyValue("fromfile", False, ApiKeyType.from_file)
-    from_file_options_api_key: ApiKeyValue = ApiKeyValue("fromfile_options", False, ApiKeyType.from_file_options)
+    runtime_apikey: ApiKeyValue = field(default= ApiKeyValue("runtime", False, ApiKeyType.runtime) )
+    from_file_apikey: ApiKeyValue = field(default= ApiKeyValue("fromfile", False, ApiKeyType.from_file))
+    from_file_options_api_key: ApiKeyValue = field(default= ApiKeyValue("fromfile_options", False, ApiKeyType.from_file_options) )
 
     def set_value(self, type_: Union[str, ApiKeyType], value):
         if type_ in ["runtime", ApiKeyType.runtime]:
@@ -97,4 +97,4 @@ class ApikeyClass(object):
         return cls.instance.APIKEYDict.from_file_apikey.value
 
     def get_api_key_fromfile_options(cls):
-        return cls.instance.APIKEYDict.from_file_options_api_key.value
+        return cls.instance.APIKEYDict.from_file_options_api_key

@@ -171,6 +171,7 @@ class SeriesFileFormat:
         return self.EvdsSeriesRequestWrapperList
 
 
+
 def test_SeriesFileFormat2():
     sff = SeriesFileFormat("series.txt")
     return sff.EvdsSeriesRequestWrapperList  # s.read()

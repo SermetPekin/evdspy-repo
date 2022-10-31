@@ -55,19 +55,11 @@ help_evds() :
 check():
 -------------
     see current installation status
-
-easy_setup()   :
--------------
-    # creates necessary folders such as `pickles`, `IO` for the environment
-
-    easy_setup()
     
-setup_steps()   :
+setup()   :
 -------------
     # this function helps you setup your project by asking your preferences step by step
-    setup_steps()
-    setup()
-
+    setup() 
 get():
 -------------
     # this will check for your current config_series.cfg file 
@@ -81,14 +73,14 @@ get():
         or to go with default from your option file 
         get()
 
-set_apikey("MyApiKey" ):
+save("MyApiKey" ):
 -------------
-    # to get data quickly for this session you may set  apikey which will
-    # be deleted before the session ends,  
-    # if you would like to provide a file adress which has your api key 
-    # see the other option setting your key globally 
+    # saves your api key to use while requesting data from the server.\
+    # creates an APIKEY_FOLDER and saves some hash function of your api key for security.
+    # If you are on a public computer we suggest you delete this folder when you are done requesting data.
+    
+    save("MyApiKey")
 
-    set_apikey("MyApiKey")
 save():
 -------------
     When you call it with not argument program will ask for your key and do the same 

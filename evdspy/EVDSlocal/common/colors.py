@@ -1,3 +1,4 @@
+import functools
 import random
 
 from rich.console import Console
@@ -31,7 +32,7 @@ colors_style = {
 
 default_styles = {
     "default": Style(color="magenta", bgcolor="yellow", italic=True),
-    "requesting": Style(color="cyan", bgcolor="magenta", italic=True),
+    "requesting": Style(color="black", bgcolor="magenta", italic=True),
     "creating": Style(color="magenta", bgcolor="black", italic=True),
     "updating": Style(color="blue", bgcolor="black", italic=True),
     "deleting": Style(color="white", bgcolor="red", italic=True),
@@ -41,13 +42,17 @@ default_styles = {
     "failure4": Style(color="deep_pink1", bgcolor="black", italic=True),
     "failure5": Style(color="cyan", bgcolor="black", italic=True),
 
-    "success": Style(color="white", bgcolor="green", italic=True),
+    "success": Style(color="white", bgcolor="black", italic=True),
     "success2": Style(color="medium_turquoise", bgcolor="black", italic=True),
     "success3": Style(color="spring_green2", bgcolor="black", italic=True),
     "success4": Style(color="spring_green1", bgcolor="black", italic=True),
     "success5": Style(color="medium_spring_green", bgcolor="black", italic=True),
     "success6": Style(color="turquoise2", bgcolor="black", italic=True),
-    "info": Style(color="blue", bgcolor="cyan", italic=True),
+    "success7": Style(color="blue_violet", bgcolor="black", italic=True),
+    # "info": Style(color="blue", bgcolor="black", italic=True),
+    "info2": Style(color="deep_sky_blue2", bgcolor="black", italic=True),
+    "info3": Style(color="turquoise2", bgcolor="black", italic=True),
+    "info4": Style(color="medium_turquoise", bgcolor="black", italic=True),
     "input": Style(color="deep_pink1", bgcolor="black", italic=True),
     "menu_item": Style(color="turquoise2", bgcolor="black", italic=True),
 
@@ -60,10 +65,19 @@ from typing import Tuple, Any
 from typing import Any
 
 
-def combine_similar_ones(item_list: tuple):
+def make_flat(x: tuple, y: tuple) -> tuple:
+    return tuple([x1 for x1 in x] + [y1 for y1 in y])
+
+
+def combine_similar_ones(*item_list: any) -> tuple:
+    if len(item_list) > 1 and isinstance(item_list[0], (tuple, list,)):
+        combined_list = [x for x in item_list]
+        combined_list = functools.reduce(lambda x, p: make_flat(x, p), combined_list, [])
+    else:
+        combined_list = list(item_list[0])
     list_ = []
 
-    for item in item_list:
+    for item in combined_list:
         list_.append(default_styles[item])
     return tuple(list_)
 
@@ -72,9 +86,9 @@ def get_list_of_keys(key_word: str = "success"):
     return tuple([x for x in default_styles.keys() if key_word in x])
 
 
-success_stories = combine_similar_ones(get_list_of_keys("success"))
+success_stories = combine_similar_ones(get_list_of_keys("success"), get_list_of_keys("info"))
 failure_stories = combine_similar_ones(get_list_of_keys("fail"))
-
+info_stories = combine_similar_ones(get_list_of_keys("info"))
 
 def get_style(name: str = "default") -> None:
     return default_styles[name]
@@ -113,8 +127,8 @@ def print_with_success_style(*msg: str):
 
 
 def print_with_info_style(*msg: str):
-    print_with_style(*msg, style=default_styles["info"])
-
+    # print_with_style(*msg, style=default_styles["info"])
+    print_with_style(*msg, style=random.choice(info_stories))
 
 def print_excel_created_style(*msg: str):
     print_with_style(*msg, style=default_styles["success"])

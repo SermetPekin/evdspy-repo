@@ -8,6 +8,7 @@ from evdspy.EVDSlocal.series_format.series_creator import SeriesFileFormat, crea
 from evdspy.EVDSlocal.initial.start_args import Args
 from evdspy.EVDSlocal.components.options_class import *
 from evdspy.EVDSlocal.components.evds_seri_files import test_series_
+from ..common.table import Table, Table_
 from ..initial_setup.setup_folders import check_setup
 from ..messages.error_classes import *
 from evdspy.EVDSlocal.log_classes.log_template import deb
@@ -17,6 +18,8 @@ from evdspy.EVDSlocal.manual_requests.prepare import basic_for_test, PrepareUrl
 
 from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
 from evdspy.EVDSlocal.utils.utils_general import *
+from ..common.colors import print_with_info_style
+import typing as t
 
 
 @dataclass
@@ -26,6 +29,8 @@ class LoadModulesClass():
     evds_list: field(default_factory=list) = ()
     series_filename: str = default_series_file_name
     api_key_test: bool = False
+    item_pointer = 0
+
     # TODO
     """
     """
@@ -58,7 +63,8 @@ class LoadModulesClass():
         """ MAIN function """
         result = []
         try:
-            result = self.series_from_file_core()
+            result: t.List[EvdsSorguSeries] = self.series_from_file_core()
+            # _ = list(x.display for x in result)
         except SeriesFileDoesNotExists:
             print(SeriesFileDoesNotExists().message)
 
@@ -142,11 +148,67 @@ class LoadModulesClass():
 
         return True
 
+    # def display_items(self):
+    #     _ = (x.display for x in self.evds_list)
+    #     print(_)
+
     def series_from_file_core(self):
         self.evds_list = self.create_EVDSSorguSeries()
+        self.display_items(self.evds_list)
+
+        # print(self.evds_list )
         self.evds_to_excel()
         self.create_locked_series_file()
-        return True
+        return self.evds_list
+
+    def display_messages(self, *msgs , wait_num=None):
+        if wait_num is None:
+            wait_num = {0: 3, 1: 2, 2: 1}
+
+        def print_and_wait():
+            for index, msg in enumerate(msgs):
+                print_with_info_style(msg)
+                time.sleep(wait_num.get(index, 2))
+
+        print_and_wait()
+
+    def display_reading_message(self, len_):
+        from ..common.colors import print_with_info_style
+        msg2 = f"""
+        collecting...
+"""
+        msg3 = f"""
+        collected {len_} items.
+"""
+        wait_num = {0: 4, 1: 3, 2: 3}
+
+        self.display_messages(msg2, msg3, wait_num=wait_num)
+
+
+    def display_items(self, evds_list:t.List[EvdsSorguSeries]):
+        msg1 = f"""
+            Now reading `config_series.cfg` file...
+
+        """
+        self.display_messages(msg1)
+
+        if not evds_list:
+            if not self.evds_list:
+                evds_list = ()
+            else:
+                evds_list = self.evds_list
+
+        if isinstance(evds_list, bool):
+            print(evds_list)
+
+            self.display_reading_message(0)
+            return
+        if not evds_list :
+            return
+        self.display_reading_message(len(evds_list))
+        for index, item in enumerate(evds_list):
+            item.display(index + 1)
+            time.sleep(1)
 
     def seri_ornek(self, options_, args):
         liste = [
@@ -197,14 +259,17 @@ class LoadModulesClass():
             if not api_key_is_ok:
                 hiddenok = ""
             msg = f"""
-        Checking installation and other setup requirements :
-        ----------------------------------------------------
-        Folders created          :      {folders_ok}
-        Series file was created  :      {series_file_was_created} {indent} {ps.input_file_name}
-        Options file was created :      {options_file_created} {indent} {options_file_name}
-        Api key was set          :      {api_key_is_ok} {indent} {hiddenok}
+Workspace : {str(Path.cwd()).replace(":" , ".")}
+Folders created          :{folders_ok}
+Series file was created  :{series_file_was_created} {indent} {ps.input_file_name}
+Options file was created :{options_file_created} {indent} {options_file_name}
+Api key was set          :{api_key_is_ok} {indent} {hiddenok}
         {options_display}
                 """
-            print(msg)
+            # print(msg)
+            Table_().show(content=msg,
+                          title=" Checking installation and other setup requirements ",
+                          columns=('', '',),
+                          skiprow=1)
 
         display()

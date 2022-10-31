@@ -168,21 +168,21 @@ def create_Input_Items(
     for msg, explanation, check_func, transform_func in zip(items_from_user, explanations, check_funcs,
                                                             transform_answers):
         items.append(
-                InputItem(
-                        msg=msg,
-                        long_msg=explanation,
-                        check_func=check_func,
-                        transform_func=transform_func
-                )
+            InputItem(
+                msg=msg,
+                long_msg=explanation,
+                check_func=check_func,
+                transform_func=transform_func
+            )
         )
 
     GetInputFromUserClassType = {
-            configType.Series: GetInputFromUserSeries,
-            configType.Config: GetInputFromUserConfig
+        configType.Series: GetInputFromUserSeries,
+        configType.Config: GetInputFromUserConfig
     }[config_type]
 
     GIF = GetInputFromUserClassType(
-            items=items, config_type=config_type
+        items=items, config_type=config_type
     )
     return GIF.process()
 
@@ -198,8 +198,6 @@ from evdspy.EVDSlocal.common.folder_name_checks import check_remove_back_slash
 # split_items: any = lambda text : list(
 #         text.translate(text.maketrans({x: "-" for x in "[,-/\n;]~"})).split("-"))
 def split_items_multi(series_list: Union[str, List, Tuple]) -> str:
-
-
     """ 1.1 """
 
     def split_items(series_list) -> tuple:
@@ -363,22 +361,22 @@ def start_setup(
     # assert config_type == configType.Series, "config_type not configType.Series "
     """ S E R I E S """
     Series_obj = InputType(
-            items_from_user_series,
-            explanations_series,
-            check_funcs_series,
-            transform_answers_series,
-            create_config_series,
-            SetupInputsSeries
+        items_from_user_series,
+        explanations_series,
+        check_funcs_series,
+        transform_answers_series,
+        create_config_series,
+        SetupInputsSeries
     )
 
     """ O P T I O N S """
     Config_obj = InputType(
-            items_from_user_config,
-            explanations_config,
-            check_funcs_options,
-            transform_answers_options,
-            create_config_config,
-            SetupInputsConfig
+        items_from_user_config,
+        explanations_config,
+        check_funcs_options,
+        transform_answers_options,
+        create_config_config,
+        SetupInputsConfig
     )
 
     instance = {configType.Config: Config_obj, configType.Series: Series_obj}[config_type]
@@ -397,11 +395,16 @@ def start_setup(
 
 def start_setup_series():
     msg = f"""
-    This process is going to add new series to yuor configuration file (config_series.cfg)....
-    You may also update all info by opening file with your favorite file editor. 
-    --------------------------------------
+
+    This process is going to add new series to your configuration file (config_series.cfg)....
+
     Program will ask couple of questions to complete your series block on your file.
-     
+
+    Pressing `Enter` will accept for default values for the questions.      
+    You may update all information later by opening file with your favorite file editor. 
+    --------------------------------------
+
+
 """
 
     print_with_creating_style(msg)
@@ -446,8 +449,8 @@ def start_setup_config(onsetup=False):
 
 def get_default_setup_answers(config_type: configType = configType.Config):
     default_answers = {
-            configType.Series: default_answers_series,
-            configType.Config: default_answers_config
+        configType.Series: default_answers_series,
+        configType.Config: default_answers_config
     }[config_type]
     return default_answers
 
@@ -461,13 +464,13 @@ def default_setup(config_type: configType = configType.Config):
 
 
 __all__ = [
-        'default_setup',
-        'create_config_series',
-        'start_setup_series',
-        'default_setup',
-        'folder_creatable_by_adding',
-        'folder_format_check',
-        'folder_creatable',
-        'get_default_setup_answers'
+    'default_setup',
+    'create_config_series',
+    'start_setup_series',
+    'default_setup',
+    'folder_creatable_by_adding',
+    'folder_format_check',
+    'folder_creatable',
+    'get_default_setup_answers'
 
 ]

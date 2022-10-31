@@ -1,5 +1,7 @@
 # ------------------------------------------------------------------------------
 import pandas as pd
+from evdspy.EVDSlocal.initial.start_options import default_series_file_name
+
 from evdspy.EVDSlocal.config.config import *
 from evdspy.EVDSlocal.components.excel_class import *
 from ..requests_.request_error_classes import Internal
@@ -73,6 +75,16 @@ class EvdsSorgu(ABC):
         if not self.check_api_key_first():
             print_with_failure_style("Api key")
 
+    #     def __str__(self):
+    #
+    #         s= f"""
+    # ------------------------------------------------------------
+    # {self.core_file_name }
+    # {self.bfs}
+    # {", ".join(self.series_.series_list)}
+    # """
+    #         return s
+
     def assign_results_to_state(self):
         """
         save result stats to state
@@ -84,19 +96,25 @@ class EvdsSorgu(ABC):
         m_cache.report()
         ...
 
-    def display(self):
-        global number
-        number += 1
+    def display(self, number=1):
+        # global number
+        # number += 1
+        items_series = (x.ID for x in self.series_.series_list)
         dec = f"""
 ----------------------------------------
-    Order item from '{default_series_file_name}' file item {number}
+    Order item from '{default_series_file_name}'  
     Details : 
     bfs : {self.bfs}
 ___________________
     filename: {self.core_file_name} 
     subject : {self.subject} 
+    series :
+        {", ".join(items_series)}
+        
 ----------------------------------------      
 """
+        print(dec)
+        return dec
 
     def check_api_key_first(self):
         # TODO  ApikeyClass().get_valid_api_key()

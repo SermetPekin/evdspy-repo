@@ -62,12 +62,23 @@ class BucketFromSeriesFile:
         self.formulas: str = get_enum_with_value(self.formulas, FormulasEnum, FormulasEnum.default)
 
         self.aggregateType = get_defaults(self.aggregateType, default_AggregateType_)
-        self.aggregateType: str = get_enum_with_value(self.aggregateType, AggregationEnum , AggregationEnum.default)
-
+        self.aggregateType: str = get_enum_with_value(self.aggregateType, AggregationEnum, AggregationEnum.default)
 
         self.folder_name = check_remove_back_slash(self.folder_name)
         self.abs_path = self.get_folder_name(self.folder_name)
         self.xls_name_path = str(Path(self.abs_path) / (self.prefix + '_' + self.subject))
+
+    def __str__(self):
+        s = f"""
+frequency : {self.frequency}
+formulas : {self.formulas}
+aggregateType : {self.aggregateType}
+folder_name : {self.folder_name}
+abs_path : {self.abs_path}
+xls_name_path : {self.xls_name_path}
+
+"""
+        return s
 
     def get_folder_name(self, folder_name: str):
         def adapt_folder_name(relative_folder, reduce=False):
@@ -108,8 +119,10 @@ class BucketFromSeriesFile:
             print(f"could not created folder {self.abs_path} ")
             return False
 
+
 from evdspy.EVDSlocal.setup_project.user_series_config import default_freq, default_formulas_, \
     default_AggregateType_
+
 null_BucketFromSeriesFile = BucketFromSeriesFile(folder_name=None,
                                                  subject="test",
                                                  frequency=default_freq,

@@ -1,4 +1,7 @@
 # functions that will be loaded
+import platform
+import sys
+
 from evdspy.EVDSlocal.console.menu import MenuMaker, MenuItem
 from .cmd_line_classes import CommandLineCommandClass
 from evdspy.EVDSlocal.initial_setup.api_key_save import save_api_key_to_file
@@ -169,6 +172,8 @@ def get():
     try:
         lmc = LoadModulesClass()
         lmc.series_from_file()
+        # lmc.display_items(lmc.series_from_file())
+
         lmc.summary()
         # try:
         #     lmc.evds_list[0].df.plot(x='TP.ODEMGZS.BDTTOPLAM', y='Index', style='o')
@@ -333,6 +338,32 @@ def version():
     print_with_info_style(reminder)
 
 
+def py_version():
+    from platform import python_version
+    #
+    # print_with_creating_style(sys.version_info)
+    # print_with_creating_style(python_version())
+    print_with_creating_style(sys.version)
+    # print_with_creating_style(str(platform.python_version_tuple()))
+
+
+def check_compat():
+    v_tuple = platform.python_version_tuple()
+    # v_tuple = "3.6.0".split(".")
+    v_tuple = tuple(map(lambda x: int(x), v_tuple))
+    v = sys.version  # sys.version_info
+    if (3, 11, -1) < v_tuple:
+        print_with_failure_style(
+            f"Your python version is {v}. This program may break because it is currently only compatible with versions between 3.7 and 3.11")
+    elif (3, 7, 0) > v_tuple:
+        print_with_failure_style(
+            f"Your python version is {v}. This program may break because it is currently only compatible with versions between 3.7 and 3.11")
+    else:
+        print_with_success_style(
+            f"Your python version is {v} This program was tested with this version and runs properly. However, "
+            f"if you notice a bug or if your version breaks at runtime please feel free to open a PR on github.")
+
+
 def save(*args):
     return save_apikey(*args)
 
@@ -371,6 +402,9 @@ def menu_display():
         ("remove cache folders", remove_cache),
         ("evdspy as a command line prompt", console_main_from_the_menu),
         ("version", version),
+        ("py version", py_version),
+        ("check compatibility of your python version", check_compat),
+
     ]
     menu_items = list(map(lambda x: MenuItem(x[1], x[0]), funcs))
     MenuMaker(

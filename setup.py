@@ -3,31 +3,28 @@ from pathlib import Path
 from dataclasses import dataclass
 from datetime import datetime
 
-from verser import get_next_version, Project
-
-PRE_RELEASE = True
+PRE_RELEASE = False
 INCREMENT = True
 
 # from setup_config import root_version, test_environment, cmd_file, package_name
 STABLE_FORCE = True
-default_vers = "1.0.17.10"
+default_vers = "1.0.18"
 
-STABLE_VERSION = get_next_version(
-    Project(package_name="evdspy",
-            default_version=default_vers,
-            version_file_path=Path() / "evdspy" / "__version__.py"),
-    increment_=INCREMENT,
-    pre_release=PRE_RELEASE,
+from verser import Project, next_version
+from pathlib import Path
 
-)
+project = Project(package_name="evdspy",
+                  default_version=default_vers,
+                  version_file_path=Path() / "evdspy" / "__version__.py")
 
-p = Path() / "evdspy" / "__version__.py"
-print(p.is_file())
+# STABLE_VERSION = next_version(project, pypi=True, write=True, part='patch')
+STABLE_VERSION = next_version(project, pypi=True , write=True, part='patch')
 
+print(STABLE_VERSION)
 # exit()
-print("Getting next version", STABLE_VERSION)
 
-# STABLE_VERSION = "1.0.17.10"
+"""FORCE HERE"""
+# STABLE_VERSION = "1.0.18"
 USER = ""
 if USER == "author":
     # from setup_config import *
@@ -232,7 +229,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
+
     ],
     install_requires=[
         "rich>=12.5.1",
@@ -244,7 +241,7 @@ setup(
     exclude_package_data={
 
     },
-    python_requires='>=3.7.*',
+    python_requires='>=3',
 
     entry_points={
         'console_scripts': [
