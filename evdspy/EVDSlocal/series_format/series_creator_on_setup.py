@@ -4,10 +4,11 @@ from .sample_series_content import sample_series
 
 """
     This file runs only on startup to create some samples to check setup.
-    you may change [default_series_file_name] `config_series.cfg` content according to format provided both on 
+    you may change `series.txt` content according to format provided both on 
     readme file and in the text file.  
 """
 from evdspy.EVDSlocal.utils.utils_general import *
+
 from evdspy.EVDSlocal.initial.start_options import *
 
 

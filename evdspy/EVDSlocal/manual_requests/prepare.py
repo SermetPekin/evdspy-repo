@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import List, Union, Tuple
 from evdspy.EVDSlocal.messages.error_classes import ApiKeyNotSetError, SeriesEmptyError
 from evdspy.EVDSlocal.config.config import config
-from rich import print, inspect
+from evdspy.EVDSlocal.requests_.real_requests import RealRequestWithParam
 
 CANCEL_REQUEST_TEMP = config.cancel_request_temp
 
@@ -12,14 +12,27 @@ def test():
     print(p.get_data())
 
 
+from rich import print, inspect
 
 
 def basic_for_test(api_key):
     url = "https://evds2.tcmb.gov.tr/service/evds/series=TP.ODEMGZS.BDTTOPLAM-TP.ODEMGZS.ABD-TP.ODEMGZS.ARJANTIN-TP.ODEMGZS.BREZILYA-TP.ODEMGZS.KANADA-TP.ODEMGZS.KOLOMBIYA-TP.ODEMGZS.MEKSIKA-TP.ODEMGZS.SILI&startDate=01-01-2019&endDate=01-12-2030&frequency=5&aggregationTypes=avg-avg-avg-avg-avg-avg-avg-avg&formulas=0-0-0-0-0-0-0-0&type=csv"
+    # url = f"{url}&key={api_key}"
+    req = RealRequestWithParam(url, api_key=api_key)
+    response = req.request()
+    # p_basic = PrepareUrl()
+    # response = p_basic.get_data_with_url(url)
+
+    return getattr(response, "status_code") and response.status_code in (200,)
+
+
+def basic_for_testOLD(api_key):
+    url = "https://evds2.tcmb.gov.tr/service/evds/series=TP.ODEMGZS.BDTTOPLAM-TP.ODEMGZS.ABD-TP.ODEMGZS.ARJANTIN-TP.ODEMGZS.BREZILYA-TP.ODEMGZS.KANADA-TP.ODEMGZS.KOLOMBIYA-TP.ODEMGZS.MEKSIKA-TP.ODEMGZS.SILI&startDate=01-01-2019&endDate=01-12-2030&frequency=5&aggregationTypes=avg-avg-avg-avg-avg-avg-avg-avg&formulas=0-0-0-0-0-0-0-0&type=csv"
     url = f"{url}&key={api_key}"
     p_basic = PrepareUrl()
     response = p_basic.get_data_with_url(url)
-    return response.status_code in (200,)
+
+    return getattr(response, "status_code") and response.status_code in (200,)
 
 
 def basic_for_test2(api_key):
@@ -32,9 +45,9 @@ def basic_for_test2(api_key):
     url = p_basic.get_data()
     url = clean(url)
     print(url)
-    return "..."
-
-
+    return "WHAT"
+    # make_request
+    return p_basic.response.status_code in (200,)
 
 
 def basic_test_with_real_key():
@@ -137,7 +150,10 @@ class PrepareUrl:
             print("CANCEL_REQUEST_TEMP is True ...prepare.151")
             return False
         try:
-            self.response = requests.get(url)
+            # self.response = requests.get(url)
+            self.response = RealRequestWithParam(url).request()
+
+
         except ApiKeyNotSetError:
             ...
             return

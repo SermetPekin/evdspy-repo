@@ -1,15 +1,155 @@
 [![Python package](https://github.com/SermetPekin/evdspy-repo/actions/workflows/python-package.yml/badge.svg)](https://github.com/SermetPekin/evdspy-repo/actions/workflows/python-package.yml) [![PyPI](https://img.shields.io/pypi/v/evdspy)](https://img.shields.io/pypi/v/evdspy) [![Supported Python Versions](https://img.shields.io/pypi/pyversions/evdspy)](https://pypi.org/project/evdspy/) [![Downloads](https://pepy.tech/badge/evdspy/week)](https://pepy.tech/project/evdspy)
 
 ## evdspy
-### Updated on this version
+
+### Updated on 1.1.17
+
+    * The API key parameter has been moved to the HTTP header as required by recent updates from EDDS data provider. 
+    This change enhances security by ensuring that sensitive information is not exposed in URLs.
+    * get_series function was added 
+
+```python
+
+    from evdspy import get_series , default_start_date_fnc , default_end_date_fnc
+    balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
+    balance_of_pay2 = """
+    
+    TP.ODEMGZS.BDTTOPLAM #
+    TP.ODEMGZS.ABD # 
+   
+    """  
+    cache = True
+    
+    df = get_series(balance_of_pay2,
+                    frequency="weekly",
+                    start_date=default_start_date_fnc(),
+                    end_date=default_end_date_fnc(),
+                    aggregation=("avg",),
+                    # proxy="http://127.0.0.1:8000",
+                    # proxies={"http": "http://127.0.0.1:8000"},
+                    cache=cache,
+                    debug=False)
+    print(df)
+
+
+
+```
+
+## example usages 
+
+```python 
+
+from evdspy import get_series
+
+template = '''
+    TP.ODEMGZS.BDTTOPLAM
+    TP.ODEMGZS.ABD
+    TP.ODEMGZS.ARJANTIN
+
+    '''
+
+df = get_series(index=template)
+df1 = get_series(index=template, start_date="01-01-2000", frequency="monthly")
+df2a = get_series(index='TP.ODEMGZS.BDTTOPLAM', start_date="01-01-2000", frequency="monthly", cache=True)
+df2b = get_series(index=('TP.ODEMGZS.BDTTOPLAM', 'TP.ODEMGZS.ARJANTIN',),
+                  start_date="01-01-2000",
+                  frequency="monthly",
+                  cache=True)
+
+df3 = get_series(template, start_date="01-01-2000", frequency="monthly", formulas="avg")
+df4 = get_series(template, start_date="01-01-2000", frequency="monthly", formulas=("avg", "min", "avg"))
+df5 = get_series(template, proxy="http://proxy.example.com:80")
+df6 = get_series(template, proxies={
+    'http': "http://proxy.example.com:80",
+    'https': "http://proxy.example.com:80",
+})
+
+
+
+```
+## get_series all params
+
+```python 
+from typing import Union
+import pandas as pd
+def get_series(
+        index: Union[str, tuple[str]],
+        start_date: str = '01-01-2000',
+        end_date: str = '01-01-2100',
+        frequency: str = None,  # monthly | weekly | annually | semimonthly | semiannually | business 
+        formulas: str = None,   # level | percentage_change | difference | year_to_year_percent_change | year_to_year_differences |
+        aggregation: str = None,  # avg |min | max | first | last | sum 
+        cache: bool = False,
+        proxy: str = None,  
+        proxies: dict = None,
+        debug: bool = False
+
+) -> pd.DataFrame:
+    ...
+
+
+""" Formulas 
+
+    percentage_change = 1
+    difference = 2
+    year_to_year_percent_change = 3
+    year_to_year_differences = 4
+    percentage_change_compared = 5
+    difference_compared = 6
+    moving_average = 7
+    moving_sum = 8
+    
+"""
+"""Frequency
+    daily = 1
+    business = 2
+    weekly = 3  # Friday
+    semimonthly = 4
+    monthly = 5
+    quarterly = 6
+    semiannually = 7
+    annual = 8
+    annually = 8
+    
+
+"""
+
+""" Aggregation
+    avg : "avg"
+    min : "min"
+    max : "max"
+    first : "first"
+    last : "last"
+    sum : "sum"
+"""
+"""proxy 
+proxy = "http://proxy.example.com:80"
+"""
+
+"""proxies 
+proxies = {
+            'http':  "http://proxy.example.com:80",
+            'https':  "http://proxy.example.com:80",
+        }
+"""
+
+```
+
+### Updated on 1.1.16
     * get_df_datagroup function was added
 
-![image](https://user-images.githubusercontent.com/96650846/201921534-22ef45f0-85cf-4982-b160-2fe37a21d491.png)
-
-### Updated on 1.1.6
-
-    * Fixed type error on json result.
-    * Some more type hints and refactoring.
+```python
+    from evdspy.main import *
+    
+    df = get_df_datagroup(
+        datagroup="bie_gsyhgycf",
+        start_date="01-01-1998",
+        end_date="01-01-2030",
+    
+    )
+    
+    print(df)
+```
 
 ### Updated on 1.1.1
 

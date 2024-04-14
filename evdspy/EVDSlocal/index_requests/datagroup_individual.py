@@ -49,7 +49,7 @@ def get_datagroup_individual_with_code_helper(
 ):
     """get_datagroup_individual_with_code_helper"""
     gid = GeneralIndexesDatagroupIndividual(code=0, EVRequest_=EVRequest(
-        options_=SingletonOptions()))  # this number will be overriten . does not matter what number
+        options_=SingletonOptions()))  # this number will be overwritten . does not matter what number
     gid.create_url_first_part()
     gid.add_extra_params(code=code_str)
     # start_date = SingletonOptions().get_valid_value("default_start_date")
@@ -116,3 +116,4 @@ def get_df_datagroup(
     df = make_df_float(df)
 
     return df
+

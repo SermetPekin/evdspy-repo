@@ -2,6 +2,7 @@ import pandas as pd
 import typing as t
 
 from ..common.colors import print_with_failure_style
+from ..components.excel_class import correct_folder
 
 
 def make_date_first_column_helper(df, col_name):
@@ -24,6 +25,7 @@ def drop_unix(df):
     if UnixTime in df.columns:
         df.drop(UnixTime, axis=1, inplace=True)
     return df
+
 
 def json_to_df(json_content: t.Union[list, dict]):
     if hasattr(json_content, 'items'):
@@ -59,6 +61,7 @@ def make_df_float(df):
 
 
 def json_to_excel(json_content: list, file_name, try_float=True):
+    file_name = correct_folder(file_name, "xlsx")
     df = json_to_df(json_content)
     if try_float:
         df = make_df_float(df)

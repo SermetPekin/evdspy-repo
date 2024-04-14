@@ -57,6 +57,7 @@ class MyCache:
 
     # get_default_cache()  # get_default_cache()  # CacheDecider.hour
     report_ = Report("stats_requests.txt")
+    msg = "will be running now..."
 
     def __post_init__(self):
         default_cache = SingletonOptions().get_valid_value("default_cache")
@@ -91,10 +92,12 @@ class MyCache:
         def wrapper_decorator(*args, **kwargs):
             if self.check_cache(func, *args):
                 value = self.load_cache(func, *args)
+
                 self.prepare_report_for_cache(func, args)
 
             else:
                 value = func(*args, **kwargs)
+                print("Requesting...", self.msg)
                 self.save_cache(func, *args, data=value)
             return value
 
@@ -130,53 +133,59 @@ class MyCache:
     def check_cache(self, f, *args):
         """added below to provide an exception when we check for valid key """
         self.update_rules_of_cache()
-
         f_hash = self.get_func_hash(f, *args)
-        f_hash_path = rf"{pickle_folder}\\{f_hash}"
+        f_hash_path = Path() / pickle_folder / f_hash
         return check_pickle(f_hash_path)
 
     def load_cache(self, f, *args):
         f_hash = self.get_func_hash(f, *args)
-        f_hash_path = rf"{pickle_folder}\\{f_hash}"
+
+        f_hash_path = Path(pickle_folder) / f_hash
         return load_pickle(f_hash_path)
 
     def save_cache(self, f, *args, data=None):
         f_hash = self.get_func_hash(f, *args)
-        f_hash_path = f"{pickle_folder}\\{f_hash}"
-        save_pickle(f_hash_path, data)
+        f_hash_path = Path(pickle_folder) / f_hash
+
+        try:
+            save_pickle(f_hash_path, data)
+        except:
+
+            print("Cache folder may be deleted.\n setup() in order to create...")
+
+
+def name_format_pickle(file_name: str):
+    return Path(f"{file_name}.pickle")
 
 
 def check_pickle(file_name: str) -> bool:
-    return os.path.isfile(file_name + ".pickle")
+    file_name_full = name_format_pickle(file_name)
+    return os.path.isfile(file_name_full)
 
 
-def load_pickle(file_name: str) -> Union[bool, requests.models.Response]:
-    file_name = file_name + ".pickle"
-    file_name_path = Path(file_name)
+def load_pickle(file_name: str, verbose=False) -> Union[bool, requests.models.Response]:
+    file_name_full = name_format_pickle(file_name)
 
-    if not file_name_path.is_file():
-        # print(file_name_path)
+    if not file_name_full.is_file():
         return False
-    with open(file_name_path, "rb") as infile:
+    with open(file_name_full, "rb") as infile:
         test_dict_reconstructed: requests.models.Response = pickle.load(infile)
-
-        # exit()
-
-    # f = bound(print, f"{file_name_path} pickle loaded...")
-    # functools.partial(print, f"{file_name} pickle loaded...")
-    # delay(1, f)
 
     msg = f"""
     ---------------------------------
     Recent cache was found for this request phrase. It will be loaded instead of making a new redundant request 
     You may change cache options in options file.
-    cache loaded...({file_name_path})
+    cache loaded...({file_name_full})
     ---------------------------------
 """
-
-    print(msg)
-
+    if verbose:
+        print(msg)
+    else:
+        print("<CacheFound>")
     return test_dict_reconstructed
+
+
+import shutil
 
 
 def delete_cache_folder():
@@ -184,8 +193,7 @@ def delete_cache_folder():
     if not path.is_dir():
         return True
     try:
-        # Path.rmdir(path)
-        # os.remove(path)
+
         shutil.rmtree(path)
         return True
     except Exception as exc:
@@ -194,42 +202,17 @@ def delete_cache_folder():
 
 
 def save_pickle(file_name, data):
-    # print("saving", file_name)
-    msg = f"""
-        
-    ---------------------------------
-    
-    
-        Request was successfull...
-        ---------------------------------
-            Cache will be saved for this result. Next time program will be
-            checking if this cache is new enough to load for the new request 
-            You may change cache options in options file 
-            ---------------------------------
-            cache saved ...({file_name})
-            
-    """
-
-    file_name_path = file_name + ".pickle"
-    try:
-        save_pickle_helper(file_name_path, data)
-    except:
-
-        print("Cache folder may be deleted.\n setup() in order to create...")
-        # if callable("setup_now"):
-        #     setup_now()
-        #     save_pickle_helper(file_name_path, data)
+    file_name_full = name_format_pickle(file_name)
+    save_pickle_helper(file_name_full, data)
 
 
 def save_pickle_helper(file_name_path, data):
     with open(file_name_path, "wb") as outfile:
         pickle.dump(data, outfile)
-    # f = bound(print, f"{file_name_path} pickle saved...")
-    # delay(1, f)
 
 
 def save_pickle_for_test(data):
-    save_pickle(test_result_file_name, data)
+    return save_pickle(test_result_file_name, data)
 
 
 def load_test_pickle():

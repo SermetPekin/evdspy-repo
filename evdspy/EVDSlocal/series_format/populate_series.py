@@ -6,8 +6,7 @@ from evdspy.EVDSlocal.series_format.populate_series_helper import *
 
 # from evdspy.EVDSlocal.series_format.series_creator import get_approval
 
-NEW_LINE =chr(10)
-
+NEW_LINE = "\n"
 GSEP = "--++--"
 BeginS = "#Begin_series"
 series_begins_note = "---Series - --------------------------------"
@@ -15,7 +14,7 @@ series_begins_note = "---Series - --------------------------------"
 from evdspy.EVDSlocal.messages.error_messages import *
 
 from typing import Callable
-from dataclasses import dataclass
+
 from evdspy.EVDSlocal.config.config import config
 from evdspy.EVDSlocal.series_format.series_examples import test_series_file_content_for_test
 from evdspy.EVDSlocal.initial.start_options import *
@@ -154,6 +153,12 @@ class PopulateSeries:
         series_codes = [x for x in cont if check(x)]
         objs = [EvdsSeri(x, bfs=bfs) for x in series_codes]
 
+        # def update(item: EvdsSeri):
+        #     item.bfs = bfs
+        #
+        #     return item
+        #
+        # objs: List[EvdsSeri] = [update(x) for x in objs]
 
         return self.export_series(objs, bfs)
 
@@ -198,7 +203,8 @@ __all__ = [
 ]
 
 
-
+# req = PopulateSeries().split_series_file()
+# print(req )
 
 def check_pop_read():
     ps = PopulateSeries()

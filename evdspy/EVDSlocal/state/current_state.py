@@ -4,7 +4,7 @@ from rich import pretty
 
 @dataclass
 class CurrentState:
-    """ Global State to check loaded funcstions
+    """ Global State to check loaded functions
     and other global variables  """
 
     def __new__(cls, *args, **kwargs):

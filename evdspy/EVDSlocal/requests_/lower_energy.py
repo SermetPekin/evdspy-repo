@@ -30,9 +30,10 @@ from dataclasses import dataclass
 from typing import List, Tuple
 from typing import Union, Callable
 
-from evdspy.EVDSlocal.initial.start_options import default_arch_folder_name , default_arch_file_name
+from evdspy.EVDSlocal.initial.start_options import default_arch_folder_name, default_arch_file_name
+
 if config.current_mode_is_test:
-    default_arch_folder_name = f"EVDSlocal/{default_arch_folder_name}"
+    default_arch_folder_name = f"--Test--/{default_arch_folder_name}"
 
 item_sep = "\n"
 item_sep_bytes = bytes(item_sep, encoding="utf8")
@@ -188,6 +189,7 @@ common_test_words = ("test", "t", "api", "key", "apikey", "key", "tested")
 
 from ..common.colors import *
 
+
 def apikey_works(api_key, check_func_request: Callable = basic_for_test, testing_=False):
     result = apikey_works_helper(**locals())
     msg_success = "Your api key was tested with success."
@@ -220,13 +222,16 @@ def apikey_works_helper(api_key, check_func_request: Callable = basic_for_test, 
             api_key in common_test_words:
         """ for testing """
         status_code_new: bool = api_key in test_apikeys_success  # random.choice((200, 500,))
-        print_with_creating_style("first part ", api_key, str(status_code_new))
+        print_with_creating_style("first part ", api_key, status_code_new)
 
     else:
         if api_key in common_test_words:
             print_with_failure_style(f"api key does not look like a key. Returning...{api_key}")
             return apikey_works_helper(api_key, testing_=True)
-
+            # raise "cannot make a new request"
+        # temp test forced
+        # print("temp test forced")
+        # return apikey_works_helper(api_key, testing_=True)
         print_with_updating_style("WARNING making a new request to test your Api key ")
         time.sleep(2)
         status_code_new: bool = check_func_request(api_key)
@@ -236,5 +241,5 @@ def apikey_works_helper(api_key, check_func_request: Callable = basic_for_test, 
 
 
 __all__ = [
-        'apikey_works'
+    'apikey_works'
 ]

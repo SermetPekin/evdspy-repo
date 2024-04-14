@@ -112,7 +112,7 @@ class MenuMaker:
 
     def add_exit_item(self):
         if self.exit_item:
-            exit_menu_item = MenuItem(self.exit, "console")
+            exit_menu_item = MenuItem(self.exit, "EXIT (console)")
             self.menu_items = tuple(list(self.menu_items) + [exit_menu_item])
 
     def make_table(self, items):

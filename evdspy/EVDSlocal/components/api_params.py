@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Callable, List, Tuple, Union
 from datetime import datetime
 
-from .api_params_enums import *
+from evdspy.EVDSlocal.components.api_params_enums import *
 
 default_api_domain = "https://evds2.tcmb.gov.tr/service/evds/"
 
@@ -44,7 +44,9 @@ class EVDSApiDomainDatagroupIndividual(ApiDomain):
 
     def __repr__(self):
         return self.domain
-#GeneralIndexesDatagroupSeriesList
+
+
+# GeneralIndexesDatagroupSeriesList
 
 @dataclass
 class EVDSApiDominDatagroupSeriesList(ApiDomain):
@@ -52,6 +54,7 @@ class EVDSApiDominDatagroupSeriesList(ApiDomain):
 
     def __repr__(self):
         return self.domain
+
 
 @dataclass
 class UrlParam(ABC):

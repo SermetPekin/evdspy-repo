@@ -17,6 +17,8 @@ from evdspy.EVDSlocal.requests_.request_error_classes import REQUEST_ERROR_CODES
 from evdspy.EVDSlocal.common.url_clean import remove_api_key
 
 from dataclasses import dataclass
+from evdspy.EVDSlocal.requests_.mock_req import *
+from evdspy.EVDSlocal.requests_.real_requests import *
 
 # ------------------------------------------------------------------------------
 
@@ -34,14 +36,6 @@ def do_first_true_order(funcs, preds, url):
             v = func(url)
             return v
     return False
-
-
-def mock_request(url, proxies=None) -> requests.models.Response:
-    """ pytest will get this mock response object"""
-    assert isinstance(url, str)
-    file_name = str(Path(__file__).parent / "test_reg_result")
-    assert Path(file_name + ".pickle").is_file(), f"file does not exist {file_name}"
-    return load_pickle(file_name)
 
 
 def decide_request_for_test_real(url: str, proxies=None):
@@ -88,6 +82,17 @@ class EVRequest:
             'https': proxy,
         }
         return decide_request_for_test_real(url, proxies=proxies)
+
+    def get_proxies(self):
+
+        if self.args.proxy is None:
+            return None
+        proxy = self.args.proxy
+        proxies = {
+            'http': proxy,
+            'https': proxy,
+        }
+        return proxies
 
     def proxy_from_file(self, url: str):
         print("using proxy from file")
@@ -207,6 +212,9 @@ class EVRequest:
         """
         return self.get_request_common(url)
 
+    def get_request_w_param(self, url: str, proxies=None):
+        return RealRequestWithParam(url, proxies).request()
+
     def get_request_common(self, url: str):
         """
         first will check cache if there is cache
@@ -221,7 +229,9 @@ class EVRequest:
         safe_url = remove_api_key(self.url)
         print("requesting!!", safe_url)
         """ Exception checks will happen in function below"""
-        result = self.get_request_alternatives(self.url)
+        result = self.get_request_w_param(self.url, self.get_proxies())
+
+        # result = self.get_request_alternatives(self.url)
         # result = self.get_request_alternatives(self.no_apikey_url)
         if not self.check_result(result):
             return False

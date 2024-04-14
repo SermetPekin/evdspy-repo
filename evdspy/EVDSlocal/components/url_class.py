@@ -74,10 +74,12 @@ class URLClass:
         self.refresh_url()
 
     def add_apikey(self, api_key=None):
-        if api_key is None:
-            api_key = ApikeyClass().get_valid_api_key()
-        self.add_item(Apikey(api_key))
-        self.refresh_url()
+        """ Not needed because apikey was moved to header """
+        return
+        # if api_key is None:
+        #     api_key = ApikeyClass().get_valid_api_key()
+        # self.add_item(Apikey(api_key))
+        # self.refresh_url()
 
     def add_mode(self, mode_enum: t.Union[Enum, str, int] = 1):
         mode_enum = get_enum_with_value(mode_enum, ModeEnumDatagroup, ModeEnumDatagroup.all_groups)

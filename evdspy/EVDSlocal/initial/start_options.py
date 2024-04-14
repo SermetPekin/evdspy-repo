@@ -42,7 +42,7 @@ if True:
     """verbose debug """
     DEBUG_PRINT = False  # TODO less verbose debug plus conditional
     """ api key tested hashes folder name  """
-    default_arch_folder_name = "APIKEY_FOLDER"
+    default_arch_folder_name = "--APIKEY_FOLDER"
     """ api key tested hashes file name  """
     default_arch_file_name = "arch.txt"
     """default_cache"""

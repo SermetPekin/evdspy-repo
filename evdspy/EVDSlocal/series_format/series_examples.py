@@ -53,8 +53,8 @@ E V D S P Y  _  C O N F I G  _  F I L E  ---------------------------------------
 #Begin_series
 
 ---Series---------------------------------
-foldername : visitors\annual
-abs_path : visitors\annual # will check again before saving requests from the server it might be replaced by ...WD.../DataSeries/visitors\monthly
+foldername : visitors/annual
+abs_path : visitors/annual # will check again before saving requests from the server it might be replaced by ...WD.../DataSeries/visitors\monthly
 subject  : visitors
 prefix   : EVPY_
 frequency : 8 # annually
@@ -74,8 +74,8 @@ TP.ODEMGZS.SILI
 --++--
 
 ---Series---------------------------------
-foldername : visitors\monthly
-abs_path : C:\Users\User\SeriesData\visitors\monthly # will check again before saving requests from the server it might be replaced by ...WD.../DataSeries/visitors\monthly
+foldername : visitors/monthly
+abs_path : visitors/monthly # will check again before saving requests from the server it might be replaced by ...WD.../DataSeries/visitors\monthly
 subject  : visitors
 prefix   : EVPY_
 frequency : 5 # Monthly

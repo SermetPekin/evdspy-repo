@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from typing import Union
 from enum import Enum, auto
 from ..config.config import config
+from ..messages.error_classes import ApiKeyNotSetError
 
 
 class ApiKeyType(Enum):
@@ -54,6 +55,8 @@ class ApiKeyDict:
 #             return
 #         self.from_file_options_api_key = value
 
+import time
+
 
 class ApikeyClass(object):
     def __new__(cls):
@@ -75,18 +78,50 @@ class ApikeyClass(object):
         cls.now_testing_is_key_is_valid: Union[str, bool] = False
         cls.current_key_using: Union[str, bool] = cls.APIKEYDict.runtime_apikey.value
 
-    def get_valid_api_key(cls):
+    def no_api_msg(self):
+        template = f"""
+        
+        Api Key not set yet. 
+        --------------------------------------------
+        how to set api key? 
+        --------------------------------------------
+        Option 1 (from console) 
+            $ evdspy save 
+        Option 2 (python console with menu)
+            python> from evdspy import menu 
+            python> menu() 
+            Selection 10
+            10 | SAVE API KEY TO FILE   
+        Option 3 (python console )
+            python> from evdspy import save
+            python> save()
+        """
+        print(template)
 
-        if config.current_mode_is_test:
-            return "VALID_KEY_FOR_TEST"
+    def get_valid_api_key(cls, check=False):
 
         if cls.now_testing_is_key_is_valid:
             return cls.now_testing_is_key_is_valid
 
         key_objs = cls.get_api_keys()
         if not key_objs:
+            if check:
+                cls.no_api_msg()
+                time.sleep(4)
+                raise ApiKeyNotSetError("No valid API keys found")
+
+            if config.current_mode_is_test:
+                return "VALID_KEY_FOR_TEST"
+
             return False
         return key_objs[0].value
+
+    @property
+    def key(self):
+        if config.current_mode_is_test:
+            return "VALID_KEY_FOR_TEST"
+        key = self.get_valid_api_key(check=True)
+        return key
 
     def set_api_key_runtime(cls, value: str):
         cls.instance.APIKEYDict.set_value(ApiKeyType.runtime, value)

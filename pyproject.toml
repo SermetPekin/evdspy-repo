@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "evdspy"
-homepage = "https://github.com/SermetPekin/evdspy-repo"
-documentation = "https://github.com/SermetPekin/evdspy-repo"
-version = "1.0.17.6rc2"
-description = "Get data from EVDS API and organize your local work environment with systematical approach. Using caching facility, this package makes less request from the server."
+version = "1.1.17"
+description = "A versatile interface for the 'EDDS' (EVDS) API of the Central Bank of the Republic of Türkiye (https://evds2.tcmb.gov.tr/index.php?/evds/userDocs). This package allows users to easily access and manage economic data through a user-friendly menu function. It features a robust caching mechanism to enhance the efficiency of data requests by storing frequently accessed data for selected periods. Required API keys can be obtained by registering on the EVDS website."
 authors = ["Sermet Pekin <sermet.pekin@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/SermetPekin/evdspy-repo"
+documentation = "https://github.com/SermetPekin/evdspy-repo"
 
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -23,21 +23,12 @@ classifiers = [
     "Typing :: Typed",
 ]
 
-
-
 [tool.poetry.dependencies]
 python = "^3.8"
 pandas = "^1.5.0"
 openpyxl = "^3.0.10"
 rich = "^12.5.1"
 requests = "^2.28.1"
-
-
-
-
-
-[tool.poetry.extras]
-jupyter = ["ipywidgets"]
 
 [tool.poetry.dev-dependencies]
 pygments = "^2.6.0"
@@ -52,12 +43,13 @@ types-dataclasses = "^0.6.4"
 pre-commit = "^2.17.0"
 asv = "^0.5.1"
 
-
-
-
-
-
+[tool.poetry.extras]
+jupyter = ["ipywidgets"]
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+evdspy = 'evdspy:console_main'
+

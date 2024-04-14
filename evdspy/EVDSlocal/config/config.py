@@ -1,3 +1,5 @@
+import warnings
+
 from ..common.common_imports import *
 from ..utils.utils_general import *
 from ..initial.start_options import *
@@ -8,8 +10,8 @@ from ..common.colors import *
 def get_develop_vers_main():
     parent = Path(__file__).parent
     v = Read(Path(parent / ".." / ".." / "__version__.py"))
-    if isinstance(v , str ) :
-        v = v.replace("#" , "")
+    if isinstance(v, str):
+        v = v.replace("#", "")
     return v
 
 
@@ -33,6 +35,9 @@ def version_display():
     print_with_info_style(v)
 
 
+import warnings
+
+
 @dataclass
 class ConfigBase(ABC):
     cancel_request_temp: bool = False
@@ -44,7 +49,11 @@ class ConfigBase(ABC):
     user_options_file_name = Path.cwd() / 'IO' / 'options.py'
     user_options_file_name_locked = Path.cwd() / 'IO' / 'options-locked.py'
     version: str = version_raw()
-    temp_cancel_mock_request :bool = temp_cancel_mock_request
+    temp_cancel_mock_request: bool = temp_cancel_mock_request
+
+    def __post_init__(self):
+        if self.cancel_request_temp:
+            warnings.warn("cancel_request_temp is set to True ")
 
     def version_display(self):
         version_display()
