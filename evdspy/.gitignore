@@ -10,6 +10,8 @@ API*.*
 arch.txt
 *h.txt
 
+.DS_Store
+
 SeriesData/
 logs/
 pickles/
