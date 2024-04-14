@@ -2,7 +2,7 @@
 
 ## evdspy
 
-### Updated on 1.1.17
+### Updated on this version
 
     * The API key parameter has been moved to the HTTP header as required by recent updates from EDDS data provider. 
     This change enhances security by ensuring that sensitive information is not exposed in URLs.
@@ -10,32 +10,31 @@
 
 ```python
 
-    from evdspy import get_series , default_start_date_fnc , default_end_date_fnc
-    balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
-    balance_of_pay2 = """
+from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
+
+balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
+balance_of_pay2 = """
     
     TP.ODEMGZS.BDTTOPLAM #
     TP.ODEMGZS.ABD # 
    
-    """  
-    cache = True
-    
-    df = get_series(balance_of_pay2,
-                    frequency="weekly",
-                    start_date=default_start_date_fnc(),
-                    end_date=default_end_date_fnc(),
-                    aggregation=("avg",),
-                    # proxy="http://127.0.0.1:8000",
-                    # proxies={"http": "http://127.0.0.1:8000"},
-                    cache=cache,
-                    debug=False)
-    print(df)
+    """
+cache = True
+
+df = get_series(balance_of_pay2,
+                frequency="monthly",
+                start_date=default_start_date_fnc(),
+                end_date=default_end_date_fnc(),
+                aggregation=("avg",),
+                cache=cache,
+                debug=False)
+print(df)
 
 
 
 ```
 
-## example usages 
+## example usages
 
 ```python 
 
@@ -67,20 +66,24 @@ df6 = get_series(template, proxies={
 
 
 ```
+
 ## get_series all params
 
 ```python 
 from typing import Union
 import pandas as pd
+
+
 def get_series(
         index: Union[str, tuple[str]],
         start_date: str = '01-01-2000',
         end_date: str = '01-01-2100',
         frequency: str = None,  # monthly | weekly | annually | semimonthly | semiannually | business 
-        formulas: str = None,   # level | percentage_change | difference | year_to_year_percent_change | year_to_year_differences |
+        formulas: str = None,
+        # level | percentage_change | difference | year_to_year_percent_change | year_to_year_differences |
         aggregation: str = None,  # avg |min | max | first | last | sum 
         cache: bool = False,
-        proxy: str = None,  
+        proxy: str = None,
         proxies: dict = None,
         debug: bool = False
 
@@ -136,19 +139,20 @@ proxies = {
 ```
 
 ### Updated on 1.1.16
+
     * get_df_datagroup function was added
 
 ```python
     from evdspy.main import *
-    
-    df = get_df_datagroup(
-        datagroup="bie_gsyhgycf",
-        start_date="01-01-1998",
-        end_date="01-01-2030",
-    
-    )
-    
-    print(df)
+
+df = get_df_datagroup(
+    datagroup="bie_gsyhgycf",
+    start_date="01-01-1998",
+    end_date="01-01-2030",
+
+)
+
+print(df)
 ```
 
 ### Updated on 1.1.1
@@ -459,7 +463,8 @@ or modify this file or delete and create a new on from menu or console using com
 ### THESE functions will return a Pandas Dataframe
 
 ### get_df_datagroup
-#### params 
+
+#### params
 
         returns all series as df to extend
         params:
@@ -480,8 +485,6 @@ or modify this file or delete and create a new on from menu or console using com
     )
 
 ![image](https://user-images.githubusercontent.com/96650846/201921534-22ef45f0-85cf-4982-b160-2fe37a21d491.png)
-
-
 
 ## OPTION 2
 

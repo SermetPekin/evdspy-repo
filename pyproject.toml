@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "evdspy"
-version = "1.1.18"
+version = "1.1.19"
 description = "A versatile interface for the 'EDDS' (EVDS) API of the Central Bank of the Republic of Türkiye (https://evds2.tcmb.gov.tr/index.php?/evds/userDocs). This package allows users to easily access and manage economic data through a user-friendly menu function. It features a robust caching mechanism to enhance the efficiency of data requests by storing frequently accessed data for selected periods. Required API keys can be obtained by registering on the EVDS website."
 authors = ["Sermet Pekin <sermet.pekin@gmail.com>"]
 license = "MIT"
