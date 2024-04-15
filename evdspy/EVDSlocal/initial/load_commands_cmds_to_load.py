@@ -349,7 +349,7 @@ def check_apikey_and_then_save(api_key_from_user):
     if not obvious_checks_of_api_key(api_key_from_user):
         print_with_failure_style(
             f"The text you entered does not meet criteria to be an valid api key. \n"
-            f"{indent}(length of api key cannot be less then 10) {api_key_from_user}")
+            f"{indent}(length of api key cannot be less then 10)  ")
         return False
     """this function will save redundant requests by catching earlier check results """
     if not check_api_key_with_low_energy(api_key_from_user):
@@ -359,7 +359,7 @@ def check_apikey_and_then_save(api_key_from_user):
     save_api_key_to_file_main(api_key_from_user)
     """ SAVE IT FOR RUNTIME """
     ApikeyClass().set_api_key_runtime(value=api_key_from_user)
-    show_apikey()
+    # show_apikey()
     return True
 
 
