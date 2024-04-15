@@ -328,9 +328,9 @@ def check_api_key_with_low_energy(api_key_from_user):
     # check api key with cache
     # send => basic_for_test > performance.lower_energy
     if not apikey_works(api_key_from_user):
-        print_with_failure_style(f"Api key did not work! => {api_key_from_user}")
+        print_with_failure_style(f"Api key did not work! ")
         return False
-    print_with_success_style(f"Api key works => {api_key_from_user}")
+    print_with_success_style(f"Api key works")
     return True
 
 
