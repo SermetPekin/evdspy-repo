@@ -15,7 +15,7 @@ arch.txt
 SeriesData/
 logs/
 pickles/
-tests/
+#tests/
 test.py
 unit_tests/
 other_tests/
