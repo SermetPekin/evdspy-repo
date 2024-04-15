@@ -1,9 +1,11 @@
 from requests import HTTPError
 from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing
-from .index_util_funcs import json_to_df, make_df_float
+from evdspy.EVDSlocal.index_requests.index_util_funcs import json_to_df, make_df_float
 from evdspy.EVDSlocal.requests_.real_requests import *
-from ..utils.github_actions import PytestTesting
-from ... import save_apikey
+from evdspy.EVDSlocal.utils.github_actions import PytestTesting
+
+from evdspy.EVDSlocal.initial.load_commands_cmds_to_load import save_apikey
+import pandas as pd
 
 m_cache = MyCache()
 
@@ -85,15 +87,15 @@ class Frequency(Enum):
 def freq_enum(frequency: Union[str, int]) -> str:
     def get_enum(value: str):
         obj = {
-            "daily": Frequency.daily,
-            "business": Frequency.business,
-            "weekly": Frequency.weekly,
-            "semimonthly": Frequency.semimonthly,
-            "monthly": Frequency.monthly,
-            "quarterly": Frequency.quarterly,
-            "semiannually": Frequency.semiannually,
-            "annual": Frequency.annually,
-            "annually": Frequency.annually,
+                "daily": Frequency.daily,
+                "business": Frequency.business,
+                "weekly": Frequency.weekly,
+                "semimonthly": Frequency.semimonthly,
+                "monthly": Frequency.monthly,
+                "quarterly": Frequency.quarterly,
+                "semiannually": Frequency.semiannually,
+                "annual": Frequency.annually,
+                "annually": Frequency.annually,
         }
         return obj.get(value, Frequency.daily)
 
@@ -120,8 +122,8 @@ class UserRequest:
     start_date: str = default_start_date_fnc()
     end_date: str = default_end_date_fnc()
     frequency: str = None
-    formulas: str = None
-    aggregation: str = None
+    formulas: str | int | tuple[str] | tuple[int] = None
+    aggregation: str | tuple[str] = None
     cache: bool = False
     proxy: str = None
     proxies: dict = None
@@ -143,27 +145,21 @@ class UserRequest:
             return None
         proxy = self.proxy
         proxies = {
-            'http': proxy,
-            'https': proxy,
+                'http': proxy,
+                'https': proxy,
         }
         return proxies
 
     def __post_init__(self):
-        # print("post_init called")
-
         self.check_index()
         self.index = tuple([self.index]) if not isinstance(self.index, (tuple, list,)) else self.index
-        # self.cache_name = f"{'_'.join(self.index)}_{self.start_date}_{self.end_date}"
         self.domain = domain_for_ind_series()
         self.series_part = create_series_part(self)
         self.formulas = self.correct_type_to_tuple(self.formulas)
         self.aggregation = self.correct_type_to_tuple(self.aggregation)
-        # self.check_aggregation_type()
-        # self.check_formulas()
         self.check()
 
-    # @staticmethod
-    def correct_type_to_tuple(self, value: any) -> tuple:
+    def correct_type_to_tuple(self, value: any) -> tuple | None:
 
         if value is None:
             return None
@@ -175,10 +171,8 @@ class UserRequest:
 
         return tuple(value[0] for _ in self.index)
 
-    # def get_cache_name(self):
-    #     return self.hash
     @property
-    def hash(self):
+    def hash(self) -> str:
         import hashlib
         return str(int(hashlib.sha256(self.url.encode('utf-8')).hexdigest(), 16) % 10 ** 8)
 
@@ -188,13 +182,13 @@ class UserRequest:
         print(f"""
 ---------------------------------
     [debug mode is turned on]
-    
+
         api_key = {api_key}
         proxies = {proxies}
         url  = {self.url}
     ! request was not made because debug mode is turned on
     in order to make the request run get_series(... , debug = False )
-    
+
 --------------------------------- 
 """)
         return self
@@ -206,6 +200,7 @@ class UserRequest:
             and self.hash == other.hash
 
     def is_ok(self):
+
         df = self()
         ok = isinstance(df, pd.DataFrame)
         if not ok:
@@ -221,8 +216,7 @@ class UserRequest:
         return isinstance(response, requests.Response) \
             and response.status_code == 200
 
-    # @property
-    def get_api_key(self, check=True):
+    def get_api_key(self, check=True) -> str:
         if PytestTesting().is_testing():
             api_key = get_api_key_while_testing()
         else:
@@ -230,7 +224,7 @@ class UserRequest:
 
         return api_key
 
-    def request(self):
+    def request(self) -> Any:
         api_key = self.get_api_key()
 
         proxies = self.get_proxies()
@@ -258,20 +252,20 @@ class UserRequest:
         # print(response)
         return response.json()
 
-    def get(self):
+    def get(self) -> pd.DataFrame:
         return self.get_data()
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> pd.DataFrame:
         return self.get()
 
-    def get_data(self):
+    def get_data(self) -> pd.DataFrame:
         json_content = self.request()
         df = json_to_df(json_content)
         df = make_df_float(df)
         return df
 
     @staticmethod
-    def template_to_tuple(index: str):
+    def template_to_tuple(index: str) -> tuple[str] | tuple:
         def clean(string: str):
             return string.split("#")[0].strip() if len(string.split("#")) > 0 else None
 
@@ -281,13 +275,13 @@ class UserRequest:
         t = tuple(clean(x) for x in index_tuple)
         return tuple(x for x in t if x is not None and len(x) > 3)
 
-    def check_index(self):
+    def check_index(self) -> None:
         if isinstance(self.index, (int, float,)):
             raise ValueError("index must be a string ot tuple of string ")
         if "\n" in self.index or "\t" in self.index:
             self.index = self.template_to_tuple(self.index)
 
-    def basic_url(self):
+    def basic_url(self) -> str:
 
         return f"{self.domain}/series={self.series_part}&startDate={self.start_date}&endDate={self.end_date}&type=json"
 
@@ -299,14 +293,14 @@ class UserRequest:
             return f"&frequency={self.frequency}"
         return freq_enum(self.frequency)
 
-    def aggregation_type_to_str(self):
+    def aggregation_type_to_str(self) -> str:
         if self.aggregation is None:
             return ""
 
         string = "-".join(self.aggregation)
         return "&aggregationTypes=" + string
 
-    def formulas_to_str(self):
+    def formulas_to_str(self) -> str:
         if self.formulas is None:
             return ""
         index = tuple([self.index]) if not isinstance(self.index, (tuple, list,)) else self.index
@@ -314,15 +308,15 @@ class UserRequest:
         string = "-".join(formulas)
         return f"&formulas={string}"
 
-    def check(self):
+    def check(self) -> None:
         if self.formulas is not None:
             assert len(self.formulas) == len(self.index)
         if self.aggregation is not None:
             assert len(self.aggregation) == len(self.index)
 
     @property
-    def url(self):
-        if self.frequency is None and self.aggregation is None:
+    def url(self) -> str:
+        if self.frequency is None and self.aggregation is None and self.formulas is None:
             return self.basic_url()
         formulas_str = self.formulas_to_str()
         aggregation_type_str = self.aggregation_type_to_str()
@@ -334,12 +328,11 @@ class UserRequest:
         return f"{self.domain}/series={self.series_part}{freq_string}{formulas_str}{aggregation_type_str}&startDate={self.start_date}&endDate={self.end_date}&type=json"
 
 
-def domain_for_ind_series():
+def domain_for_ind_series() -> str:
     return "https://evds2.tcmb.gov.tr/service/evds"
 
 
-def create_series_part(user_req):
-    # print("create_series_part")
+def create_series_part(user_req)->str :
     indexes = user_req.index
     if isinstance(indexes, str):
         indexes = tuple([indexes])
@@ -347,7 +340,6 @@ def create_series_part(user_req):
 
 
 def create_url_for_series(user_req: UserRequest) -> str:
-    # print("create_url_for_series")
     domain = domain_for_ind_series()
     series_part = create_series_part(user_req)
     return f"{domain}/series={series_part}&startDate={user_req.start_date}&endDate={user_req.end_date}&type=json"
