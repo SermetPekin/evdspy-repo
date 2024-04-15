@@ -55,8 +55,8 @@ df2b = get_series(index=('TP.ODEMGZS.BDTTOPLAM', 'TP.ODEMGZS.ARJANTIN',),
                   frequency="monthly",
                   cache=True)
 
-df3 = get_series(template, start_date="01-01-2000", frequency="monthly", formulas="avg")
-df4 = get_series(template, start_date="01-01-2000", frequency="monthly", formulas=("avg", "min", "avg"))
+df3 = get_series(template, start_date="01-01-2000", frequency="monthly", aggregation="avg")
+df4 = get_series(template, start_date="01-01-2000", frequency="monthly", aggregation=("avg", "min", "avg"))
 df5 = get_series(template, proxy="http://proxy.example.com:80")
 df6 = get_series(template, proxies={
     'http': "http://proxy.example.com:80",
