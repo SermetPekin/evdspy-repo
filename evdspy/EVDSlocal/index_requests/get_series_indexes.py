@@ -8,7 +8,6 @@ from evdspy.EVDSlocal.initial.load_commands_cmds_to_load import save_apikey
 import pandas as pd
 
 m_cache = MyCache()
-
 from enum import Enum, auto
 import typing as t
 from dataclasses import dataclass
@@ -97,28 +96,23 @@ def freq_enum(frequency: Union[str, int]) -> str:
                 "annual": Frequency.annually,
                 "annually": Frequency.annually,
         }
-        return obj.get(value, Frequency.daily)
+        return obj.get(str(value).lower(), Frequency.daily)
 
     if isinstance(frequency, int):
         return f"&frequency={frequency}"
     return get_enum(frequency)()
 
 
-def replaceAll(index: str, old: str, new: str):
+def replaceAll(index: str, old: str, new: str) -> str:
     if old in index:
         index = index.replace(old, new)
         return replaceAll(index, old, new)
     return index
 
 
-def test_replaceAll():
-    assert replaceAll("aaa", "a", "b") == "bbb"
-    assert "aaa".replace("a", "b") == "bbb"
-
-
 @dataclass
 class UserRequest:
-    index: t.Union[str, tuple[str]]
+    index: Union[str, tuple[str]]
     start_date: str = default_start_date_fnc()
     end_date: str = default_end_date_fnc()
     frequency: Union[str, int, None] = None
@@ -128,6 +122,15 @@ class UserRequest:
     proxy: Optional[str] = None
     proxies: Optional[dict[Any, Any]] = None
     cache_name: str = ""
+
+    def __post_init__(self):
+        self.check_index()
+        self.index = tuple([self.index]) if not isinstance(self.index, (tuple, list,)) else self.index
+        self.domain = domain_for_ind_series()
+        self.series_part = create_series_part(self)
+        self.formulas = self.correct_type_to_tuple(self.formulas)
+        self.aggregation = self.correct_type_to_tuple(self.aggregation)
+        self.check()
 
     def get_proxies(self) -> Optional[dict[Any, Any]]:
         if self.proxies is None:
@@ -149,15 +152,6 @@ class UserRequest:
                 'https': proxy,
         }
         return proxies
-
-    def __post_init__(self):
-        self.check_index()
-        self.index = tuple([self.index]) if not isinstance(self.index, (tuple, list,)) else self.index
-        self.domain = domain_for_ind_series()
-        self.series_part = create_series_part(self)
-        self.formulas = self.correct_type_to_tuple(self.formulas)
-        self.aggregation = self.correct_type_to_tuple(self.aggregation)
-        self.check()
 
     def correct_type_to_tuple(self, value: any) -> Optional[tuple]:
 
@@ -249,7 +243,7 @@ class UserRequest:
         if not self.is_response_ok(response):
             print(response)
             raise HTTPError(response=response)
-        # print(response)
+
         return response.json()
 
     def get(self) -> pd.DataFrame:
@@ -288,31 +282,31 @@ class UserRequest:
     def freq_str(self) -> str:
         if self.frequency is None:
             return ""
-
         if isinstance(self.frequency, int):
             return f"&frequency={self.frequency}"
         return freq_enum(self.frequency)
 
-    def aggregation_type_to_str(self) -> str:
-        if self.aggregation is None:
+    def agr_form_type_to_str(self, value: Optional[tuple], part_name="aggregationTypes"):
+        if value is None:
             return ""
 
-        string = "-".join(self.aggregation)
-        return "&aggregationTypes=" + string
+        value = tuple(map(str, value))
+        string = "-".join(value)
+        return f"&{part_name}=" + string
+
+    def aggregation_type_to_str(self) -> str:
+        return self.agr_form_type_to_str(self.aggregation, "aggregationTypes")
 
     def formulas_to_str(self) -> str:
-        if self.formulas is None:
-            return ""
-        index = tuple([self.index]) if not isinstance(self.index, (tuple, list,)) else self.index
-        formulas = self.formulas if isinstance(self.formulas, (tuple, list,)) else tuple(self.formulas for _ in index)
-        string = "-".join(formulas)
-        return f"&formulas={string}"
+        return self.agr_form_type_to_str(self.formulas, "formulas")
 
     def check(self) -> None:
         if self.formulas is not None:
             assert len(self.formulas) == len(self.index)
         if self.aggregation is not None:
             assert len(self.aggregation) == len(self.index)
+        if self.frequency is not None:
+            assert isinstance(self.frequency, (int, str,))
 
     @property
     def url(self) -> str:
@@ -321,11 +315,14 @@ class UserRequest:
         formulas_str = self.formulas_to_str()
         aggregation_type_str = self.aggregation_type_to_str()
         freq_string = self.freq_str()
-        # series = TP.ODEMGZS.BDTTOPLAM
-        # "https://evds2.tcmb.gov.tr/service/evds/series=TP.ODEMGZS.BDTTOPLAM-TP.ODEMGZS.ABD-TP.ODEMGZS.ARJANTIN-TP.ODEMGZS.BREZILYA-TP.ODEMGZS.KANADA-TP.ODEMGZS.KOLOMBIYA-TP.ODEMGZS.MEKSIKA-TP.ODEMGZS.SILI&startDate=01-01-2019&endDate=01-12-2030&frequency=5&aggregationTypes=avg-avg-avg-avg-avg-avg-avg-avg&formulas=0-0-0-0-0-0-0-0&type=csv"
-        # &startDate=01-01-2019&endDate=01-12-2030&frequency=5&aggregationTypes=avg-avg-avg-avg-avg-avg-avg-avg&formulas=0-0-0-0-0-0-0-0&type=json"
-        # &startDate=01-01-2019&endDate=01-12-2030&type=json"
-        return f"{self.domain}/series={self.series_part}{freq_string}{formulas_str}{aggregation_type_str}&startDate={self.start_date}&endDate={self.end_date}&type=json"
+        parts = (
+                f"{self.domain}/series={self.series_part}{freq_string}{formulas_str}{aggregation_type_str}",
+                f"startDate={self.start_date}",
+                f"endDate={self.end_date}",
+                "type=json"
+
+        )
+        return "&".join(parts)
 
 
 def domain_for_ind_series() -> str:
