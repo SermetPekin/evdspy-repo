@@ -121,9 +121,9 @@ class UserRequest:
     index: t.Union[str, tuple[str]]
     start_date: str = default_start_date_fnc()
     end_date: str = default_end_date_fnc()
-    frequency: str = None
-    formulas: str | int | tuple[str] | tuple[int] = None
-    aggregation: str | tuple[str] = None
+    frequency: Union[str, int, None] = None
+    formulas: Union[str, int, tuple[str], tuple[int], None] = None
+    aggregation: Union[str, tuple[str], None] = None
     cache: bool = False
     proxy: str = None
     proxies: dict = None
@@ -139,7 +139,7 @@ class UserRequest:
             proxies = self.proxies
         return proxies
 
-    def get_proxies_helper(self):
+    def get_proxies_helper(self) -> Union[dict, None]:
 
         if self.proxy is None:
             return None
@@ -159,7 +159,7 @@ class UserRequest:
         self.aggregation = self.correct_type_to_tuple(self.aggregation)
         self.check()
 
-    def correct_type_to_tuple(self, value: any) -> tuple | None:
+    def correct_type_to_tuple(self, value: any) -> Union[tuple, None]:
 
         if value is None:
             return None
@@ -265,7 +265,7 @@ class UserRequest:
         return df
 
     @staticmethod
-    def template_to_tuple(index: str) -> tuple[str] | tuple:
+    def template_to_tuple(index: str) -> tuple:
         def clean(string: str):
             return string.split("#")[0].strip() if len(string.split("#")) > 0 else None
 
@@ -332,7 +332,7 @@ def domain_for_ind_series() -> str:
     return "https://evds2.tcmb.gov.tr/service/evds"
 
 
-def create_series_part(user_req)->str :
+def create_series_part(user_req) -> str:
     indexes = user_req.index
     if isinstance(indexes, str):
         indexes = tuple([indexes])
