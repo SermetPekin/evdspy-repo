@@ -125,11 +125,11 @@ class UserRequest:
     formulas: Union[str, int, tuple[str], tuple[int], None] = None
     aggregation: Union[str, tuple[str], None] = None
     cache: bool = False
-    proxy: str = None
-    proxies: dict = None
+    proxy: Optional[str] = None
+    proxies: Optional[dict[Any, Any]] = None
     cache_name: str = ""
 
-    def get_proxies(self):
+    def get_proxies(self) -> Optional[dict[Any, Any]]:
         if self.proxies is None:
             if self.proxy is None:
                 proxies = None
@@ -139,7 +139,7 @@ class UserRequest:
             proxies = self.proxies
         return proxies
 
-    def get_proxies_helper(self) -> Union[dict, None]:
+    def get_proxies_helper(self) -> Optional[dict[Any, Any]]:
 
         if self.proxy is None:
             return None
@@ -159,7 +159,7 @@ class UserRequest:
         self.aggregation = self.correct_type_to_tuple(self.aggregation)
         self.check()
 
-    def correct_type_to_tuple(self, value: any) -> Union[tuple, None]:
+    def correct_type_to_tuple(self, value: any) -> Optional[tuple]:
 
         if value is None:
             return None
