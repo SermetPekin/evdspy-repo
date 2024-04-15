@@ -226,7 +226,7 @@ def apikey_works_helper(api_key, check_func_request: Callable = basic_for_test, 
 
     else:
         if api_key in common_test_words:
-            print_with_failure_style(f"api key does not look like a key. Returning...{api_key}")
+            print_with_failure_style(f"api key does not look like a key. Returning...")
             return apikey_works_helper(api_key, testing_=True)
             # raise "cannot make a new request"
         # temp test forced
