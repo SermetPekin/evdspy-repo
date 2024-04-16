@@ -1,13 +1,11 @@
+
 from evdspy.EVDSlocal.utils.utils_general import *
 from evdspy.EVDSlocal.series_format.series_format_config_funcs import *
-
 mainSepBegin = "---Series---------------------------------"
 mainSepEnd = "---/Series---------------------------------"
 GSEP = "--++--"
 NEW_LINE = "\n"
-
 # "cache_freq gl_date_start gl_date_end"
-
 # ----------------------------- C O N F I G  ---------------------------------------------------
 items_from_user_config = [
     "Cache frequency",
@@ -15,7 +13,6 @@ items_from_user_config = [
     "global date end for the series",
     "avoid absolute paths protection" ,
 ]
-
 explanations_config = [
     f"Cache frequency will be used to decide to make a new request. {NEW_LINE} "
     f"If recent cache is found in local cache folder program will use it instead of making a request. {NEW_LINE}"
@@ -29,5 +26,4 @@ explanations_config = [
 check_funcs_options = [TrueFunc, TrueFunc, TrueFunc, TrueFunc]
 default_answers_config = ['', '', '', 'True']
 same = lambda x: x
-
 transform_answers_options = (same for _ in items_from_user_config)

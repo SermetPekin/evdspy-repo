@@ -12,8 +12,8 @@
 
 from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
 
-balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
-balance_of_pay2 = """
+index1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
+index2 = """
     
     TP.ODEMGZS.BDTTOPLAM #
     TP.ODEMGZS.ABD # 
@@ -21,7 +21,7 @@ balance_of_pay2 = """
     """
 cache = True
 
-df = get_series(balance_of_pay2,
+df = get_series(index1,
                 frequency="monthly",
                 start_date=default_start_date_fnc(),
                 end_date=default_end_date_fnc(),
@@ -143,7 +143,7 @@ proxies = {
     * get_df_datagroup function was added
 
 ```python
-    from evdspy.main import *
+from evdspy.main import *
 
 df = get_df_datagroup(
     datagroup="bie_gsyhgycf",

@@ -1,3 +1,4 @@
+
 """ S T A R T   O P T I O N S """
 #
 #
@@ -6,20 +7,14 @@
 from ..common.common_imports import *
 from pathlib import Path
 import sys
-
-
 def check_if_this_is_pytest():
     def check():
         path_ = Path(sys.argv[0])
         return "pytest" in str(path_.stem)
-
     if len(sys.argv) > 0 and check():
         return True
     else:
-
         return False
-
-
 #
 #
 #
@@ -52,7 +47,6 @@ if True:
     """default_start_date"""
     default_start_date = "01-01-2019"
     import os
-
     # USERNAME = os.getenv("USERNAME")  # or hard coded "Username"
 #
 #
@@ -65,8 +59,6 @@ if True:
 #
 #
 """ / S T A R T   O P T I O N S """
-
 # pytest will set this True
 current_mode_is_test = check_if_this_is_pytest()
-
 """ GLOBALS """

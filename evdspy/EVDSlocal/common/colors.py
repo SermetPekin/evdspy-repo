@@ -1,10 +1,9 @@
+
 import functools
 import random
-
 from rich.console import Console
 from rich.theme import Theme
 from rich.style import Style
-
 custom_theme = Theme({
     "info": "dim cyan",
     "warning": "magenta",
@@ -18,9 +17,7 @@ colors_style = {
     "red": "danger",
     "yellow": "warning",
     "blue": "info",
-
 }
-
 """
  44 ? "dark_turquoise"      ? #00d7d7 ? rgb(0,215,215)   ?
 ?            ?     45 ? "turquoise2"          ? #00d7ff ? rgb(0,215,255)   ?
@@ -29,19 +26,16 @@ colors_style = {
 ?            ?     48 ? "spring_green1"       ? #00ff87 ? rgb(0,255,135)   ?
 ?            ?     49 ? "medium_spring_green" ? #00ffaf ? rgb(0,255,175)   ?
 """
-
 default_styles = {
     "default": Style(color="magenta", bgcolor="yellow", italic=True),
     "requesting": Style(color="black", bgcolor="magenta", italic=True),
     "creating": Style(color="magenta", bgcolor="black", italic=True),
     "updating": Style(color="blue", bgcolor="black", italic=True),
     "deleting": Style(color="white", bgcolor="red", italic=True),
-
     "failure2": Style(color="red", bgcolor="black", italic=True),
     "failure3": Style(color="magenta", bgcolor="black", italic=True),
     "failure4": Style(color="deep_pink1", bgcolor="black", italic=True),
     "failure5": Style(color="cyan", bgcolor="black", italic=True),
-
     "success": Style(color="white", bgcolor="black", italic=True),
     "success2": Style(color="medium_turquoise", bgcolor="black", italic=True),
     "success3": Style(color="spring_green2", bgcolor="black", italic=True),
@@ -55,20 +49,13 @@ default_styles = {
     "info4": Style(color="medium_turquoise", bgcolor="black", italic=True),
     "input": Style(color="deep_pink1", bgcolor="black", italic=True),
     "menu_item": Style(color="turquoise2", bgcolor="black", italic=True),
-
 }
-
 # success_stories = (default_styles["success"], default_styles["success2"], default_styles["creating"])
 #
 from typing import Tuple, Any
-
 from typing import Any
-
-
 def make_flat(x: tuple, y: tuple) -> tuple:
     return tuple([x1 for x1 in x] + [y1 for y1 in y])
-
-
 def combine_similar_ones(*item_list: any) -> tuple:
     if len(item_list) > 1 and isinstance(item_list[0], (tuple, list,)):
         combined_list = [x for x in item_list]
@@ -76,72 +63,42 @@ def combine_similar_ones(*item_list: any) -> tuple:
     else:
         combined_list = list(item_list[0])
     list_ = []
-
     for item in combined_list:
         list_.append(default_styles[item])
     return tuple(list_)
-
-
 def get_list_of_keys(key_word: str = "success"):
     return tuple([x for x in default_styles.keys() if key_word in x])
-
-
 success_stories = combine_similar_ones(get_list_of_keys("success"), get_list_of_keys("info"))
 failure_stories = combine_similar_ones(get_list_of_keys("fail"))
 info_stories = combine_similar_ones(get_list_of_keys("info"))
-
 def get_style(name: str = "default") -> None:
     return default_styles[name]
-
-
 def print_with_color(msg: str, color: str) -> None:
     if isinstance(color, str):
         color = colors_style[color]
-
     console.print(msg, style=color)
-
-
 def print_with_style(*msg, style: Style = get_style()) -> None:
     console.print(*msg, style=style)
-
-
 def print_with_updating_style(*msg: str) -> None:
     print_with_style(*msg, style=default_styles["updating"])
-
-
 def print_with_deleting_style(*msg: str) -> None:
     print_with_style(*msg, style=default_styles["deleting"])
-
-
 def print_with_creating_style(*msg: str) -> None:
     print_with_style(*msg, style=default_styles["creating"])
-
-
 def print_with_failure_style(*msg: str) -> None:
     print_with_style(*msg, style=random.choice(failure_stories))
-
-
 def print_with_success_style(*msg: str):
     # print_with_style(*msg, style=default_styles["success"])
     print_with_style(*msg, style=random.choice(success_stories))
-
-
 def print_with_info_style(*msg: str):
     # print_with_style(*msg, style=default_styles["info"])
     print_with_style(*msg, style=random.choice(info_stories))
-
 def print_excel_created_style(*msg: str):
     print_with_style(*msg, style=default_styles["success"])
-
-
 def print_get_input_style(*msg: str):
     print_with_style(*msg, style=default_styles["input"])
-
-
 def print_menu_item_style(*msg: str):
     print_with_style(*msg, style=default_styles["menu_item"])
-
-
 rf"""
 ????????????????????????????????????????????????????????????????????????????
 ?            ?      0 ? "black"               ?         ?                  ?
@@ -348,5 +305,4 @@ rf"""
 ?            ?    254 ? "grey89"              ? #e4e4e4 ? rgb(228,228,228) ?
 ?            ?    255 ? "grey93"              ? #eeeeee ? rgb(238,238,238) ?
 ????????????????????????????????????????????????????????????????????????????
-
 """

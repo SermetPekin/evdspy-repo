@@ -1,6 +1,6 @@
+
 from ..common.common_imports import *
 import os
-
 opsys_dict = {
     'nt': 'windows',
     'posix': 'linux/mac',
@@ -13,9 +13,6 @@ clear_dict = {
     'default': 'clear'
 }
 clear_command_name = clear_dict.get(opsys_name, clear_dict.get('default', None))
-
-
 class Screen:
     def clear(self):
         os.system(clear_command_name)
-

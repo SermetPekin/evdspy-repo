@@ -1,37 +1,27 @@
+
 from .index_classes import GeneralIndexesCategories
 from ..components.options_class import load_options
 from ..manual_requests.prepare import PrepareUrl
 from evdspy.EVDSlocal.common.files import Write, Read
 from ..requests_.ev_request import EVRequest
-
-
 def get_categories() -> str:
     """get_categories"""
     # EVRequest_: EVRequest = EVRequest()
-
     return GeneralIndexesCategories(EVRequest_=EVRequest(options_=load_options())).create_url()
-
-
 def get_categories_data() -> str:
     """get_categories_data"""
     csv = GeneralIndexesCategories(EVRequest_=EVRequest(options_=load_options())).get_csv()
     # Write("categories_list.txt", csv)
     return csv
-
-
 def get_table_header():
     from rich.table import Table
     table = Table(title="Categories / Kategoriler")
-    table.add_column("ID/Sayı", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Title/Başlık (ENG)", style="magenta")
-    table.add_column("Title/Başlık (TR)", justify="right", style="green")
+    table.add_column("ID/SayÄ±", justify="right", style="cyan", no_wrap=True)
+    table.add_column("Title/BaÅŸlÄ±k (ENG)", style="magenta")
+    table.add_column("Title/BaÅŸlÄ±k (TR)", justify="right", style="green")
     return table
-
-
 from typing import List
 import typing as t
-
-
 def get_category_name(code: t.Union[int, str] = 1) -> t.Union[str, None]:
     if isinstance(code, str):
         code = int(code)
@@ -42,8 +32,6 @@ def get_category_name(code: t.Union[int, str] = 1) -> t.Union[str, None]:
         id, cat_eng, cat_tr = split_wisely(item)
         list_of_categs.update({int(id): cat_tr})
     return list_of_categs.get(code, None)
-
-
 def display_categories() -> t.Union[List[tuple], None]:
     """display_categories"""
     from rich.console import Console
@@ -60,8 +48,6 @@ def display_categories() -> t.Union[List[tuple], None]:
     console = Console()
     console.print(table)
     return list_of_categs
-
-
 def split_wisely(line: str) -> tuple:
     """split_wisely"""
     parts = line.split(",")
