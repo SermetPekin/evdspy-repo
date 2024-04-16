@@ -15,6 +15,15 @@ def initial_api_process_when_given(api_key: str = None):
             save_apikey(api_key)
 
 
+"""
+        frequency: str = None,  # monthly | weekly | annually | semimonthly | semiannually | business 
+        formulas: str = None,
+        # level | percentage_change | difference | year_to_year_percent_change | year_to_year_differences |
+        aggregation: str = None,  # avg |min | max | first | last | sum 
+        
+"""
+
+
 def get_series(
         index: Union[str, tuple[Any, ...]],
         start_date: str = default_start_date_fnc(),
@@ -28,7 +37,7 @@ def get_series(
         debug: bool = False,
         api_key: Optional[str] = None
 
-) -> Union[pd.DataFrame, str]:
+) -> Union[pd.DataFrame, RequestConfig]:
     """
     Retrieves economic data series from the specified API and returns it as a pandas DataFrame.
 
@@ -41,11 +50,14 @@ def get_series(
     end_date : str, optional
         The end date for the data retrieval in 'DD-MM-YYYY' format, by default calls default_end_date_fnc().
     frequency : str, optional
-        The frequency at which data should be retrieved. Examples include 'daily', 'monthly', 'yearly', etc.
+        The frequency at which data should be retrieved.
+        monthly | weekly | annually | semimonthly | semiannually | business
     formulas : str or tuple of str, optional
-        The computation methods to apply to the data series, such as 'average', 'sum', etc.
+        The computation methods to apply to the data series
+        level | percentage_change | difference | year_to_year_percent_change | year_to_year_differences
     aggregation : str or tuple of str, optional
         The aggregation methods to apply to the data, similar to formulas.
+        avg |min | max | first | last | sum
     cache : bool, optional
         If True, uses cached data when available to speed up the data retrieval process, by default False.
     proxy : str, optional
@@ -109,16 +121,14 @@ def get_series(
         return api_requester.dry_request()
     """DataProcessor"""
     data_processor = DataProcessor(api_requester())
-    df = data_processor()
-    print(df.head())
-    return df
+    return data_processor()
 
 
 def test_get_series2(capsys):
     with capsys.disabled():
         # setup()
         df = get_series("TP.ODEMGZS.BDTTOPLAM",
-                         cache=False)
+                        cache=False)
         assert isinstance(df, pd.DataFrame)
 
 
@@ -126,7 +136,7 @@ def t_stream():
     import streamlit as st
 
     df = get_series("TP.ODEMGZS.BDTTOPLAM",
-                     cache=True)
+                    cache=True)
 
     st.write(df)
 
