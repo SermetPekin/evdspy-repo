@@ -1,10 +1,10 @@
-pop_series_test_content = rf"""
 
+pop_series_test_content = rf"""
 #Series_config_file
     E V D S P Y  _  C O N F I G  _  F I L E  ---------------------------------------------
 #
-# This file will be used by evdspy package (python) in order to help updating 
-# your series. 
+# This file will be used by evdspy package (python) in order to help updating
+# your series.
 # Script will be adding this file when you setup a new project.
 # Deleting or modifying its content may require to setup configuration from the beginning
 # ----------------------------------------------------------------------------------------
@@ -25,5 +25,4 @@ TP.ODEMGZS.SILI
 ------------/SERIES CODES------------------
 ---/Series---------------------------------
 --++--
-
 """

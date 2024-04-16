@@ -1,5 +1,5 @@
-from rich import inspect
 
+from rich import inspect
 from .datagroups_initial import data_models_dict , data_strategy , GID_json , GID_csv
 from .index_classes import  GeneralIndexesDatagroups
 from .error_classes_index import ContentFunctionError
@@ -8,8 +8,6 @@ from evdspy.EVDSlocal.common.files import Write, Read
 import typing as t
 import json
 from .datagroups import get_datagroups_df
-
-
 def get_datagroups_data(data_strategy_type="json"):
     # csv = GeneralIndexesDatagroups().get_csv()
     buffer_function: t.Callable = data_strategy[data_strategy_type]  # GeneralIndexesDatagroups().get_json

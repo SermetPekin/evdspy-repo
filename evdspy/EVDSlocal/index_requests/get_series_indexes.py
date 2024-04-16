@@ -1,452 +1,136 @@
-from requests import HTTPError
-from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing
-from evdspy.EVDSlocal.index_requests.index_util_funcs import json_to_df, make_df_float
-from evdspy.EVDSlocal.requests_.real_requests import *
-from evdspy.EVDSlocal.utils.github_actions import PytestTesting
+from typing import Union, Any, Optional
 
-from evdspy.EVDSlocal.initial.load_commands_cmds_to_load import save_apikey
 import pandas as pd
 
-m_cache = MyCache()
-from enum import Enum, auto
-import typing as t
-from dataclasses import dataclass
-from typing import Union
-
-
-def default_start_date_fnc():
-    return "01-01-2000"
-
-
-def default_end_date_fnc():
-    return "01-01-2100"
-
-
-class AggregationType(Enum):
-    """
-    avg : "avg"
-    min : "min"
-    max : "max"
-    first : "first"
-    last : "last"
-    sum : "sum"
-
-
-    """
-    avg = "avg"
-    min = "min"
-    max = "max"
-    first = "first"
-    last = "last"
-    sum = "sum"
-
-
-class Formulas(Enum):
-    """Formulas
-    Level: 0
-    Percentage change: 1
-    Difference: 2
-    Year-to-year Percent Change: 3
-    Year-to-year Differences: 4
-    Percentage Change Compared to End-of-Previous Year: 5
-    Difference Compared to End-of-Previous Year : 6
-    Moving Average: 7
-    Moving Sum: 8
-
-    """
-    level = 0
-    percentage_change = 1
-    difference = 2
-    year_to_year_percent_change = 3
-    year_to_year_differences = 4
-    percentage_change_compared = 5
-    difference_compared = 6
-    moving_average = 7
-    moving_sum = 8
-
-
-class Frequency(Enum):
-    daily = 1
-    business = 2
-    weekly = 3  # Friday
-    semimonthly = 4
-    monthly = 5
-    quarterly = 6
-    semiannually = 7
-    annual = 8
-    annually = 8
-
-    def __str__(self):
-        return f"{self.value}"
-
-    def __call__(self, *args, **kwargs):
-        return f"&frequency={self.value}"
-
-
-def freq_enum(frequency: Union[str, int]) -> str:
-    def get_enum(value: str):
-        obj = {
-                "daily": Frequency.daily,
-                "business": Frequency.business,
-                "weekly": Frequency.weekly,
-                "semimonthly": Frequency.semimonthly,
-                "monthly": Frequency.monthly,
-                "quarterly": Frequency.quarterly,
-                "semiannually": Frequency.semiannually,
-                "annual": Frequency.annually,
-                "annually": Frequency.annually,
-        }
-        return obj.get(str(value).lower(), Frequency.daily)
-
-    if isinstance(frequency, int):
-        return f"&frequency={frequency}"
-    return get_enum(frequency)()
-
-
-def replaceAll(index: str, old: str, new: str) -> str:
-    if old in index:
-        index = index.replace(old, new)
-        return replaceAll(index, old, new)
-    return index
-
-
-@dataclass
-class UserRequest:
-    index: Union[str, tuple[str]]
-    start_date: str = default_start_date_fnc()
-    end_date: str = default_end_date_fnc()
-    frequency: Union[str, int, None] = None
-    formulas: Union[str, int, tuple[str], tuple[int], None] = None
-    aggregation: Union[str, tuple[str], None] = None
-    cache: bool = False
-    proxy: Optional[str] = None
-    proxies: Optional[dict[Any, Any]] = None
-    cache_name: str = ""
-
-    def __post_init__(self):
-        self.check_index()
-        self.index = tuple([self.index]) if not isinstance(self.index, (tuple, list,)) else self.index
-        self.domain = domain_for_ind_series()
-        self.series_part = create_series_part(self)
-        self.formulas = self.correct_type_to_tuple(self.formulas)
-        self.aggregation = self.correct_type_to_tuple(self.aggregation)
-        self.check()
-
-    def get_proxies(self) -> Optional[dict[Any, Any]]:
-        if self.proxies is None:
-            if self.proxy is None:
-                proxies = None
-            else:
-                proxies = self.get_proxies_helper()
-        else:
-            proxies = self.proxies
-        return proxies
-
-    def get_proxies_helper(self) -> Optional[dict[Any, Any]]:
-
-        if self.proxy is None:
-            return None
-        proxy = self.proxy
-        proxies = {
-                'http': proxy,
-                'https': proxy,
-        }
-        return proxies
-
-    def correct_type_to_tuple(self, value: any) -> Optional[tuple]:
-
-        if value is None:
-            return None
-        if isinstance(value, (list, tuple)):
-            if len(value) == len(self.index):
-                return value
-        if isinstance(value, (str,)):
-            return tuple(value for _ in self.index)
-
-        return tuple(value[0] for _ in self.index)
-
-    @property
-    def hash(self) -> str:
-        import hashlib
-        return str(int(hashlib.sha256(self.url.encode('utf-8')).hexdigest(), 16) % 10 ** 8)
-
-    def dry_request(self):
-        api_key = self.get_api_key(check=False)
-        proxies = self.get_proxies()
-        print(f"""
----------------------------------
-    [debug mode is turned on]
-
-        api_key = {api_key}
-        proxies = {proxies}
-        url  = {self.url}
-    ! request was not made because debug mode is turned on
-    in order to make the request run get_series(... , debug = False )
-
---------------------------------- 
-""")
-        return self
-
-    def __eq__(self, other):
-        return self.index == other.index and \
-            self.cache_name == other.cache_name \
-            and self.url == other.url \
-            and self.hash == other.hash
-
-    def is_ok(self):
-
-        df = self()
-        ok = isinstance(df, pd.DataFrame)
-        if not ok:
-            self.dry_request()
-            raise ValueError("request Not Ok")
-        else:
-            print("<data is here>")
-            print(df.shape)
-        return ok
-
-    def is_response_ok(self, response):
-
-        return isinstance(response, requests.Response) \
-            and response.status_code == 200
-
-    def get_api_key(self, check=True) -> str:
-        if PytestTesting().is_testing():
-            api_key = get_api_key_while_testing()
-        else:
-            api_key = ApikeyClass().get_valid_api_key(check=check)
-
-        return api_key
-
-    def request(self) -> Any:
-        api_key = self.get_api_key()
-
-        proxies = self.get_proxies()
-
-        @m_cache.cache
-        def local_request_w_cache(url: str) -> requests.Response:
-            requester = RealRequestWithParam(url,
-                                             proxies=proxies,
-                                             api_key=api_key)
-            return requester.request()
-
-        def local_request(url: str) -> requests.Response:
-            requester = RealRequestWithParam(url,
-                                             proxies=proxies,
-                                             api_key=api_key)
-            return requester.request()
-
-        req_func = local_request
-        if self.cache:
-            req_func = local_request_w_cache
-        response = req_func(self.url)
-        if not self.is_response_ok(response):
-            print(response)
-            raise HTTPError(response=response)
-
-        return response.json()
-
-    def get(self) -> pd.DataFrame:
-        return self.get_data()
-
-    def __call__(self, *args, **kwargs) -> pd.DataFrame:
-        return self.get()
-
-    def get_data(self) -> pd.DataFrame:
-        json_content = self.request()
-        df = json_to_df(json_content)
-        df = make_df_float(df)
-        return df
-
-    @staticmethod
-    def template_to_tuple(index: str) -> tuple:
-        def clean(string: str):
-            return string.split("#")[0].strip() if len(string.split("#")) > 0 else None
-
-        index = replaceAll(index, "\t", "\n")
-        index_tuple = index.splitlines()
-
-        t = tuple(clean(x) for x in index_tuple)
-        return tuple(x for x in t if x is not None and len(x) > 3)
-
-    def check_index(self) -> None:
-        if isinstance(self.index, (int, float,)):
-            raise ValueError("index must be a string ot tuple of string ")
-        if "\n" in self.index or "\t" in self.index:
-            self.index = self.template_to_tuple(self.index)
-
-    def basic_url(self) -> str:
-
-        return f"{self.domain}/series={self.series_part}&startDate={self.start_date}&endDate={self.end_date}&type=json"
-
-    def freq_str(self) -> str:
-        if self.frequency is None:
-            return ""
-        if isinstance(self.frequency, int):
-            return f"&frequency={self.frequency}"
-        return freq_enum(self.frequency)
-
-    def agr_form_type_to_str(self, value: Optional[tuple], part_name="aggregationTypes"):
-        if value is None:
-            return ""
-
-        value = tuple(map(str, value))
-        string = "-".join(value)
-        return f"&{part_name}=" + string
-
-    def aggregation_type_to_str(self) -> str:
-        return self.agr_form_type_to_str(self.aggregation, "aggregationTypes")
-
-    def formulas_to_str(self) -> str:
-        return self.agr_form_type_to_str(self.formulas, "formulas")
-
-    def check(self) -> None:
-        if self.formulas is not None:
-            assert len(self.formulas) == len(self.index)
-        if self.aggregation is not None:
-            assert len(self.aggregation) == len(self.index)
-        if self.frequency is not None:
-            assert isinstance(self.frequency, (int, str,))
-
-    @property
-    def url(self) -> str:
-        if self.frequency is None and self.aggregation is None and self.formulas is None:
-            return self.basic_url()
-        formulas_str = self.formulas_to_str()
-        aggregation_type_str = self.aggregation_type_to_str()
-        freq_string = self.freq_str()
-        parts = (
-                f"{self.domain}/series={self.series_part}{freq_string}{formulas_str}{aggregation_type_str}",
-                f"startDate={self.start_date}",
-                f"endDate={self.end_date}",
-                "type=json"
-
-        )
-        return "&".join(parts)
-
-
-def domain_for_ind_series() -> str:
-    return "https://evds2.tcmb.gov.tr/service/evds"
-
-
-def create_series_part(user_req) -> str:
-    indexes = user_req.index
-    if isinstance(indexes, str):
-        indexes = tuple([indexes])
-    return "-".join(indexes)
-
-
-def create_url_for_series(user_req: UserRequest) -> str:
-    domain = domain_for_ind_series()
-    series_part = create_series_part(user_req)
-    return f"{domain}/series={series_part}&startDate={user_req.start_date}&endDate={user_req.end_date}&type=json"
+from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
+from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
+from evdspy.EVDSlocal.index_requests.user_requests import ProxyManager, UrlBuilder, UrlSeries, ApiRequester, \
+    DataProcessor, RequestConfig
+
+
+def initial_api_process_when_given(api_key: str = None):
+    if api_key:
+        if ApikeyClass().get_valid_api_key(check=False) is False:
+            from evdspy.EVDSlocal.initial.load_commands_cmds_to_load import save_apikey
+            save_apikey(api_key)
 
 
 def get_series(
-        index: t.Union[str, tuple[str]],
+        index: Union[str, tuple[Any, ...]],
         start_date: str = default_start_date_fnc(),
         end_date: str = default_end_date_fnc(),
-        frequency: str = None,
-        formulas: str = None,
-        aggregation: str = None,
+        frequency: Union[str, int, None] = None,
+        formulas: Union[str, tuple[str, int, ...]] = None,
+        aggregation: Union[str, None] = None,
         cache: bool = False,
-        proxy: str = None,
-        proxies: dict = None,
+        proxy: Optional[str] = None,
+        proxies: Optional[dict[str, str]] = None,
         debug: bool = False,
-        api_key: str = None
+        api_key: Optional[str] = None
 
-) -> pd.DataFrame:
+) -> Union[pd.DataFrame, str]:
     """
-    returns all series as pandas DataFrame
+    Retrieves economic data series from the specified API and returns it as a pandas DataFrame.
 
-    example usages
-    template = '''
-    TP.ODEMGZS.BDTTOPLAM
-    TP.ODEMGZS.ABD
-    TP.ODEMGZS.ARJANTIN
+    Parameters
+    ----------
+    index : str or tuple of str
+        The identifier(s) for the data series to fetch. Can be a single string for one series or a tuple of strings for multiple series.
+    start_date : str, optional
+        The start date for the data retrieval in 'DD-MM-YYYY' format, by default calls default_start_date_fnc().
+    end_date : str, optional
+        The end date for the data retrieval in 'DD-MM-YYYY' format, by default calls default_end_date_fnc().
+    frequency : str, optional
+        The frequency at which data should be retrieved. Examples include 'daily', 'monthly', 'yearly', etc.
+    formulas : str or tuple of str, optional
+        The computation methods to apply to the data series, such as 'average', 'sum', etc.
+    aggregation : str or tuple of str, optional
+        The aggregation methods to apply to the data, similar to formulas.
+    cache : bool, optional
+        If True, uses cached data when available to speed up the data retrieval process, by default False.
+    proxy : str, optional
+        The URL of the proxy server to use for the requests, by default None.
+    proxies : dict, optional
+        A dictionary of proxies to use for the request, by default None.
+    debug : bool, optional
+        If True, runs the function in debug mode, providing additional debug information without making a real API request, by default False.
+    api_key : str, optional
+        The API key required for accessing the data, by default None.
+        When it was given for the first time it will be saved to a file for the subsequent requests.
+        alternatively it may be saved by save("APIKEY") function or $ evdspy save [from console]
+    Returns
+    -------
+    pd.DataFrame
+        A pandas DataFrame containing the retrieved data series.
 
-    '''
+    Raises
+    ------
+    ValueError
+        If an invalid API key is provided or required parameters are missing.
 
-    df = get_series( template )
+    Examples
+    --------
+    Basic usage:
+    >>> template = "TP.ODEMGZS.BDTTOPLAM"
+    >>> df = get_series2(template, start_date="01-01-2020", end_date="01-01-2021", frequency="monthly")
+    >>> print(df.head())
 
-    df1 = get_series( template , start_date = "01-01-2000" , frequency = "monthly"  )
+    Using multiple indexes and cache:
+    >>> indexes = ("TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD")
+    >>> df = get_series2(indexes, start_date="01-01-2020", frequency="monthly", cache=True)
+    >>> print(df.head())
 
-    df2 = get_series('TP.ODEMGZS.BDTTOPLAM' , start_date = "01-01-2000" , frequency = "monthly"  , cache = True  )
-
-    df3 = get_series( template , start_date = "01-01-2000" , frequency = "monthly" , formulas = "avg"  )
-
-    df3 = get_series( template , start_date = "01-01-2000" , frequency = "monthly" , formulas = ("avg" , "min" , "avg" )  )
-
-
-
-
-    :param index: str or tuple[str]
-    :param start_date: str
-    :param end_date: str
-    :param frequency: str
-    :param formulas: str | tuple[str]
-    :param aggregation: str| tuple[str]
-    :param cache: bool True for using cached data when possible
-    :param proxy: str  (default=None)
-    :param proxies: dict (default=None)
-    :param debug: bool True for debugging
-    :return: pd.DataFrame
-
-
-
-
-
+    Applying formulas and aggregation:
+    >>> df = get_series2(template, start_date="01-01-2020", formulas="level", aggregation="sum")
+    >>> print(df.head())
     """
-    if api_key:
-        if ApikeyClass().get_valid_api_key(check=False) is False:
-            save_apikey(api_key)
 
-    user_req = UserRequest(index,
+    """initial_api_process_when_given"""
+    initial_api_process_when_given(api_key)
+
+    """RequestConfig"""
+    config = RequestConfig(index=index,
                            start_date=start_date,
                            end_date=end_date,
                            frequency=frequency,
                            formulas=formulas,
                            aggregation=aggregation,
-                           cache=cache,
-                           proxy=proxy,
-                           proxies=proxies
+                           cache=cache
+
                            )
+
+    """ProxyManager"""
+    proxy_manager = ProxyManager(proxy=proxy, proxies=proxies)
+    """UrlBuilder"""
+    url_builder = UrlBuilder(config, url_type=UrlSeries())
+    """ApiRequester"""
+    api_requester = ApiRequester(url_builder, proxy_manager)
     if debug:
-        return user_req.dry_request()
-    return user_req()
+        return api_requester.dry_request()
+    """DataProcessor"""
+    data_processor = DataProcessor(api_requester())
+    df = data_processor()
+    print(df.head())
+    return df
 
 
-def test_aggr_types(capsys):
-    balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
-
-    balance_of_pay2 = """
-
-    TP.ODEMGZS.BDTTOPLAM #
-    TP.ODEMGZS.ABD # 
-
-    """
-    cache = True
+def test_get_series2(capsys):
     with capsys.disabled():
-        u1 = UserRequest(balance_of_pay1,
-                         frequency="weekly",
-                         start_date=default_start_date_fnc(),
-                         end_date=default_end_date_fnc(),
-                         aggregation=("avg",),
-                         # proxy="http://127.0.0.1:8000",
-                         # proxies={"http": "http://127.0.0.1:8000"},
-                         cache=cache,
-                         )
-
-        u2 = UserRequest(balance_of_pay2,
-                         frequency="weekly",
-                         start_date=default_start_date_fnc(),
-                         end_date=default_end_date_fnc(),
-                         aggregation=("avg",),
-                         # proxy="http://127.0.0.1:8000",
-                         # proxies={"http": "http://127.0.0.1:8000"},
-                         cache=cache,
-                         )
-        assert u1 == u2
+        # setup()
+        df = get_series("TP.ODEMGZS.BDTTOPLAM",
+                         cache=False)
+        assert isinstance(df, pd.DataFrame)
 
 
-__all__ = ['get_series']
+def t_stream():
+    import streamlit as st
+
+    df = get_series("TP.ODEMGZS.BDTTOPLAM",
+                     cache=True)
+
+    st.write(df)
+
+
+__all__ = (
+    'get_series',
+)

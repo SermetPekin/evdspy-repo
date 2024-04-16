@@ -1,3 +1,4 @@
+
 import time
 import pandas as pd
 from ..components.evds_files import DfColumnsDoesNotMatch
@@ -5,28 +6,22 @@ from ..config.config import config
 from ..common.colors import print_with_failure_style, print_with_updating_style, print_with_info_style
 from .data_models import *
 from dataclasses import dataclass
-
-
 @dataclass
 class DFOperations():
     data_model: DataModel
     df: pd.DataFrame = None
-
     @staticmethod
     def extract_values_from_line(line: str, sep=","):
         return line.split(sep)
-
     @staticmethod
     def line_gen(buffer: str):
         if not buffer:
             return False
         for item in buffer.split("\n"):
             yield item
-
     def get_columns_from_first_row(self):
         first_row = self.data_model.data.split("\n")[0].split(",")
         return first_row
-
     def get_columns(self, df):
         current_columns = df.columns  # rangeIndex
         if isinstance(current_columns, pd.RangeIndex):
@@ -44,17 +39,13 @@ class DFOperations():
             ...
             # self.save_excel("testpytest2.xlsx")
         return df
-
     def save_excel(self, name):
         if isinstance(self.df, pd.DataFrame):
             self.df.to_excel(name)
-
     @staticmethod
     def list_to_df(items):
         return pd.DataFrame(items)
-
     def make_df_float(self):
-
         def check_cols(x: str):
             items = (
                 "Tarih" not in x,
@@ -62,18 +53,15 @@ class DFOperations():
                 "DAY" not in x,
             )
             return all(items)
-
         columns = (x for x in self.df.columns if check_cols(x))
         other_cols = (x for x in self.df.columns if not check_cols(x))
         old_df = self.df
         try:
             self.df = self.df[columns].astype(float)
-
         except:
             print_with_failure_style("Could not convert some columns to float type...")
         for other_column in other_cols:
             self.df[other_column] = old_df[other_column]
-
     def convert_to_df_abstract(self):
         from rich import inspect
         inspect(self.data_model)
@@ -83,13 +71,11 @@ class DFOperations():
         }
         fn = obj[self.data_model.type_name]
         fn()
-
     def convert_json__df(self, json_buffer: str = None):
         # print("To be implemented soon...")
         print(json_buffer)
         exit()
         # raise NotImplementedError
-
     def convert_csv_df(self, csv_buffer: str = None):
         if csv_buffer is None:
             csv_buffer = self.data_model.data
@@ -119,5 +105,4 @@ class DFOperations():
             print_with_failure_style(e)
             pass
         self.make_df_float()
-
         return self.df

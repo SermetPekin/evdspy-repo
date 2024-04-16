@@ -1,6 +1,7 @@
+
 current_menu_appears = f"""
-        Quickly setup your work environment run commands from the menu. 
-        Currently you may choose one below or create your own functions and 
+        Quickly setup your work environment run commands from the menu.
+        Currently you may choose one below or create your own functions and
         add to this list following instructions on Readme.md
         --------------------------------------------------
                              M E N U

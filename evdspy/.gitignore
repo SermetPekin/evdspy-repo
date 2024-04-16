@@ -215,3 +215,7 @@ cython_debug/
 #.idea/
 /_version.py
 /EVDSlocal/APIKEY_FOLDER/
+pickles/
+logs/
+SeriesData/
+*.cfg

@@ -1,21 +1,18 @@
-site_visitors = rf"""
 
-#Series_config_file    
+site_visitors = rf"""
+#Series_config_file
 E V D S P Y  _  C O N F I G  _  F I L E  ---------------------------------------------
 #
-# This file will be used by evdspy package (python) in order to help updating 
-# your series. 
+# This file will be used by evdspy package (python) in order to help updating
+# your series.
 # Script will be adding this file when you setup a new project.
 # Deleting or modifying its content may require to setup configuration from the beginning
 # ----------------------------------------------------------------------------------------
 #
-#About alternative params 
+#About alternative params
 # ----------------------------------------------------------------------------------------
-
-
           Frequencies
           -----------------
-
           Daily: 1
           Business: 2
           Weekly(Friday): 3
@@ -24,11 +21,8 @@ E V D S P Y  _  C O N F I G  _  F I L E  ---------------------------------------
           Quarterly: 6
           Semiannual: 7
           Annual: 8
-
-
           `Formulas`s
           -----------------
-
           Level: 0
           Percentage change: 1
           Difference: 2
@@ -38,20 +32,15 @@ E V D S P Y  _  C O N F I G  _  F I L E  ---------------------------------------
           Difference Compared to End-of-Previous Year : 6
           Moving Average: 7
           Moving Sum: 8
-
           Aggregate types
           -----------------
-
           Average: avg,
           Minimum: min,
           Maximum: max
           Beginning: first,
           End: last,
           Cumulative: sum
-
-
 #Begin_series
-
 ---Series---------------------------------
 foldername : visitors/annual
 abs_path : visitors/annual # will check again before saving requests from the server it might be replaced by ...WD.../DataSeries/visitors\monthly
@@ -72,7 +61,6 @@ TP.ODEMGZS.SILI
 ------------/SERIES CODES------------------
 ---/Series---------------------------------
 --++--
-
 ---Series---------------------------------
 foldername : visitors/monthly
 abs_path : visitors/monthly # will check again before saving requests from the server it might be replaced by ...WD.../DataSeries/visitors\monthly
@@ -93,14 +81,8 @@ TP.ODEMGZS.SILI
 ------------/SERIES CODES------------------
 ---/Series---------------------------------
 --++--
-
-
-
-
 """
-
 test_series_file_content_for_test = site_visitors
-
 example_series = [site_visitors]
 __all__ = [
         'example_series',

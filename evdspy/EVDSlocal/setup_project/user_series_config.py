@@ -1,13 +1,12 @@
+
 from evdspy.EVDSlocal.utils.utils_general import *
 from evdspy.EVDSlocal.series_format.series_format_config_funcs import *
-
 mainSepBegin = "---Series---------------------------------"
 mainSepEnd = "---/Series---------------------------------"
 GSEP = "--++--"
 NEW_LINE = "\n"
 example_codes = ['TP.EVDSSTATS.KAYITLI', 'TP.EVDSSTATS.ZIYARET']
 example_codes_str = ",".join(example_codes)
-
 # ----------------------------- S E R I E S ---------------------------------------------------
 items_from_user_series = [
         "Data folder",
@@ -18,7 +17,6 @@ items_from_user_series = [
         "Formulas",
         "AggregateType",
 ]
-
 default_prefix = "EVPY_"
 freq = f"""
 Daily: 1
@@ -98,24 +96,14 @@ explanations_series = [
         f"{formulas_}\n e.g. (Number between 0, 8  e.g.(Level) : 0) default: 0 ",
         f"{AggregateType_}\n e.g. ( avg / min / max / first / last / sum  ) default: avg",
 ]
-
-
 def check_valid_answer(items, answer: str):
     return answer in items
-
-
 def check_valid_answer_freq(answer: str):
     return check_valid_answer(tuple(map(str, range(1, 8))), answer) or answer.strip() == ""
-
-
 def check_valid_answer_formulas_(answer: str):
     return check_valid_answer(tuple(map(str, range(0, 9))), answer) or answer.strip() == ""
-
-
 def check_valid_answer_aggr(answer: str):
     return check_valid_answer(AggregateType__valid_answers, answer) or answer.strip() == ""
-
-
 default_answer_subject = 'SubjectNotGiven'
 default_answers_series = [f"{default_prefix}Data",
                           default_answer_subject,
@@ -139,13 +127,10 @@ check_funcs_series = [folder_format_check,
 same = lambda x: x
 trim_string = lambda x: x.strip()
 from typing import Tuple
-
 # import re
 # split_items = lambda x: re.split("[,-/\n;]+", x)
 split_items = lambda text: tuple(text.translate(text.maketrans({x: "-" for x in "[,-/\n;]~"})).split("-"))
 """ Default answers if the user goes with an Empty answer """
-
-
 def get_default_for_question(answer, question):
     obj = {
             "folder": f"{default_prefix}Data",
@@ -159,13 +144,10 @@ def get_default_for_question(answer, question):
     if not answer.strip():
         """ default returns here """
         return obj.get(question, answer)
-
     if question == "series":
         """item1,item2\nitem3"""
         return split_items(answer)
     return answer.strip()
-
-
 # instead of functools partial lambda this time
 bound_question = lambda question: lambda answer: get_default_for_question(answer, question)
 funcs_names = ("folder", "subject", "prefix", "series", "freq", "formulas", "aggr",)

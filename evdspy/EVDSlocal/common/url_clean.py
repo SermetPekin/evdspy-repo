@@ -1,3 +1,4 @@
+
 def remove_api_key(url):
     if "key=" not in url:
         return url

@@ -1,6 +1,6 @@
+
 # ------------------------------------------------------------------------------
 import requests as requests
-
 from evdspy.EVDSlocal.components.url_class import URLClass
 from evdspy.EVDSlocal.utils.utils_general import *
 from evdspy.EVDSlocal.requests_.my_cache import MyCache, save_pickle_for_test, lru_cache_patched, load_test_pickle
@@ -15,18 +15,11 @@ from evdspy.EVDSlocal.requests_.my_cache import load_pickle
 from evdspy.EVDSlocal.stats.save_stats_of_requests import *
 from evdspy.EVDSlocal.requests_.request_error_classes import REQUEST_ERROR_CODES
 from evdspy.EVDSlocal.common.url_clean import remove_api_key
-
 from dataclasses import dataclass
-
 # ------------------------------------------------------------------------------
-
 m_cache = MyCache()
-
 from evdspy.EVDSlocal.config.config import config
-
 CANCEL_REQUEST_TEMP = config.cancel_request_temp
-
-
 def mock_request(url, proxies=None) -> requests.models.Response:
     """ pytest will get this mock response object"""
     assert isinstance(url, str)
