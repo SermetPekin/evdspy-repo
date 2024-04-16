@@ -1,5 +1,4 @@
 from typing import Union, Any, Optional
-
 import pandas as pd
 
 from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
@@ -8,20 +7,11 @@ from evdspy.EVDSlocal.index_requests.user_requests import ProxyManager, UrlBuild
     DataProcessor, RequestConfig
 
 
-def initial_api_process_when_given(api_key: str = None):
+def initial_api_process_when_given(api_key: str = None) -> None:
     if api_key:
         if ApikeyClass().get_valid_api_key(check=False) is False:
             from evdspy.EVDSlocal.initial.load_commands_cmds_to_load import save_apikey
             save_apikey(api_key)
-
-
-"""
-        frequency: str = None,  # monthly | weekly | annually | semimonthly | semiannually | business 
-        formulas: str = None,
-        # level | percentage_change | difference | year_to_year_percent_change | year_to_year_differences |
-        aggregation: str = None,  # avg |min | max | first | last | sum 
-        
-"""
 
 
 def get_series(
@@ -84,16 +74,16 @@ def get_series(
     --------
     Basic usage:
     >>> template = "TP.ODEMGZS.BDTTOPLAM"
-    >>> df = get_series2(template, start_date="01-01-2020", end_date="01-01-2021", frequency="monthly")
+    >>> df = get_series(template, start_date="01-01-2020", end_date="01-01-2021", frequency="monthly")
     >>> print(df.head())
 
     Using multiple indexes and cache:
     >>> indexes = ("TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD")
-    >>> df = get_series2(indexes, start_date="01-01-2020", frequency="monthly", cache=True)
+    >>> df = get_series(indexes, start_date="01-01-2020", frequency="monthly", cache=True)
     >>> print(df.head())
 
     Applying formulas and aggregation:
-    >>> df = get_series2(template, start_date="01-01-2020", formulas="level", aggregation="sum")
+    >>> df = get_series(template, start_date="01-01-2020", formulas="level", aggregation="sum")
     >>> print(df.head())
     """
 
