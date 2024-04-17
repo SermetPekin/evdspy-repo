@@ -8,14 +8,15 @@ def get_api_key():
     return os.getenv("EVDS_API_KEY")
 
 
-if not get_api_key():
-    raise Exception("No API key provided from environment variables")
+assert isinstance(get_api_key(), str)
+
+# if not get_api_key():
+#     raise Exception("No API key provided from environment variables")
 
 
 def test1():
     setup()
     save(get_api_key())
-
 
 # def test2():
 #     df = get_series("TP.ODEMGZS.BDTTOPLAM",
