@@ -13,8 +13,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      EVDS_API_KEY : ${{ secrets.EVDS_API_KEY }}  
       
     strategy:
       fail-fast: false
@@ -22,7 +20,9 @@ jobs:
 
         python-version: [    "3.9", "3.10" , "3.11"  ]
 
-
+    env:
+      EVDS_API_KEY : ${{ secrets.EVDS_API_KEY }}  
+      
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
