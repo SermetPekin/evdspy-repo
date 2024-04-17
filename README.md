@@ -9,12 +9,15 @@
     
     * `get_series` function was added 
     
-    * [soon will be deprecated] `get_datagroup` function will be depreciated in the future versions. You may use get_series function for both series 
-    datagroups.
+    * [soon will be deprecated] **get_datagroup** function will be depreciated in the future versions. 
+    **get_series** function will be able to handle both series and datagroups.
 
-> get_series function for both datagroups and series
+> ! get_series function can be used for both datagroups and series
 
-### datagroup example and series example
+### api_key
+api_key will be saved to a file if it was given to get_series function. It will ignore 
+later calls if it was saved before. 
+Alternatively save function can be used.  
 
 ```python
 from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
@@ -71,7 +74,7 @@ print(df)
 
 ```
 
-## example usages
+### Some more examples
 
 ```python 
 
