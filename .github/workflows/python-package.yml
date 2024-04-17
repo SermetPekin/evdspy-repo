@@ -13,6 +13,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      EVDS_API_KEY : ${{ secrets.EVDS_API_KEY }}  
+      
     strategy:
       fail-fast: false
       matrix:
@@ -45,3 +48,8 @@ jobs:
         run: |
           pytest -v -s -cov
           python -c "import sys; print(sys.executable)"
+      - name: test dt 
+        run: |
+          python ./evdspy_test.py 
+
+          
