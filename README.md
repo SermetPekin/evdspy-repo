@@ -6,11 +6,15 @@
 
     * The API key parameter has been moved to the HTTP header as required by recent updates from EDDS data provider. 
     This change enhances security by ensuring that sensitive information is not exposed in URLs.
-    * get_series function was added 
-    * get_datagroup function will be depreciated in the future versions. You may use get_series function for both series 
+    
+    * `get_series` function was added 
+    
+    * [soon will be deprecated] `get_datagroup` function will be depreciated in the future versions. You may use get_series function for both series 
     datagroups.
 
 > get_series function for both datagroups and series
+
+### datagroup example and series example
 
 ```python
 from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
@@ -100,7 +104,9 @@ df6 = get_series(template, proxies={
 
 ```
 
-## get_series all params
+## get_series
+
+all parameters of get_series function
 
 ```python 
 from typing import Union
@@ -109,12 +115,17 @@ import pandas as pd
 
 def get_series(
         index: Union[str, tuple[str]],
+
         start_date: str = '01-01-2000',
+
         end_date: str = '01-01-2100',
-        frequency: str = None,  # monthly | weekly | annually | semimonthly | semiannually | business 
-        formulas: str = None,
-        # level | percentage_change | difference | year_to_year_percent_change | year_to_year_differences |
-        aggregation: str = None,  # avg |min | max | first | last | sum 
+
+        frequency: str = None,  # | monthly | weekly | annually | semimonthly | semiannually | business 
+
+        formulas: str = None,  # | level | percentage_change | difference |
+        #   | year_to_year_percent_change | year_to_year_differences |
+
+        aggregation: str = None,  # | avg      |min    | max    | first    | last    |    sum 
         cache: bool = False,
         proxy: str = None,
         proxies: dict = None,
@@ -124,40 +135,6 @@ def get_series(
     ...
 
 
-""" Formulas 
-
-    percentage_change = 1
-    difference = 2
-    year_to_year_percent_change = 3
-    year_to_year_differences = 4
-    percentage_change_compared = 5
-    difference_compared = 6
-    moving_average = 7
-    moving_sum = 8
-    
-"""
-"""Frequency
-    daily = 1
-    business = 2
-    weekly = 3  # Friday
-    semimonthly = 4
-    monthly = 5
-    quarterly = 6
-    semiannually = 7
-    annual = 8
-    annually = 8
-    
-
-"""
-
-""" Aggregation
-    avg : "avg"
-    min : "min"
-    max : "max"
-    first : "first"
-    last : "last"
-    sum : "sum"
-"""
 """proxy 
 proxy = "http://proxy.example.com:80"
 """
@@ -170,29 +147,6 @@ proxies = {
 """
 
 ```
-
-### Updated on 1.1.16
-
-    * get_df_datagroup function was added
-
-```python
-from evdspy.main import *
-
-# will be deprecated in future versions. 
-df = get_df_datagroup(
-    datagroup="bie_gsyhgycf",
-    start_date="01-01-1998",
-    end_date="01-01-2030",
-
-)
-
-print(df)
-```
-
-### Updated on 1.1.1
-
-    * The categories menu now goes only one step back as it should instead of returning.
-    * Fixed some verbose debug results.
 
 ### Menu
 
