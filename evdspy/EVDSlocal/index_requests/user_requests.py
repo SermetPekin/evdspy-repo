@@ -354,13 +354,22 @@ class ApiRequester:
         return ok
 
 
+import traceback
+
+
 class DataProcessor:
     def __init__(self, data: Any):
         self.data = data
 
-    def process_to_dataframe(self) -> pd.DataFrame:
-        df = json_to_df(self.data)
-        df = make_df_float(df)
+    def process_to_dataframe(self) -> Optional[pd.DataFrame]:
+        try:
+            df = json_to_df(self.data)
+        except Exception as e:
+            print(e)
+            traceback.print_exc()
+            return None
+        if isinstance(df, pd.DataFrame):
+            df = make_df_float(df)
         return df
 
     def __call__(self, *args, **kwargs) -> pd.DataFrame:
