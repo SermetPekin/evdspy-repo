@@ -31,5 +31,7 @@ def test2():
 
 
 if __name__ == "__main__":
+    if not get_api_key():
+        raise Exception("No API key provided from environment variables")
     test1()
     test2()
