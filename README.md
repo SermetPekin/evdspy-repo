@@ -459,34 +459,10 @@ or modify this file or delete and create a new on from menu or console using com
 
     create_options()
 
-### THESE functions will return a Pandas Dataframe
-
-### get_df_datagroup
-
-#### params
-
-        returns all series as df to extend
-        params:
-        -----------------------
-        datagroup : str
-            e.g. `bie_dkdovytl`
-        start_date : str
-            e.g. `31-01-2010`
-        end_date : str
-            e.g. `31-01-2030`
-
-#### example usage :
-
-    df_exchange_rate = get_df_datagroup(
-        datagroup="bie_dkdovytl",
-        start_date = '01-01-2010',
-        end_date: str ='01-01-2030',
-    )
 
 ![image](https://user-images.githubusercontent.com/96650846/201921534-22ef45f0-85cf-4982-b160-2fe37a21d491.png)
 
 ## OPTION 2
-
 _________________________________    
 
 #### FROM THE MENU
