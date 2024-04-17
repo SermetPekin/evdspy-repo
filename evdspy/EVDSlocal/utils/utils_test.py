@@ -1,4 +1,4 @@
-
+import os
 from pathlib import Path
 import pandas as pd
 from evdspy.EVDSlocal.index_requests.datagroups_initial import data_models_dict, data_strategy
@@ -7,6 +7,7 @@ from evdspy.EVDSlocal.index_requests.index_classes import GeneralIndexesDatagrou
 from evdspy.EVDSlocal.index_requests.error_classes_index import ContentFunctionError
 from evdspy.EVDSlocal.index_requests.df_operations import DFOperations
 from evdspy.EVDSlocal.index_requests.index_util_funcs import json_to_excel, json_to_df, make_df_float
+from .github_actions import GithubActions
 from ..common.files import Read
 from ..common.table import Table2_
 from ..components.api_params import DateStart, DateEnd
@@ -30,3 +31,21 @@ def get_api_key_while_testing():
     line = tuple(line for line in lines if "evds" in line)
     api_key = line[0].split("=")[1]
     return str(api_key).strip()
+
+class ApiClassWhileTesting():
+    """ApiClassWhileTesting"""
+
+    def __init__(self):
+        self.api_key = self.get_api_key()
+
+    def get_api_key(self):
+        if GithubActions().is_testing():
+            return os.getenv("EVDS_API_KEY")
+        return get_api_key_while_testing()
+
+    @property
+    def key(self):
+        return self.api_key
+
+    def __call__(self, *args, **kwargs):
+        return self.key

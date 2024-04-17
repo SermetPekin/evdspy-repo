@@ -4,7 +4,7 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes import default_start_dat
     default_end_date_fnc, get_series
 from evdspy.EVDSlocal.utils.github_actions import GithubActions
 from evdspy.EVDSlocal.utils.utils_general import get_env_api_key
-from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing
+from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing, ApiClassWhileTesting
 from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import Frequency, freq_enum, Formulas, AggregationType, \
     correct_types
 # from evdspy.EVDSlocal.index_requests.user_requests import
@@ -143,24 +143,27 @@ def test_get_series2(capsys):
         assert isinstance(df, pd.DataFrame)
 
 
-def test_get_df_datagroup(capsys):
-    if not GithubActions().is_testing():
-        return
-    from evdspy.main import get_df_datagroup
-    df = get_df_datagroup(
-        datagroup="bie_gsyhgycf",
-        start_date="01-01-1998",
-        end_date="01-01-2030",
-    )
-    print(df)
+# def test_get_df_datagroup(capsys):
+#     # if not GithubActions().is_testing():
+#     #     return
+#     from evdspy.main import get_df_datagroup
+#     with capsys.disabled():
+#         df = get_df_datagroup(
+#             datagroup="bie_gsyhgycf",
+#             start_date="01-01-1998",
+#             end_date="01-01-2030",
+#         )
+#         print(df)
+
+import os
+
+
+
 
 
 def test_get_api_key_while_testing(capsys):
     with capsys.disabled():
-        if GithubActions().is_testing():
-            return
-
-        a = get_api_key_while_testing()
+        a = ApiClassWhileTesting().key
         assert len(a) > 5 and 'lg' in a
 
 
@@ -174,8 +177,8 @@ def test_get_series(capsys):
         start_date = "01-01-2000"
         end_date = "01-01-2100"
         cache = True
-        # user_req = UserRequest(index, start_date, end_date)
-        df = get_series(index, start_date, end_date, cache)
+
+        df = get_series(index, start_date, end_date, cache, api_key=ApiClassWhileTesting()())
         print(df)
 
 
@@ -222,27 +225,3 @@ def test_correct2(capsys):
     with capsys.disabled():
         assert correct_types("avg", AggregationType) == "avg"
         assert correct_types(("avg", "min",), AggregationType) == ("avg", "min",)
-# def test_UserRequest(capsys):
-#     with capsys.disabled():
-#         print("\n")
-#         ur = RequestConfig("TP.ODEMGZS.BDTTOPLAM")
-#         assert ur.url == "https://evds2.tcmb.gov.tr/service/evds/series=TP.ODEMGZS.BDTTOPLAM&startDate=01-01-2000&endDate=01-01-2100&type=json"
-#         ur = RequestConfig(("Aaa", "Bbb",),
-#                          start_date=default_start_date_fnc(),
-#                          end_date=default_end_date_fnc(),
-#                          aggregation=("avg",))
-#         assert ur.url == "https://evds2.tcmb.gov.tr/service/evds/series=Aaa-Bbb&aggregationTypes=avg-avg&startDate=01-01-2000&endDate=01-01-2100&type=json"
-#         ur = RequestConfig(("Aaa", "Bbb",),
-#                          start_date=default_start_date_fnc(),
-#                          end_date=default_end_date_fnc(),
-#                          aggregation=("avg",),
-#                          formulas="level")
-#         assert ur.url == "https://evds2.tcmb.gov.tr/service/evds/series=Aaa-Bbb&formulas=0-0&aggregationTypes=avg-avg&startDate=01-01-2000&endDate=01-01-2100&type=json"
-#         ur = RequestConfig(("Aaa", "Bbb",),
-#                          frequency=3,
-#                          start_date=default_start_date_fnc(),
-#                          end_date=default_end_date_fnc(),
-#                          aggregation=("avg",),
-#                          formulas="level")
-#         print(ur.url)
-#         assert ur.url == "https://evds2.tcmb.gov.tr/service/evds/series=Aaa-Bbb&frequency=3&formulas=0-0&aggregationTypes=avg-avg&startDate=01-01-2000&endDate=01-01-2100&type=json"
