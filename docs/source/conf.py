@@ -16,14 +16,15 @@ release = 'v1.1.19'
 
 
 extensions = [
-        'sphinx.ext.autodoc',
-        'sphinx.ext.doctest',
-        'sphinx.ext.intersphinx',
-        'sphinx.ext.todo',
-        'sphinx.ext.ifconfig',
-        'sphinx.ext.viewcode',
-        'sphinx.ext.inheritance_diagram',
-        'sphinx.ext.autosummary'
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.ifconfig',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.autosummary',
+    # 'myst_parser'
 ]
 
 templates_path = ['_templates']
@@ -34,11 +35,11 @@ exclude_patterns = []
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-extensions = ['myst_parser']
+# extensions = ['myst_parser']
 source_suffix = {
-        '.rst': 'restructuredtext',
-        '.txt': 'markdown',
-        '.md': 'markdown',
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown',
 }
 
 import os
