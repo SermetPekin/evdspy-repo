@@ -1,0 +1,3 @@
+
+""" Test Options """
+verbose = False

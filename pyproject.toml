@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "evdspy"
+version = "1.1.20"
+description = "A versatile interface for the 'EDDS' (EVDS) API of the Central Bank of the Republic of Türkiye (https://evds2.tcmb.gov.tr/index.php?/evds/userDocs). This package allows users to easily access and manage economic data through a user-friendly menu function. It features a robust caching mechanism to enhance the efficiency of data requests by storing frequently accessed data for selected periods. Required API keys can be obtained by registering on the EVDS website."
+authors = ["Sermet Pekin <sermet.pekin@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/SermetPekin/evdspy-repo"
+documentation = "https://github.com/SermetPekin/evdspy-repo"
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Framework :: IPython",
+    "Intended Audience :: Developers",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.5.0"
+openpyxl = "^3.0.10"
+rich = "^12.5.1"
+requests = "^2.28.1"
+
+[tool.poetry.dev-dependencies]
+pygments = "^2.6.0"
+commonmark = "^0.9.0"
+typing-extensions = { version = ">=4.0.0, <5.0", python = "<3.9" }
+pytest = "^7.0.0"
+black = "^22.6"
+mypy = "^0.971"
+pytest-cov = "^3.0.0"
+attrs = "^21.4.0"
+types-dataclasses = "^0.6.4"
+pre-commit = "^2.17.0"
+asv = "^0.5.1"
+
+[tool.poetry.extras]
+jupyter = ["ipywidgets"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+evdspy = 'evdspy:console_main'
+
