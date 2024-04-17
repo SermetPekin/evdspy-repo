@@ -50,6 +50,7 @@ class EVRequest:
     args: Args = field(default_factory=Args)  # None  # Args(tuple(sys.argv))
     last_url_checked: str = "NoneURL"
     URL_Instance: field(default_factory=URLClass) = field(default_factory=URLClass)
+    force_no_cache = False
     # report : post init
     def __post_init__(self):
         # self.URL_Instance = field(default_factory=URLClass) # None
@@ -62,8 +63,8 @@ class EVRequest:
         self.report = Report("stats_requests.txt")
     def get_request_with_proxy(self, url: str, proxy: str):
         proxies = {
-            'http': proxy,
-            'https': proxy,
+                'http': proxy,
+                'https': proxy,
         }
         return decide_request_for_test_real(url, proxies=proxies)
     def get_proxies(self):
@@ -71,8 +72,8 @@ class EVRequest:
             return None
         proxy = self.args.proxy
         proxies = {
-            'http': proxy,
-            'https': proxy,
+                'http': proxy,
+                'https': proxy,
         }
         return proxies
     def proxy_from_file(self, url: str):
@@ -101,8 +102,8 @@ class EVRequest:
             # raise ExceptionClass(self.__doc__)
         else:
             print(
-                f"Program was checking request status code and noticed "
-                f"{status_code} not included in  `REQUEST_ERROR_CODES`"
+                    f"Program was checking request status code and noticed "
+                    f"{status_code} not included in  `REQUEST_ERROR_CODES`"
             )
         self.report.add(f"{status_code} returned. ")
         return False
@@ -115,16 +116,16 @@ class EVRequest:
         return (url, no_apikey_url)
     def get_request_alternatives(self, url):
         result = do_first_true_order(
-            funcs=[
-                self.proxy_from_cmd_line,
-                self.proxy_from_file,
-                decide_request_for_test_real
-            ],
-            preds=[
-                self.args.proxy,
-                self.credentials.proxy,
-                True],
-            url=url
+                funcs=[
+                        self.proxy_from_cmd_line,
+                        self.proxy_from_file,
+                        decide_request_for_test_real
+                ],
+                preds=[
+                        self.args.proxy,
+                        self.credentials.proxy,
+                        True],
+                url=url
         )
         return result
     def check_result(self, result):
@@ -178,7 +179,7 @@ class EVRequest:
         below will not run at all
         """
         self.url, self.no_apikey_url = self.post_urls(url)
-        if current_mode_is_test:
+        if current_mode_is_test and ApikeyClass().key is False:
             print("Current Mode is test not requesting new data see initial.start_options")
             return load_test_pickle()
         """ if it is running we are definitely requesting """

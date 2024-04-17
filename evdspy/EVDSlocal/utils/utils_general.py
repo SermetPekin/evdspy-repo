@@ -21,6 +21,22 @@ from datetime import date
 today = date.today()
 stoday = str(today)
 import time
+import os
+def ls():
+    print(os.popen("ls -l").read())
+def api_key_looks_valid(key: str):
+    return isinstance(key, str) and len(key) == 10
+class ApiKeyErrorEnvir(BaseException):
+    """ApiKeyErrorEnvir"""
+def get_env_api_key(check=False):
+    key = os.getenv("EVDS_API_KEY")
+    if check and not api_key_looks_valid(key):
+        from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing
+        api_key = get_api_key_while_testing()
+        if api_key_looks_valid(api_key):
+            return api_key
+        raise ApiKeyErrorEnvir("ApiKeyErrorEnvir")
+    return key
 def do_if_callable(f):
     if callable(f):
         f()

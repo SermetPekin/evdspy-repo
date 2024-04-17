@@ -7,6 +7,39 @@
     * The API key parameter has been moved to the HTTP header as required by recent updates from EDDS data provider. 
     This change enhances security by ensuring that sensitive information is not exposed in URLs.
     * get_series function was added 
+    * get_datagroup function will be depreciated in the future versions. You may use get_series function for both series 
+    datagroups.
+
+> get_series function for both datagroups and series
+
+```python
+from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
+
+# datagroup `bie_gsyhgycf`
+df1 = get_series("bie_gsyhgycf", cache=False, api_key="YOUR_API_KEY_HERE")
+
+# series    `TP_GSYIH01_GY_CF ...`
+
+template = """TP_GSYIH01_GY_CF
+        TP_GSYIH02_GY_CF
+        TP_GSYIH03_GY_CF
+        TP_GSYIH04_GY_CF
+        TP_GSYIH05_GY_CF
+        TP_GSYIH06_GY_CF
+        TP_GSYIH07_GY_CF
+        TP_GSYIH08_GY_CF
+        TP_GSYIH09_GY_CF
+        TP_GSYIH10_GY_CF
+        TP_GSYIH11_GY_CF
+        TP_GSYIH14_GY_CF
+        TP_GSYIH15_GY_CF
+        TP_GSYIH16_GY_CF
+"""
+df2 = get_series(template, debug=False, cache=False)
+
+
+
+```
 
 ```python
 
@@ -145,6 +178,7 @@ proxies = {
 ```python
 from evdspy.main import *
 
+# will be deprecated in future versions. 
 df = get_df_datagroup(
     datagroup="bie_gsyhgycf",
     start_date="01-01-1998",
@@ -159,6 +193,14 @@ print(df)
 
     * The categories menu now goes only one step back as it should instead of returning.
     * Fixed some verbose debug results.
+
+### Menu
+
+```python
+from evdspy.main import menu
+
+menu()
+```
 
 ![image](https://user-images.githubusercontent.com/96650846/198966008-77302f42-f8f5-430c-962d-a988abe57bb7.png)
 
