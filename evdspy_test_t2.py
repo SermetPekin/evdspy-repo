@@ -9,14 +9,12 @@ def t1():
     setup()
     save(get_api_key())
 def t2():
-    df = get_series("TP.ODEMGZS.BDTTOPLAM",
-                    frequency="monthly",
-                    start_date=default_start_date_fnc(),
-                    end_date=default_end_date_fnc(),
-                    aggregation=("avg",),
-                    cache=False,
-                    debug=False,
-                    api_key=get_api_key())
+    from evdspy.main import get_df_datagroup
+    df = get_df_datagroup(
+        datagroup="bie_gsyhgycf",
+        start_date="01-01-1998",
+        end_date="01-01-2030",
+    )
     print(df)
     assert isinstance(df, pd.DataFrame)
 if __name__ == "__main__":

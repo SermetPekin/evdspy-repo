@@ -16,9 +16,9 @@ def get_categories_data() -> str:
 def get_table_header():
     from rich.table import Table
     table = Table(title="Categories / Kategoriler")
-    table.add_column("ID/SayÄ±", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Title/BaÅŸlÄ±k (ENG)", style="magenta")
-    table.add_column("Title/BaÅŸlÄ±k (TR)", justify="right", style="green")
+    table.add_column("ID/SayÃ„Â±", justify="right", style="cyan", no_wrap=True)
+    table.add_column("Title/BaÃ…Å¸lÃ„Â±k (ENG)", style="magenta")
+    table.add_column("Title/BaÃ…Å¸lÃ„Â±k (TR)", justify="right", style="green")
     return table
 from typing import List
 import typing as t

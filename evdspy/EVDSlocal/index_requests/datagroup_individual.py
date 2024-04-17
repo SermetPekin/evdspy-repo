@@ -44,8 +44,6 @@ def get_datagroup_individual_with_code_helper(
         options_=SingletonOptions()))  # this number will be overwritten . does not matter what number
     gid.create_url_first_part()
     gid.add_extra_params(code=code_str)
-    # start_date = SingletonOptions().get_valid_value("default_start_date")
-    # end_date = SingletonOptions().get_valid_value("default_end_date")
     if not start_date:
         start_date = SingletonOptions().get_valid_value("default_start_date")
     if not end_date:

@@ -1,24 +1,43 @@
 
 from pathlib import Path
 import pandas as pd
-from evdspy.EVDSlocal.index_requests.get_series_indexes import  default_start_date_fnc, \
+from evdspy.EVDSlocal.index_requests.get_series_indexes import default_start_date_fnc, \
     default_end_date_fnc, get_series
-
 from evdspy.EVDSlocal.utils.github_actions import GithubActions
+from evdspy.EVDSlocal.utils.utils_general import get_env_api_key
 from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing
-from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import Frequency, freq_enum, Formulas, AggregationType, correct_types
+from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import Frequency, freq_enum, Formulas, AggregationType, \
+    correct_types
 # from evdspy.EVDSlocal.index_requests.user_requests import
 from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
 from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
 from evdspy.EVDSlocal.index_requests.user_requests import ProxyManager, UrlBuilder, UrlSeries, ApiRequester, \
     DataProcessor, RequestConfig
-
-
-
-
+def test_get_series_bridge(capsys):
+    with capsys.disabled():
+        df = get_series("bie_gsyhgycf", cache=False, api_key=get_env_api_key(check=True))
+        assert isinstance(df, pd.DataFrame)
+def test_get_diff_series(capsys):
+    with capsys.disabled():
+        template = """TP_GSYIH01_GY_CF
+        TP_GSYIH02_GY_CF
+        TP_GSYIH03_GY_CF
+        TP_GSYIH04_GY_CF
+        TP_GSYIH05_GY_CF
+        TP_GSYIH06_GY_CF
+        TP_GSYIH07_GY_CF
+        TP_GSYIH08_GY_CF
+        TP_GSYIH09_GY_CF
+        TP_GSYIH10_GY_CF
+        TP_GSYIH11_GY_CF
+        TP_GSYIH14_GY_CF
+        TP_GSYIH15_GY_CF
+        TP_GSYIH16_GY_CF
+        """
+        df = get_series(template, debug=False, cache=False, api_key=get_env_api_key(check=True))
+        assert isinstance(df, pd.DataFrame)
 def test_template_series(capsys):
     with capsys.disabled():
-
         balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
         balance_of_pay2 = """
         TP.ODEMGZS.BDTTOPLAM #
@@ -38,14 +57,12 @@ def test_a(capsys):
         a1 = get_series(balance_of_pay1, debug=True)
         a2 = get_series(balance_of_pay2, debug=True)
         assert a1 == a2
-        print(a1 )
-
+        print(a1)
         if is_testing():
             return
-
-        a1 = get_series(balance_of_pay1, debug=False )
-        print(a1 )
-        assert isinstance(a1 , pd.DataFrame)
+        a1 = get_series(balance_of_pay1, debug=False)
+        print(a1)
+        assert isinstance(a1, pd.DataFrame)
 def test_template_series2(capsys):
     with capsys.disabled():
         balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
@@ -84,18 +101,33 @@ def test_freq(capsys):
 def test_pickles():
     import os
     os.makedirs("pickles", exist_ok=True)
+def get_api_key():
+    import os
+    return os.getenv("EVDS_API_KEY")
+# assert isinstance(get_api_key(), str) and len(get_api_key()) == 10
+def key_valid():
+    return isinstance(get_api_key(), str) and len(get_api_key()) == 10
 def is_testing():
-    return GithubActions().is_testing()
+    return GithubActions().is_testing() and not key_valid()
 def test_get_series2(capsys):
     with capsys.disabled():
-
         if is_testing():
             return
         # setup()
         # print(Path().absolute())
         df = get_series("TP.ODEMGZS.BDTTOPLAM",
-                         cache=False)
+                        cache=False)
         assert isinstance(df, pd.DataFrame)
+def test_get_df_datagroup(capsys):
+    if is_testing():
+        return
+    from evdspy.main import get_df_datagroup
+    df = get_df_datagroup(
+            datagroup="bie_gsyhgycf",
+            start_date="01-01-1998",
+            end_date="01-01-2030",
+    )
+    print(df)
 def test_get_api_key_while_testing(capsys):
     with capsys.disabled():
         if is_testing():
@@ -125,23 +157,23 @@ def test_aggr_types(capsys):
     cache = True
     with capsys.disabled():
         u1 = RequestConfig(balance_of_pay1,
-                         frequency="weekly",
-                         start_date=default_start_date_fnc(),
-                         end_date=default_end_date_fnc(),
-                         aggregation=("avg",),
-                         # proxy="http://127.0.0.1:8000",
-                         # proxies={"http": "http://127.0.0.1:8000"},
-                         cache=cache,
-                         )
+                           frequency="weekly",
+                           start_date=default_start_date_fnc(),
+                           end_date=default_end_date_fnc(),
+                           aggregation=("avg",),
+                           # proxy="http://127.0.0.1:8000",
+                           # proxies={"http": "http://127.0.0.1:8000"},
+                           cache=cache,
+                           )
         u2 = RequestConfig(balance_of_pay2,
-                         frequency="weekly",
-                         start_date=default_start_date_fnc(),
-                         end_date=default_end_date_fnc(),
-                         aggregation=("avg",),
-                         # proxy="http://127.0.0.1:8000",
-                         # proxies={"http": "http://127.0.0.1:8000"},
-                         cache=cache,
-                         )
+                           frequency="weekly",
+                           start_date=default_start_date_fnc(),
+                           end_date=default_end_date_fnc(),
+                           aggregation=("avg",),
+                           # proxy="http://127.0.0.1:8000",
+                           # proxies={"http": "http://127.0.0.1:8000"},
+                           cache=cache,
+                           )
         assert u1 == u2
 def test_correct(capsys):
     with capsys.disabled():

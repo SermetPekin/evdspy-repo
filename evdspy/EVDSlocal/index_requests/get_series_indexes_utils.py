@@ -95,8 +95,6 @@ def freq_enum(frequency: Union[str, int]) -> str:
     if isinstance(frequency, int):
         return f"&frequency={frequency}"
     return get_enum(frequency)()
-
-
 def correct_types(value: Optional[tuple], enum_class) -> Union[str, int, tuple ]:
     if value is None: return value
     # first_type = type(next(iter(enum_class)).value)

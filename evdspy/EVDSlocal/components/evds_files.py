@@ -38,7 +38,7 @@ from evdspy.EVDSlocal.messages.error_classes import ApiKeyNotSetError
 # field(default_factory=URLClass)
 @dataclass
 class EvdsSorgu(ABC):
-    """ EVDS Genel SÄ±nÄ±f"""
+    """ EVDS Genel SÃ„Â±nÃ„Â±f"""
     options_: Options
     session: any
     series_: EvdsSeriesRequest = field(
@@ -243,7 +243,7 @@ ___________________
 # */
 @dataclass
 class EvdsSorguSeries(EvdsSorgu):
-    """ Seriler iÃ§in """
+    """ Seriler iÃƒÂ§in """
     def summary(self):
         if not self.check_api_key_first():
             return False
