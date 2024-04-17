@@ -4,7 +4,7 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes import default_start_dat
     default_end_date_fnc, get_series
 from evdspy.EVDSlocal.utils.github_actions import GithubActions
 from evdspy.EVDSlocal.utils.utils_general import get_env_api_key
-from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing
+from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing, ApiClassWhileTesting
 from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import Frequency, freq_enum, Formulas, AggregationType, \
     correct_types
 # from evdspy.EVDSlocal.index_requests.user_requests import
