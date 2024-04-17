@@ -132,6 +132,9 @@ def test_get_api_key_while_testing(capsys):
     with capsys.disabled():
         if is_testing():
             return
+        if GithubActions().is_testing() :
+            return
+
         a = get_api_key_while_testing()
         assert len(a) > 5 and 'lg' in a
 def test_get_series(capsys):
