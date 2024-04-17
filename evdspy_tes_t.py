@@ -11,12 +11,12 @@ def get_api_key():
 assert isinstance(get_api_key(), str) and len(get_api_key()) == 10
 
 
-def test1():
+def t1():
     setup()
     save(get_api_key())
 
 
-def test2():
+def t2():
     df = get_series("TP.ODEMGZS.BDTTOPLAM",
                     frequency="monthly",
                     start_date=default_start_date_fnc(),
@@ -30,5 +30,5 @@ def test2():
 
 
 if __name__ == "__main__":
-    test1()
-    test2()
+    t1()
+    t2()
