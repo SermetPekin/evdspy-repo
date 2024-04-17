@@ -313,7 +313,7 @@ class ApiRequester:
         api_key = self.get_api_key()
 
         if api_key is False:
-            if GithubActions().is_testing():
+            if GithubActions().is_testing() :
                 return self.dry_request()
             if PytestTesting().is_testing():
                 raise NotImplementedError
