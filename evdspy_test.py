@@ -8,12 +8,13 @@ def get_api_key():
     return os.getenv("EVDS_API_KEY")
 
 
-assert isinstance(get_api_key(), str)
+assert isinstance(get_api_key(), str) and len(get_api_key()) == 10
 
 
 def test1():
     setup()
     save(get_api_key())
+
 
 def test2():
     df = get_series("TP.ODEMGZS.BDTTOPLAM",
@@ -29,6 +30,5 @@ def test2():
 
 
 if __name__ == "__main__":
-
     test1()
     test2()
