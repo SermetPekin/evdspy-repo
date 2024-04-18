@@ -1,5 +1,9 @@
 [![Python package](https://github.com/SermetPekin/evdspy-repo/actions/workflows/python-package.yml/badge.svg)](https://github.com/SermetPekin/evdspy-repo/actions/workflows/python-package.yml) [![PyPI](https://img.shields.io/pypi/v/evdspy)](https://img.shields.io/pypi/v/evdspy) [![Supported Python Versions](https://img.shields.io/pypi/pyversions/evdspy)](https://pypi.org/project/evdspy/) [![Downloads](https://pepy.tech/badge/evdspy/week)](https://pepy.tech/project/evdspy)
 
+
+## Documentation
+[Documentation](https://sermetpekin.github.io/evdspy-repo/)
+
 ## evdspy
 
 ### Updated on this version
