@@ -4,7 +4,9 @@
 
 ## Documentation
 
-[Documentation](https://sermetpekin.github.io/evdspy-repo/)
+
+[Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
+
 
 ## evdspy
 
