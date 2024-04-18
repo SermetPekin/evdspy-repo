@@ -1,3 +1,4 @@
+
 import os
 from pathlib import Path
 import pandas as pd
@@ -31,21 +32,16 @@ def get_api_key_while_testing():
     line = tuple(line for line in lines if "evds" in line)
     api_key = line[0].split("=")[1]
     return str(api_key).strip()
-
 class ApiClassWhileTesting():
     """ApiClassWhileTesting"""
-
     def __init__(self):
         self.api_key = self.get_api_key()
-
     def get_api_key(self):
         if GithubActions().is_testing():
             return os.getenv("EVDS_API_KEY")
         return get_api_key_while_testing()
-
     @property
     def key(self):
         return self.api_key
-
     def __call__(self, *args, **kwargs):
         return self.key
