@@ -25,6 +25,21 @@ api_key will be saved to a file if it was given to get_series function. It will 
 later calls if it was saved before. 
 Alternatively save function can be used.  
 
+#### save("MyApiKey"):
+
+    Program will store your api key in your environment in a safe folder
+    called APIKEY_FOLDER
+    and only use it when you run a new request which was not requested 
+    recently depending on your cache preference.
+
+.
+```python
+from evdspy import save
+save("MyApiKey")
+
+```
+
+      
 ```python
 from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
 
