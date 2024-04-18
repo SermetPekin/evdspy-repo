@@ -6,6 +6,8 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+html_build_dir = '../docs'
+
 project = 'evdspy'
 copyright = '2024, Sermet Pekin'
 author = 'Sermet Pekin'
