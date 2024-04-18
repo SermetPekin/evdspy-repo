@@ -49,23 +49,4 @@ def linkcode_resolve(domain, info):
         return None
     filename = info['module'].replace('.', '/')
     return "https://github.com/SermetPekin/evdspy-repo/%s.py" % filename
-def linkcode_resolveOLD(domain, info):
-    if domain != 'py' or not info['module']:
-        return None
-    try:
-        mod = __import__(info['module'])
-        for part in info['module'].split('.')[1:]:
-            mod = getattr(mod, part)
-        obj = mod
-        if 'fullname' in info:
-            obj = getattr(obj, info['fullname'])
-        filename = inspect.getsourcefile(obj)
-        filename = os.path.relpath(filename, start=os.path.dirname(mod.__file__))
-        lines, _ = inspect.getsourcelines(obj)
-    except Exception as e:
-        logger.warning(f"Could not get source link for module {info['module']} due to {e}")
-        return None
-    tag_or_branch = 'main'  # or 'master' or the specific tag if versioned
-    path_to_file = os.path.join('path_to_repository', filename)
-    return f"https://github.com/SermetPekin/evdspy-repo/blob/{tag_or_branch}/{path_to_file}#L{lines[0]}"
 
