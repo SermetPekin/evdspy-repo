@@ -68,3 +68,4 @@ def linkcode_resolveOLD(domain, info):
     tag_or_branch = 'main'  # or 'master' or the specific tag if versioned
     path_to_file = os.path.join('path_to_repository', filename)
     return f"https://github.com/SermetPekin/evdspy-repo/blob/{tag_or_branch}/{path_to_file}#L{lines[0]}"
+
