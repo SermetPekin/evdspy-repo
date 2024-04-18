@@ -39,6 +39,7 @@ To install evdspy, simply run the following command:
 Quick Start
 -----------
 Here's a quick example to get you started with using evdspy:
+
 .. code-block:: python
 
     from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
@@ -48,6 +49,7 @@ Here's a quick example to get you started with using evdspy:
 
 API Usage Examples
 ------------------
+
 .. literalinclude:: ../../evdspy_example.py
    :language: python
    :linenos:
@@ -57,6 +59,7 @@ Menus and Commands
 ------------------
 - **Main Menu**: Access a user-friendly menu to manage data requests and settings.
 - **Console Commands**: Use terminal commands to manage settings and request data:
+
   .. code-block:: bash
 
       evdspy setup
