@@ -4,7 +4,9 @@
 
 ## Documentation
 
-[Documentation](https://sermetpekin.github.io/evdspy-repo/)
+
+[Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
+
 
 ## evdspy
 
@@ -25,6 +27,21 @@ api_key will be saved to a file if it was given to get_series function. It will 
 later calls if it was saved before. 
 Alternatively save function can be used.  
 
+#### save("MyApiKey"):
+
+    Program will store your api key in your environment in a safe folder
+    called APIKEY_FOLDER
+    and only use it when you run a new request which was not requested 
+    recently depending on your cache preference.
+
+.
+```python
+from evdspy import save
+save("MyApiKey")
+
+```
+
+      
 ```python
 from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
 
@@ -466,7 +483,7 @@ or modify this file or delete and create a new on from menu or console using com
     create_options()
 
 
-![image](https://user-images.githubusercontent.com/96650846/201921534-22ef45f0-85cf-4982-b160-2fe37a21d491.png)
+
 
 ## OPTION 2
 _________________________________    
