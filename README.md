@@ -481,7 +481,7 @@ or modify this file or delete and create a new on from menu or console using com
     create_options()
 
 
-![image](https://user-images.githubusercontent.com/96650846/201921534-22ef45f0-85cf-4982-b160-2fe37a21d491.png)
+
 
 ## OPTION 2
 _________________________________    
