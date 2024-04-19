@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-# html_build_dir = '../docs'
+html_build_dir = '../docs'
 # html_build_dir = 'docs'
 
 project = 'evdspy'
