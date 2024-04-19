@@ -63,21 +63,7 @@ def get_series(
     ------
     ValueError
         If an invalid API key is provided or required parameters are missing.
-    Examples
-    --------
-    Basic usage:
-    # >>> template = "TP.ODEMGZS.BDTTOPLAM"
-    # >>> df = get_series(template, start_date="01-01-2020", end_date="01-01-2021", frequency="monthly")
-    # >>> print(df.head())
-    #
-    # Using multiple indexes and cache:
-    # >>> indexes = ("TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD")
-    # >>> df = get_series(indexes, start_date="01-01-2020", frequency="monthly", cache=True)
-    # >>> print(df.head())
-    #
-    # Applying formulas and aggregation:
-    # >>> df = get_series(template, start_date="01-01-2020", formulas="level", aggregation="sum")
-    # >>> print(df.head())
+
     """
     # ............initial_api_process_when_given...............
     initial_api_process_when_given(api_key)
