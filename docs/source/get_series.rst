@@ -1,8 +1,9 @@
-
 get_series Function
 ===================
 The ``get_series`` function is designed to fetch economic data series from a specified API and return it formatted as a pandas DataFrame, making extensive use of various parameters to fine-tune the data retrieval process.
+
 .. autofunction:: evdspy.get_series
+
 Parameters
 ----------
 index : str or tuple
@@ -27,34 +28,48 @@ debug : bool, optional
     If True, runs the function in debug mode, providing additional debug information without making a real API request. Default is False.
 api_key : str, optional
     The API key required for accessing the data. Initially, it can be saved using the ``save("APIKEY")`` function or via command line with ``$ evdspy save``.
+
 Returns
 -------
 pd.DataFrame
     A pandas DataFrame containing the retrieved data series.
+
 Raises
 ------
 ValueError
     Raised if an invalid API key is provided or required parameters are missing.
+
 Examples
 --------
 Basic usage:
+
 .. code-block:: python
+
     index = "TP.ODEMGZS.BDTTOPLAM"
     df = get_series(index, start_date="01-01-2020", end_date="01-01-2021", frequency="monthly")
     print(df.head())
+
 Using multiple indexes and cache:
+
 .. code-block:: python
+
     indexes = ("TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD")
     df = get_series(indexes, start_date="01-01-2020", frequency="monthly", cache=True)
     print(df.head())
+
 .. code-block:: python
+
     template = """
     TP.ODEMGZS.BDTTOPLAM
     TP.ODEMGZS.ABD
     """
     df = get_series(template, start_date="01-01-2020", frequency="monthly", cache=True)
     print(df.head())
+
 Applying formulas and aggregation:
+
 .. code-block:: python
+
     df = get_series(template, start_date="01-01-2020", formulas="level", aggregation="sum")
     print(df.head())
+
