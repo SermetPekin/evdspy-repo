@@ -12,8 +12,11 @@
 project = 'evdspy'
 copyright = '2024, Sermet Pekin'
 author = 'Sermet Pekin'
-release = 'v1.1.19'
 
+# The short X.Y version
+version = ''
+# The full version, including alpha/beta/rc tags
+release = ''
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
