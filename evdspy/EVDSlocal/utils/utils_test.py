@@ -34,7 +34,7 @@ def get_api_key_file(file_name="api_key.txt", deep=4) -> Optional[Path]:
         return folder / file_name
     for _ in range(deep):
         file_name = get_file_deep(_)
-        if file_name.is_file():
+        if file_name and file_name.is_file():
             return file_name
     return None
 def test_get_api_key_file(capsys):
