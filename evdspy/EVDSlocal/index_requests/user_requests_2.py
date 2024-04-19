@@ -124,6 +124,7 @@ class GuideMetadata:
 class UrlBuilderMetadataCategories(UrlBuilderMetadata, GuideMetadata):
     """
     UrlBuilderMetadataCategories
+
     """
 
 
