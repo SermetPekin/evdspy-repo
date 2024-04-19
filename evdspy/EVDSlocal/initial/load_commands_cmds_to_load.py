@@ -58,10 +58,13 @@ def check_which_command_params(params, extra_params: dict):
         if callable(fnc_class.func):
             fnc_class.func()
     return functions_will_apply
-def menu(*args, **kw):
+def menu():
+    """
+    Displays user-friendly menu screen for many functionalities
+    such as saving API key, getting data, categories etc.
+    :return: None
+    """
     menu_helper()
-    # if CurrentState().menu_will_open:
-    #     menu_helper()
 # -------------------------------- Entry point ---cmd line prompt------------------------------------
 def console_main(test_args=None):
     # test_args = tuple(["series", "create"])
@@ -213,18 +216,18 @@ def get_input_for_categs_data_groups_deeper(codes_and_titles: List[tuple], calla
             series_docs = get_series_list_of_subject(code_str)
             df_exp: pd.DataFrame = json_to_df(series_docs)
             print_with_success_style(
-                "Getting explanations for the series...after this process both excel files will be created...[1-Data , 2-Explanations] "
+                    "Getting explanations for the series...after this process both excel files will be created...[1-Data , 2-Explanations] "
             )
             time.sleep(1)
             print(df_exp.head())
             # print(series_docs)
         except:
             print_with_failure_style(
-                f"...json  content is not proper to convert to a pd.DataFrame .. passing this one... code : {code_str}")
+                    f"...json  content is not proper to convert to a pd.DataFrame .. passing this one... code : {code_str}")
             pass
         df_exp: pd.DataFrame = json_to_df(series_docs)
         print_with_success_style(
-            "Getting explanations for the series...after this process both excel files will be created...[1-Data , 2-Explanations] "
+                "Getting explanations for the series...after this process both excel files will be created...[1-Data , 2-Explanations] "
         )
         time.sleep(1)
         print(df_exp.head())
@@ -267,8 +270,8 @@ def save_apikey(api_key: str = None):
 def check_apikey_and_then_save(api_key_from_user):
     if not obvious_checks_of_api_key(api_key_from_user):
         print_with_failure_style(
-            f"The text you entered does not meet criteria to be an valid api key. \n"
-            f"{indent}(length of api key cannot be less then 10)  ")
+                f"The text you entered does not meet criteria to be an valid api key. \n"
+                f"{indent}(length of api key cannot be less then 10)  ")
         return False
     """this function will save redundant requests by catching earlier check results """
     if not check_api_key_with_low_energy(api_key_from_user):
@@ -349,14 +352,14 @@ def check_compat():
     v = sys.version  # sys.version_info
     if (3, 11, -1) < v_tuple:
         print_with_failure_style(
-            f"Your python version is {v}. This program may break because it is currently only compatible with versions between 3.7 and 3.11")
+                f"Your python version is {v}. This program may break because it is currently only compatible with versions between 3.7 and 3.11")
     elif (3, 7, 0) > v_tuple:
         print_with_failure_style(
-            f"Your python version is {v}. This program may break because it is currently only compatible with versions between 3.7 and 3.11")
+                f"Your python version is {v}. This program may break because it is currently only compatible with versions between 3.7 and 3.11")
     else:
         print_with_success_style(
-            f"Your python version is {v} This program was tested with this version and runs properly. However, "
-            f"if you notice a bug or if your version breaks at runtime please feel free to open a PR on github.")
+                f"Your python version is {v} This program was tested with this version and runs properly. However, "
+                f"if you notice a bug or if your version breaks at runtime please feel free to open a PR on github.")
 def save(*args):
     return save_apikey(*args)
 def remove_cache():
@@ -387,30 +390,30 @@ def main_exit_function():
     ...
 def menu_display():
     funcs = [
-        ("check setup", check),
-        ("setup", setup),
-        ("create user options file", create_options_file),
-        ("create series file", create_series_file),
-        ("add new series group ", setup_series_steps),
-        ("get data", get),
-        ("get categories (get all series of a datagroup)", get_categories_main),  # next version
-        # ("get data groups (on development) ", get_datagroups_data_main),  # next version
-        ("help", help_),
-        ("show api key", show_apikey),
-        ("save api key to file", set_apikey_input),
-        ("remove cache folders", remove_cache),
-        ("evdspy as a command line prompt", console_main_from_the_menu),
-        ("version", version),
-        ("py version", py_version),
-        ("check compatibility of your python version", check_compat),
+            ("check setup", check),
+            ("setup", setup),
+            ("create user options file", create_options_file),
+            ("create series file", create_series_file),
+            ("add new series group ", setup_series_steps),
+            ("get data", get),
+            ("get categories (get all series of a datagroup)", get_categories_main),  # next version
+            # ("get data groups (on development) ", get_datagroups_data_main),  # next version
+            ("help", help_),
+            ("show api key", show_apikey),
+            ("save api key to file", set_apikey_input),
+            ("remove cache folders", remove_cache),
+            ("evdspy as a command line prompt", console_main_from_the_menu),
+            ("version", version),
+            ("py version", py_version),
+            ("check compatibility of your python version", check_compat),
     ]
     if 'NEXT_RELEASE' in str(Path().cwd()):
         funcs.append(('test_the latest', testt_the_latest))
     menu_items = list(map(lambda x: MenuItem(x[1], x[0]), funcs))
     MenuMaker(
-        menu_items=menu_items,
-        exit_item=True,
-        exit_menu_call_back=main_exit_function
+            menu_items=menu_items,
+            exit_item=True,
+            exit_menu_call_back=main_exit_function
     ).display()
 def menu_helper():
     # TODO config

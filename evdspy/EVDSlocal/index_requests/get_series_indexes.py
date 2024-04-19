@@ -63,7 +63,6 @@ def get_series(
     ------
     ValueError
         If an invalid API key is provided or required parameters are missing.
-
     """
     # ............initial_api_process_when_given...............
     initial_api_process_when_given(api_key)
