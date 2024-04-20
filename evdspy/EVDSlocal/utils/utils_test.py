@@ -43,8 +43,9 @@ def get_api_key_file(file_name="api_key.txt", deep=7) -> Optional[Path]:
     return get_file_deep(deep)
 
 
-
 def test_get_api_key_file(capsys):
+    if GithubActions().is_testing(): return
+
     with capsys.disabled():
         api_key = get_api_key_file(deep=8)
         print(api_key)
