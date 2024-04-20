@@ -5,51 +5,23 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes import default_start_dat
     default_end_date_fnc, get_series
 from evdspy.EVDSlocal.utils.github_actions import GithubActions
 from evdspy.EVDSlocal.utils.utils_general import get_env_api_key
-from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing, ApiClassWhileTesting, get_api_key_file
+from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing, ApiClassWhileTesting, get_api_key_file, \
+    skip_if_gthub, skip_if_not_keyvalid, is_df
 from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import Frequency, freq_enum, Formulas, AggregationType, \
     correct_types
 # from evdspy.EVDSlocal.index_requests.user_requests import
 from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
 from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
 from evdspy.EVDSlocal.index_requests.user_requests.user_requests import ProxyManager, UrlBuilder, UrlSeries, \
-    ApiRequester, \
-    DataProcessor, RequestConfig
+    ApiRequester,     DataProcessor, RequestConfig
+# from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import *
 
 try:
-
     import pytest
 except ImportError:
     pass
-import sys
 
 
-def get_api_key():
-    import os
-    return os.getenv("EVDS_API_KEY")
-
-
-# assert isinstance(get_api_key(), str) and len(get_api_key()) == 10
-def key_valid():
-    return isinstance(get_api_key(), str) and len(get_api_key()) == 10
-
-
-def is_df(df: Any):
-    return isinstance(df, pd.DataFrame)
-
-
-def gth_testing():
-    return GithubActions().is_testing()
-
-
-reason_gth = "passing when github Actions "
-
-skip_if_gthub = pytest.mark.skipif(
-    gth_testing, reason=reason_gth
-)
-
-skip_if_not_keyvalid = pytest.mark.skipif(
-    key_valid(), reason='No Api key Valid provided'
-)
 
 
 @skip_if_gthub

@@ -20,6 +20,19 @@ from ..requests_.ev_request import EVRequest
 
 """Globals  """
 EVDS_API_KEY_ENV_NAME = "EVDS_API_KEY"
+try:
+    import pytest
+except ImportError:
+    pass
+
+
+def get_api_key():
+    import os
+    return os.getenv("EVDS_API_KEY")
+
+
+def key_valid():
+    return isinstance(get_api_key(), str) and len(get_api_key()) == 10
 
 
 def is_df(df: Any):
@@ -32,6 +45,25 @@ def gth_testing():
 
 reason_gth = "passing when github Actions "
 
+skip_if_gthub = pytest.mark.skipif(
+    gth_testing, reason=reason_gth
+)
+
+skip_if_not_keyvalid = pytest.mark.skipif(
+    key_valid(), reason='No Api key Valid provided'
+)
+
+
+# def is_df(df: Any):
+#     return isinstance(df, pd.DataFrame)
+
+
+# def gth_testing():
+#     return GithubActions().is_testing()
+
+
+# reason_gth = "passing when github Actions "
+#
 
 def get_api_env_key_name():
     return EVDS_API_KEY_ENV_NAME
