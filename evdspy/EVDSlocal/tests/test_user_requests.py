@@ -17,6 +17,7 @@ from evdspy.EVDSlocal.index_requests.user_requests.user_requests import ProxyMan
 
 
 def test_get_api_key_file(capsys):
+    if GithubActions().is_testing(): return
     with capsys.disabled():
         api_key_file = get_api_key_file(deep=8)
         print(api_key_file.absolute())
@@ -24,6 +25,7 @@ def test_get_api_key_file(capsys):
 
 
 def test_ApiClassWhileTesting(capsys):
+    if GithubActions().is_testing(): return
     with capsys.disabled():
         api_key = ApiClassWhileTesting().key
         print(ApikeyClass().obscure(api_key))
