@@ -15,7 +15,22 @@ from evdspy.EVDSlocal.index_requests.user_requests.user_requests import ProxyMan
     ApiRequester, \
     DataProcessor, RequestConfig
 
+try:
 
+    import pytest
+except ImportError:
+    pass
+import sys
+
+
+def gth_testing():
+    return GithubActions().is_testing()
+
+
+reason_gth = "passing when github Actions "
+
+
+@pytest.mark.skipif(gth_testing(), reason=reason_gth)
 def test_get_api_key_file(capsys):
     if GithubActions().is_testing(): return
     with capsys.disabled():
@@ -24,8 +39,8 @@ def test_get_api_key_file(capsys):
         assert api_key_file is not None
 
 
+@pytest.mark.skipif(gth_testing(), reason=reason_gth)
 def test_ApiClassWhileTesting(capsys):
-    if GithubActions().is_testing(): return
     with capsys.disabled():
         api_key = ApiClassWhileTesting().key
         print(ApikeyClass().obscure(api_key))
@@ -36,6 +51,7 @@ def is_df(df: Any):
     return isinstance(df, pd.DataFrame)
 
 
+@pytest.mark.skipif(gth_testing(), reason=reason_gth)
 def test_get_series_bridge(capsys):
     with capsys.disabled():
         df = get_series("bie_gsyhgycf", cache=False, api_key=get_env_api_key(check=True))
