@@ -1,4 +1,3 @@
-
 import os
 from pathlib import Path
 from typing import Optional
@@ -18,30 +17,41 @@ from ..config.apikey_class import ApikeyClass
 from ..config.config import ConfigBase
 from ..initial.start_options import default_data_folder_name, Default_Prefix_
 from ..requests_.ev_request import EVRequest
+
 """Globals  """
 EVDS_API_KEY_ENV_NAME = "EVDS_API_KEY"
+
+
 def get_api_env_key_name():
     return EVDS_API_KEY_ENV_NAME
+
+
 # import pytest
-def get_api_key_file(file_name="api_key.txt", deep=4) -> Optional[Path]:
-    def get_file_deep(num=1):
-        folder = Path("..")
-        for _ in range(num):
+def get_api_key_file(file_name="api_key.txt", deep=7) -> Optional[Path]:
+    def get_file_deep(number):
+        folder = Path(".")
+        for _ in range(number):
             folder = folder / ".."
-            if not "PycharmProjects" in str(folder.absolute()):
+            if not "pycharmprojects" in str(folder.absolute()).lower():
                 """Do not go back deeper if it is not my folder"""
                 return None
-        return folder / file_name
-    for _ in range(deep):
-        file_name = get_file_deep(_)
-        if file_name and file_name.is_file():
-            return file_name
-    return None
+            file_namex = folder / file_name
+            if file_namex.exists():
+                return file_namex
+        return None
+
+    return get_file_deep(deep)
+
+
+
 def test_get_api_key_file(capsys):
     with capsys.disabled():
-        print(get_api_key_file(deep=5))
+        api_key = get_api_key_file(deep=8)
+        print(api_key)
+
+
 def get_api_key_while_testing():
-    file_name = get_api_key_file(deep=4)
+    file_name = get_api_key_file(deep=7)
     if file_name is None:
         return False
     content = Read(file_name)
@@ -49,16 +59,28 @@ def get_api_key_while_testing():
     line = tuple(line for line in lines if "evds" in line)
     api_key = line[0].split("=")[1]
     return str(api_key).strip()
+
+
 class ApiClassWhileTesting():
     """ApiClassWhileTesting"""
+
     def __init__(self):
         self.api_key = self.get_api_key()
+
     def get_api_key(self):
         if GithubActions().is_testing():
             return os.getenv(get_api_env_key_name())
         return get_api_key_while_testing()
+
     @property
     def key(self):
         return self.api_key
+
     def __call__(self, *args, **kwargs):
         return self.key
+
+
+def test_ApiClassWhileTesting(capsys):
+    with capsys.disabled():
+        api_key = ApiClassWhileTesting().key
+        print(ApikeyClass().obscure(api_key))
