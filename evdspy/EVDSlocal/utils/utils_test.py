@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Any
 import pandas as pd
 from evdspy.EVDSlocal.index_requests.datagroups_initial import data_models_dict, data_strategy
 from evdspy.EVDSlocal.index_requests.index_classes import GeneralIndexesDatagroups, GeneralIndexesDatagroupIndividual, \
@@ -20,6 +20,17 @@ from ..requests_.ev_request import EVRequest
 
 """Globals  """
 EVDS_API_KEY_ENV_NAME = "EVDS_API_KEY"
+
+
+def is_df(df: Any):
+    return isinstance(df, pd.DataFrame)
+
+
+def gth_testing():
+    return GithubActions().is_testing()
+
+
+reason_gth = "passing when github Actions "
 
 
 def get_api_env_key_name():
@@ -53,7 +64,6 @@ def test_get_api_key_file(capsys):
 
 
 def get_api_key_while_testing():
-
     file_name = get_api_key_file(deep=7)
     if file_name is None:
         return False

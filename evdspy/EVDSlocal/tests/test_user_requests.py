@@ -23,23 +23,44 @@ except ImportError:
 import sys
 
 
+def get_api_key():
+    import os
+    return os.getenv("EVDS_API_KEY")
+
+
+# assert isinstance(get_api_key(), str) and len(get_api_key()) == 10
+def key_valid():
+    return isinstance(get_api_key(), str) and len(get_api_key()) == 10
+
+
+def is_df(df: Any):
+    return isinstance(df, pd.DataFrame)
+
+
 def gth_testing():
     return GithubActions().is_testing()
 
 
 reason_gth = "passing when github Actions "
 
+skip_if_gthub = pytest.mark.skipif(
+    gth_testing, reason=reason_gth
+)
 
-@pytest.mark.skipif(gth_testing(), reason=reason_gth)
+skip_if_not_keyvalid = pytest.mark.skipif(
+    key_valid(), reason='No Api key Valid provided'
+)
+
+
+@skip_if_gthub
 def test_get_api_key_file(capsys):
-    if GithubActions().is_testing(): return
     with capsys.disabled():
         api_key_file = get_api_key_file(deep=8)
         print(api_key_file.absolute())
         assert api_key_file is not None
 
 
-@pytest.mark.skipif(gth_testing(), reason=reason_gth)
+@skip_if_gthub
 def test_ApiClassWhileTesting(capsys):
     with capsys.disabled():
         api_key = ApiClassWhileTesting().key
@@ -47,17 +68,14 @@ def test_ApiClassWhileTesting(capsys):
         print(Path('').absolute())
 
 
-def is_df(df: Any):
-    return isinstance(df, pd.DataFrame)
-
-
-@pytest.mark.skipif(gth_testing(), reason=reason_gth)
+@skip_if_not_keyvalid
+@skip_if_gthub
 def test_get_series_bridge(capsys):
     with capsys.disabled():
         df = get_series("bie_gsyhgycf", cache=False, api_key=get_env_api_key(check=True))
         assert is_df(df)
 
-
+@skip_if_not_keyvalid
 def test_get_diff_series(capsys):
     with capsys.disabled():
         template = """TP_GSYIH01_GY_CF
@@ -78,7 +96,7 @@ def test_get_diff_series(capsys):
         df = get_series(template, debug=False, cache=False, api_key=get_env_api_key(check=True))
         assert is_df(df)
 
-
+# @skip_if_not_keyvalid
 def test_template_series(capsys):
     with capsys.disabled():
         balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
@@ -91,7 +109,7 @@ def test_template_series(capsys):
         print(a1.hash, a2.hash)
         assert a1 == a2
 
-
+@skip_if_not_keyvalid
 def test_a(capsys):
     with capsys.disabled():
         balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
@@ -103,8 +121,7 @@ def test_a(capsys):
         a2 = get_series(balance_of_pay2, debug=True)
         assert a1 == a2
         print(a1)
-        if is_testing():
-            return
+
         a1 = get_series(balance_of_pay1, debug=False)
         print(a1)
         assert is_df(a1)
@@ -122,6 +139,7 @@ def test_template_series2(capsys):
         print(a1.hash, a2.hash)
         assert a1 == a2
 
+# @skip_if_not_keyvalid
 
 def test_template_series3(capsys):
     with capsys.disabled():
@@ -156,26 +174,12 @@ def test_pickles():
     os.makedirs("pickles", exist_ok=True)
 
 
-def get_api_key():
-    import os
-    return os.getenv("EVDS_API_KEY")
+# def is_testing():
+#     return GithubActions().is_testing() and not key_valid()
 
-
-# assert isinstance(get_api_key(), str) and len(get_api_key()) == 10
-def key_valid():
-    return isinstance(get_api_key(), str) and len(get_api_key()) == 10
-
-
-def is_testing():
-    return GithubActions().is_testing() and not key_valid()
-
-
+@skip_if_not_keyvalid
 def test_get_series2(capsys):
     with capsys.disabled():
-        if is_testing():
-            return
-        # setup()
-        # print(Path().absolute())
         df = get_series("TP.ODEMGZS.BDTTOPLAM",
                         cache=False)
         assert isinstance(df, pd.DataFrame)
@@ -200,13 +204,9 @@ def test_get_api_key_while_testing(capsys):
         a = ApiClassWhileTesting().key
         assert len(a) > 5 and 'lg' in a
 
-
+@skip_if_not_keyvalid
 def test_get_series(capsys):
-    if is_testing():
-        return
     with capsys.disabled():
-        if is_testing():
-            return
         index = 'TP.YSSK.A1'
         start_date = "01-01-2000"
         end_date = "01-01-2100"
@@ -217,6 +217,7 @@ def test_get_series(capsys):
 
 
 # from evdspy.EVDSlocal.index_requests.get_series_indexes import Formulas, correct_types, AggregationType
+# @skip_if_not_keyvalid
 def test_aggr_types(capsys):
     balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
     balance_of_pay2 = """
@@ -260,7 +261,7 @@ def test_correct2(capsys):
         assert correct_types("avg", AggregationType) == "avg"
         assert correct_types(("avg", "min",), AggregationType) == ("avg", "min",)
 
-
+@skip_if_not_keyvalid
 def test_mixedcase_get_series(capsys):
     index = """
     tp.sekbil1122.GENEL
@@ -279,7 +280,7 @@ def test_mixedcase_get_series(capsys):
         df = get_series(index)
         assert is_df(df)
 
-
+@skip_if_not_keyvalid
 def test_gets_upper(capsys):
     with capsys.disabled():
         template = """TP_GSYIH01_GY_CF
@@ -300,7 +301,7 @@ def test_gets_upper(capsys):
         df = get_series(template)
         assert is_df(df)
 
-
+# @skip_if_not_keyvalid
 def test_multi(capsys):
     template = """
 bie_sekbil1122
@@ -315,7 +316,7 @@ bie_sekbil3051
     assert all(map(lambda x: is_df(x), dfs))
     tuple(map(lambda x: print(x.shape), dfs))
 
-
+@skip_if_not_keyvalid
 def test_get_series_b(capsys):
     index = """
     TP.OSUVBG01
