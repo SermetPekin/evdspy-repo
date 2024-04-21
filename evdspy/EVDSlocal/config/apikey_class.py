@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from typing import Union
 from enum import Enum, auto
 from ..config.config import config
+
 from ..messages.error_classes import ApiKeyNotSetError
 
 
@@ -103,13 +104,15 @@ class ApikeyClass(object):
 
     @staticmethod
     def obscure(key=None):
+        from evdspy.EVDSlocal.utils.utils_general import encode
         if key is None:
             key = ApikeyClass().key
         if not isinstance(key, str):
             return "..."
+
         strings = []
-        for index, i in enumerate(key):
-            if index < 7 or index % 2 == 0:
+        for index, i in enumerate(str(encode(key))):
+            if index < 7 or index % 3 == 0:
                 strings.append("*")
             else:
                 strings.append(i)

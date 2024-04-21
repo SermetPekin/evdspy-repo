@@ -105,6 +105,7 @@ T_str_tuple_None = Union[str, tuple[str], None]
 T_tuple_str_int_None = Union[str, int, tuple[str], tuple[int], None]
 T_maybeDf = Union[pd.DataFrame, bool, None]
 
+
 # ................................................................... RequestConfig
 @dataclass
 class RequestConfig(Serialize):
@@ -299,6 +300,8 @@ class UrlBuilder:
             "type=json"
         )
         return "&".join(parts)
+
+
 # ..................................................................................
 
 def create_cache_version(fnc: Callable):
@@ -361,15 +364,8 @@ class ApiRequester:
 
     @staticmethod
     def obscure(string: str):
-        if not isinstance(string, str):
-            return "..."
-        strings = []
-        for index, i in enumerate(string):
-            if index < 7 or index % 2 == 0:
-                strings.append("*")
-            else:
-                strings.append(i)
-        return "".join(strings)
+        return ApikeyClass().obscure(string)
+
 
     def get_api_key(self, check=True) -> str:
         if PytestTesting().is_testing() or GithubActions().is_testing():

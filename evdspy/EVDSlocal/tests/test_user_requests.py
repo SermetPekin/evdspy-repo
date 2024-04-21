@@ -36,7 +36,7 @@ def test_get_api_key_file(capsys):
 def test_ApiClassWhileTesting(capsys):
     with capsys.disabled():
         api_key = ApiClassWhileTesting().key
-        print(ApikeyClass().obscure(api_key))
+        # print(ApikeyClass().obscure(api_key))
         print(Path('').absolute())
 
 
@@ -44,7 +44,9 @@ def test_ApiClassWhileTesting(capsys):
 @skip_if_gthub
 def test_get_series_bridge(capsys):
     with capsys.disabled():
-        df = get_series("bie_gsyhgycf", cache=False, api_key=get_env_api_key(check=True))
+        df = get_series("bie_gsyhgycf",
+                        cache=False,
+                        api_key=get_env_api_key(check=True))
         assert is_df(df)
 
 @skip_if_not_keyvalid
@@ -65,7 +67,8 @@ def test_get_diff_series(capsys):
         TP_GSYIH15_GY_CF
         TP_GSYIH16_GY_CF
         """
-        df = get_series(template, debug=False, cache=False, api_key=get_env_api_key(check=True))
+        df = get_series(template, debug=False, cache=False,
+                        api_key=get_env_api_key(check=True))
         assert is_df(df)
 
 # @skip_if_not_keyvalid
@@ -291,8 +294,8 @@ bie_sekbil3051
 @skip_if_not_keyvalid
 def test_get_series_b(capsys):
     index = """
-    TP.OSUVBG01
-TP.OSUVBG02
+    TP.OSUVBG01 # some comments
+TP.OSUVBG02 # ...
 TP.OSUVBG03
     TP.OSUVBG04
     TP.OSUVBG05

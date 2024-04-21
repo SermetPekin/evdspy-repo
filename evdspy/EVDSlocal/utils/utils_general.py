@@ -24,6 +24,18 @@ import time
 import os
 def ls():
     print(os.popen("ls -l").read())
+
+def decode(base64_bytes) -> str:
+    if isinstance(base64_bytes, str):
+        base64_bytes = str.encode(base64_bytes)
+    str_bytes = base64.b64decode(base64_bytes)
+    decoded = str_bytes.decode("ascii")
+    return decoded
+def encode(text: str) -> bytes:
+    t_bytes = text.encode("ascii")
+    encoded = base64.b64encode(t_bytes)
+    return encoded
+
 def api_key_looks_valid(key: str):
     return isinstance(key, str) and len(key) == 10
 class ApiKeyErrorEnvir(BaseException):

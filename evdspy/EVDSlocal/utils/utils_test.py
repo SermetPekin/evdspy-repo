@@ -54,17 +54,6 @@ skip_if_not_keyvalid = pytest.mark.skipif(
 )
 
 
-# def is_df(df: Any):
-#     return isinstance(df, pd.DataFrame)
-
-
-# def gth_testing():
-#     return GithubActions().is_testing()
-
-
-# reason_gth = "passing when github Actions "
-#
-
 def get_api_env_key_name():
     return EVDS_API_KEY_ENV_NAME
 
