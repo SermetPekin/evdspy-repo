@@ -12,16 +12,15 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import Frequency, 
 # from evdspy.EVDSlocal.index_requests.user_requests import
 from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
 from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
-from evdspy.EVDSlocal.index_requests.user_requests.user_requests import ProxyManager, UrlBuilder, UrlSeries, \
-    ApiRequester,     DataProcessor, RequestConfig
+from evdspy.EVDSlocal.index_requests.user_requests import (ProxyManager, UrlBuilder, UrlSeries,
+                                                           ApiRequester, DataProcessor, RequestConfig)
+
 # from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import *
 
 try:
     import pytest
 except ImportError:
     pass
-
-
 
 
 @skip_if_gthub
@@ -49,6 +48,7 @@ def test_get_series_bridge(capsys):
                         api_key=get_env_api_key(check=True))
         assert is_df(df)
 
+
 @skip_if_not_keyvalid
 def test_get_diff_series(capsys):
     with capsys.disabled():
@@ -71,6 +71,7 @@ def test_get_diff_series(capsys):
                         api_key=get_env_api_key(check=True))
         assert is_df(df)
 
+
 # @skip_if_not_keyvalid
 def test_template_series(capsys):
     with capsys.disabled():
@@ -83,6 +84,7 @@ def test_template_series(capsys):
         a2 = get_series(balance_of_pay2, debug=True)
         print(a1.hash, a2.hash)
         assert a1 == a2
+
 
 @skip_if_not_keyvalid
 def test_a(capsys):
@@ -113,6 +115,7 @@ def test_template_series2(capsys):
         a2 = get_series(balance_of_pay2, aggregation=("avg", "avg"), debug=True)
         print(a1.hash, a2.hash)
         assert a1 == a2
+
 
 # @skip_if_not_keyvalid
 
@@ -179,6 +182,7 @@ def test_get_api_key_while_testing(capsys):
         a = ApiClassWhileTesting().key
         assert len(a) > 5 and 'lg' in a
 
+
 @skip_if_not_keyvalid
 def test_get_series(capsys):
     with capsys.disabled():
@@ -236,6 +240,7 @@ def test_correct2(capsys):
         assert correct_types("avg", AggregationType) == "avg"
         assert correct_types(("avg", "min",), AggregationType) == ("avg", "min",)
 
+
 @skip_if_not_keyvalid
 def test_mixedcase_get_series(capsys):
     index = """
@@ -254,6 +259,7 @@ def test_mixedcase_get_series(capsys):
     with capsys.disabled():
         df = get_series(index)
         assert is_df(df)
+
 
 @skip_if_not_keyvalid
 def test_gets_upper(capsys):
@@ -276,6 +282,7 @@ def test_gets_upper(capsys):
         df = get_series(template)
         assert is_df(df)
 
+
 # @skip_if_not_keyvalid
 def test_multi(capsys):
     template = """
@@ -290,6 +297,7 @@ bie_sekbil3051
     dfs = tuple(map(get_series, names))
     assert all(map(lambda x: is_df(x), dfs))
     tuple(map(lambda x: print(x.shape), dfs))
+
 
 @skip_if_not_keyvalid
 def test_get_series_b(capsys):
