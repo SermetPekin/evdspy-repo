@@ -16,7 +16,7 @@ def check_compat():
     # v_tuple = "3.6.0".split(".")
     v_tuple = tuple(map(lambda x: int(x), v_tuple))
     v = sys.version  # sys.version_info
-    if (3, 12, -1) < v_tuple:
+    if (4, 1, -1) < v_tuple:
         print_with_failure_style(
             f"Your python version is {v}. This program may break because it is currently only compatible with versions between 3.7 and 3.11")
         return False
