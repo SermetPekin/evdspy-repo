@@ -1,19 +1,31 @@
-
 from typing import Union, Any, Optional
-import pandas as pd
-from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
-from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
-from evdspy.EVDSlocal.index_requests.user_requests.user_requests import ProxyManager, UrlBuilder, ApiRequester, \
-    DataProcessor, RequestConfig
 
+import pandas as pd
+
+from evdspy.EVDSlocal.index_requests.user_requests.Request_config import RequestConfig
 
 
 def initial_api_process_when_given(api_key: Optional[str] = None) -> None:
+    from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
+    from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
+
+    from evdspy.EVDSlocal.index_requests.user_requests import RequestConfig, ProxyManager, \
+        UrlBuilder, DataProcessor
+    from evdspy.EVDSlocal.index_requests.user_requests.Api_requester import ApiRequester
+
+
     if api_key is None:
         return
     if ApikeyClass().get_valid_api_key(check=False) is False:
         from evdspy.EVDSlocal.initial.load_commands_cmds_to_load import save_apikey
         save_apikey(api_key)
+
+from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
+    default_start_date_fnc,
+    default_end_date_fnc,
+    correct_types,
+)
+
 def get_series(
         index: Union[str, tuple[Any, ...]],
         start_date: str = default_start_date_fnc(),
@@ -67,6 +79,13 @@ def get_series(
     ValueError
         If an invalid API key is provided or required parameters are missing.
     """
+    from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
+    from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
+
+    from evdspy.EVDSlocal.index_requests.user_requests import RequestConfig, ProxyManager, \
+        UrlBuilder, DataProcessor
+    from evdspy.EVDSlocal.index_requests.user_requests.Api_requester import ApiRequester
+
     # ............initial_api_process_when_given...............
     initial_api_process_when_given(api_key)
     # ............RequestConfig................................
@@ -89,19 +108,25 @@ def get_series(
     # ............DataProcessor................................
     data_processor = DataProcessor(api_requester())
     return data_processor()
+
+
 def test_get_series2(capsys):
     with capsys.disabled():
         # setup()
         df = get_series(
-                "TP.ODEMGZS.BDTTOPLAM",
-                cache=False
+            "TP.ODEMGZS.BDTTOPLAM",
+            cache=False
         )
         assert isinstance(df, pd.DataFrame)
+
+
 def t_stream():
     import streamlit as st
     df = get_series("TP.ODEMGZS.BDTTOPLAM",
                     cache=True)
     st.write(df)
+
+
 __all__ = (
-        'get_series',
+    'get_series',
 )
