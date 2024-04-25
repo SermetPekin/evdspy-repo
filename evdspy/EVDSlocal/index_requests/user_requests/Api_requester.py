@@ -2,11 +2,14 @@
 import traceback
 import requests
 # ...........................................................................................
-from evdspy.EVDSlocal.index_requests.user_requests import UrlBuilder, ProxyManager, RequestConfig
+from evdspy.EVDSlocal.index_requests.user_requests.Url_builder import UrlBuilder 
+from evdspy.EVDSlocal.index_requests.user_requests.Proxy_manager import ProxyManager 
+from evdspy.EVDSlocal.index_requests.user_requests.Request_config import RequestConfig
 from evdspy.EVDSlocal.index_requests.user_requests.User_request_utils import cache_or_raw_fnc
 from evdspy.EVDSlocal.utils.utils_test import ApiClassWhileTesting
 from evdspy.EVDSlocal.requests_.real_requests import *
 from evdspy.EVDSlocal.utils.github_actions import PytestTesting, GithubActions
+
 # ...........................................................................................
 
 
