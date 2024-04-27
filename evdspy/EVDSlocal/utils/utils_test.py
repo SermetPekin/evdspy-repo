@@ -22,7 +22,7 @@ from ..requests_.ev_request import EVRequest
 EVDS_API_KEY_ENV_NAME = "EVDS_API_KEY"
 try:
     import pytest
-except ImportError:
+except Exception:
     pass
 
 
