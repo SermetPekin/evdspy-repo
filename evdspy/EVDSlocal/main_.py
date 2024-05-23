@@ -54,7 +54,7 @@ def initial_checks_after_first_run():
     assert callable(get)
     assert callable(menu)
 # --------------------------------- M A I N ---------
-do_start(register_actions())
+# do_start(register_actions())
 from evdspy.EVDSlocal.initial.load_commands_ import *
 initial_checks_after_first_run()
 # --------------------------------- / M A I N ---------
