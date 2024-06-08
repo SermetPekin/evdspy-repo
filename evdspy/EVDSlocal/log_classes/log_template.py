@@ -4,7 +4,7 @@ from logging.handlers import TimedRotatingFileHandler
 import os
 from pathlib import Path
 from inspect import getframeinfo, stack
-from evdspy.EVDSlocal.initial.start_options import DEBUG_LOG_CANCEL, DEGUB_NOTICE
+from evdspy.EVDSlocal.initial.start_options import DEGUB_NOTICE
 
 NoteShown = False
 
@@ -27,8 +27,9 @@ class Log:
     def get_file_handler(self, logger_name):
         log_file_path = Path() / "logs" / "log_files"  # / "log-{}-{}.log"
         if not os.path.exists(log_file_path):
-            return# TODO
-            os.makedirs(log_file_path)
+            # return# TODO
+            # os.makedirs(log_file_path)
+            ...
         log_file_name = log_file_path / "log-{}-{}.log".format(LOG_FILE, logger_name)
         # print(log_file_name)
         self.log_file_path = log_file_path
@@ -79,7 +80,6 @@ def debugInfo(s="", *args, **kw):
 
 def get_debugger(session=None):
     def show_notice(*args):
-        return
         if not DEGUB_NOTICE:
             return
         title = "=" * 50 + " DEBUG " + "=" * 50
@@ -91,7 +91,6 @@ def get_debugger(session=None):
         pass
 
     def show_once(*args):
-        return
         global NoteShown
         if not NoteShown:
             # show_notice_b = update_wrapper(partial(show_notice, *args), show_notice)
@@ -112,16 +111,19 @@ def get_debugger(session=None):
         d = debugInfo(*args)
         args = args + tuple([d])
         for item in args:
-            deb(item)
+            # deb(item)
+            ...
 
     def deb_multi2(*args):
         funcs = []
         for item in args:
             deb2(item)
 
-    if DEBUG_LOG_CANCEL:
-        deb_multi = show_once
-        deb_multi2 = show_once
+    # TODO Cancel Debug in prod  
+    # if DEBUG_LOG_CANCEL:
+    if True:
+        deb_multi = do_nothing
+        deb_multi2 = do_nothing
         debug = None
     return deb_multi, deb_multi2, debugOBJ
 
