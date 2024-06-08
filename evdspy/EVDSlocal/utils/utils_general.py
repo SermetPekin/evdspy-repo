@@ -35,7 +35,12 @@ def encode(text: str) -> bytes:
     t_bytes = text.encode("ascii")
     encoded = base64.b64encode(t_bytes)
     return encoded
-
+def replace_recursive(content: str, char: str, new_char: str):
+    if char not in content:
+        return content
+    content = content.replace(char, new_char)
+    return replace_recursive(content, char, new_char)
+    
 def api_key_looks_valid(key: str):
     return isinstance(key, str) and len(key) == 10
 class ApiKeyErrorEnvir(BaseException):
