@@ -98,13 +98,15 @@ def get_debugger(session=None):
             return show_notice
         return do_nothing
 
-    debugOBJ = Log("DEBUG_log_")
-    if session:
-        debugOBJ.logger = debugOBJ.get_logger("DEBUG_log_{}.-{}".format(__name__, session.hash))
-    else:
-        debugOBJ.logger = debugOBJ.get_logger("DEBUG_log_{}".format(__name__))
-    deb = debugOBJ.logger.debug
-    deb2 = debugOBJ.get_logger("DEBUG_URGENT_{}".format(__name__)).debug
+    debugOBJ = None
+
+    # debugOBJ = Log("DEBUG_log_")
+    # if session:
+    #     debugOBJ.logger = debugOBJ.get_logger("DEBUG_log_{}.-{}".format(__name__, session.hash))
+    # else:
+    #     debugOBJ.logger = debugOBJ.get_logger("DEBUG_log_{}".format(__name__))
+    # # deb = debugOBJ.logger.debug
+    # # deb2 = debugOBJ.get_logger("DEBUG_URGENT_{}".format(__name__)).debug
 
     def deb_multi(*args):
         funcs = []
