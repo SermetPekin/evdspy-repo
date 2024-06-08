@@ -1,4 +1,4 @@
-from evdspy.EVDSlocal.common.files import Read 
+from evdspy.EVDSlocal.common.files import Read
 from pathlib import Path
 
 from typing import Union, List
@@ -123,7 +123,7 @@ def read_user_options_on_load():
     opts = SingletonOptions()
     file_name = "options.cfg"
     if not Path(file_name).is_file():
-        print(Path(file_name))
+        # print(Path(file_name))
         cls = SingletonOptions()
         SingletonOptions().set("default_cache_user", cls.options_.default_cache)
         SingletonOptions().set("default_start_date_user", cls.options_.default_start_date)
