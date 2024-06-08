@@ -1,7 +1,8 @@
+from evdspy.EVDSlocal.common.files import Read 
+from pathlib import Path
 
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-from dataclasses import dataclass
+from typing import Union, List
+
 """
 Usage :
     SingletonOptions().set("default_start_date_user", "UserStartDate")
@@ -25,12 +26,9 @@ if "__main__" == __name__:
         default_cache = "daily"  # nocache / hourly
         default_end_date = "01-12-2030"
         default_start_date = "01-01-2019"
-        import os
-        # USERNAME = os.getenv("USERNAME")  # or hard coded "Username"
 else:
     from ..config.config import *
     from ..initial.start_options import *
-from typing import Union, List
 class Options:
     def __init__(self,
                  default_start_date: str,
@@ -60,7 +58,6 @@ class Options:
 #     default_cache_user: Union[str, None]
 #     avoid_absolute_paths: bool = True
 #     avoid_absolute_paths_user: bool = True
-from pathlib import Path
 def load_options():
     options_ = Options(
         default_start_date=default_start_date,
@@ -111,7 +108,6 @@ class SingletonOptions(object):
         if not user_preferred_value_or_default:
             user_preferred_value_or_default = self.getitem(f"{attr}", None)
         return user_preferred_value_or_default
-from evdspy.EVDSlocal.common.files import Read, Write
 notsetyet = "not set yet OptionsClassfile"
 class NotSetYet:
     def __str__(self):
@@ -134,7 +130,7 @@ def read_user_options_on_load():
         SingletonOptions().set("default_end_date_user", cls.options_.default_end_date)
         SingletonOptions().set("avoid_absolute_paths_user", cls.options_.avoid_absolute_paths_user)
         # raise "file"
-        print("user options file was not found. Program will continue with default options...")
+        # print("user options file was not found. Program will continue with default options...")
         return
     def read_options_file():
         cont = Read(file_name, "could not read ")
