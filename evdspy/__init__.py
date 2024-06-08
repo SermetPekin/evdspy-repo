@@ -17,15 +17,11 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
     correct_types,
 )
 
-from evdspy.EVDSlocal.Seas.mevsimsel_general import MevsimselADV
-from evdspy.EVDSlocal.Seas.mevsimsel_options import MevsimselOptions
 
 __all__ = [
         "default_start_date_fnc",
         "default_end_date_fnc",
         "correct_types",
-        "MevsimselADV",
-        "MevsimselOptions",
         "get_series" ,
         "ls"
 ]
