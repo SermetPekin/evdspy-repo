@@ -48,16 +48,7 @@ class Options:
         self.default_cache_user = default_cache_user
         self.avoid_absolute_paths = avoid_absolute_paths
         self.avoid_absolute_paths_user = avoid_absolute_paths_user
-# @dataclass
-# class Options_old:
-#     default_start_date: str
-#     default_start_date_user: Union[str, None]
-#     default_end_date: str
-#     default_end_date_user: Union[str, None]
-#     default_cache: str
-#     default_cache_user: Union[str, None]
-#     avoid_absolute_paths: bool = True
-#     avoid_absolute_paths_user: bool = True
+
 def load_options():
     options_ = Options(
         default_start_date=default_start_date,

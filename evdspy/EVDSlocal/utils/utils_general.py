@@ -35,6 +35,7 @@ def encode(text: str) -> bytes:
     t_bytes = text.encode("ascii")
     encoded = base64.b64encode(t_bytes)
     return encoded
+
 def replace_recursive(content: str, char: str, new_char: str):
     if char not in content:
         return content
