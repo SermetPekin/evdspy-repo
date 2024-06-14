@@ -80,7 +80,7 @@ def mock_file_items():
     random.seed(954)
     exts = ("xlsx", "mat", "m", "xml")
     folders = (".", "A", "B", "C")
-    for item in range(1000):
+    for item in range(10):
         name = get_random_hash(5)
         f = FileItem(random.choice(folders), name + "." + random.choice(exts))
         items.append(f)
