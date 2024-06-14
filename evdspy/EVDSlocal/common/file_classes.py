@@ -7,7 +7,7 @@ from evdspy.EVDSlocal.utils.utils_general import get_random_hash
 
 @dataclass
 class FileItem:
-    """Class for all files to pass all over the place"""
+    """Class for general use case"""
     dir_path: str
     file_name: str
     full_name: Path = None
