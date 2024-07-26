@@ -38,8 +38,8 @@ scratches/
 
 #Poetry
 #----------------------------------------------
-*.lock
-poetry.lock
+# *.lock
+# poetry.lock
 
 #/ PY PACKAGES --------------------------------
 
