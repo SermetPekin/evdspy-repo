@@ -34,7 +34,13 @@ check:
 	ruff check 
 	tox run 
 
-.PHONY: clean
+.PHONY: security
+security:
+	python3.11 -m pip install safety
+	python3.11 -m safety check --ignore=70612
+
+
+
 clean:
 	rm -rf $(VENV)
 	find . -type f -name "*.pyc" -delete

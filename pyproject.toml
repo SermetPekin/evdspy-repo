@@ -35,7 +35,7 @@ pytest = ">=7.0.0"
 pygments = ">=2.6.0"
 commonmark = ">=0.9.0"
 typing-extensions = { version = ">=4.0.0, <5.0", python = "<3.9" }
-black = "^24.3"
+black = ">=24.3.0"
 mypy = "^0.971"
 pytest-cov = "^3.0.0"
 attrs = "^21.4.0"

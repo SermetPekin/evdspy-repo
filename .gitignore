@@ -32,7 +32,9 @@ ignore_*/
 ignore/
 ignore*
 scratches/
-
+.DS_Store
+.github/.DS_Store
+*.DS_Store
 
 #PY PACKAGES --------------------------------
 
