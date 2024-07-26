@@ -1,17 +1,35 @@
 from pathlib import Path
 import pandas as pd
-from evdspy.EVDSlocal.index_requests.get_series_indexes import default_start_date_fnc, \
-    default_end_date_fnc, get_series
+from evdspy.EVDSlocal.index_requests.get_series_indexes import (
+    default_start_date_fnc,
+    default_end_date_fnc,
+    get_series,
+)
 from evdspy.EVDSlocal.utils.utils_general import get_env_api_key
-from evdspy.EVDSlocal.utils.utils_test import ApiClassWhileTesting, get_api_key_file, \
-    skip_if_gthub, skip_if_not_keyvalid, is_df
-from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import Frequency, freq_enum, Formulas, AggregationType, \
-    correct_types
-# from evdspy.EVDSlocal.index_requests.user_requests import
-from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
-from evdspy.EVDSlocal.index_requests.user_requests import (RequestConfig)
+from evdspy.EVDSlocal.utils.utils_test import (
+    ApiClassWhileTesting,
+    get_api_key_file,
+    skip_if_gthub,
+    skip_if_not_keyvalid,
+    is_df,
+)
+from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
+    Frequency,
+    freq_enum,
+    Formulas,
+    AggregationType,
+    correct_types,
+)
+from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing
 
-import os 
+# from evdspy.EVDSlocal.index_requests.user_requests import
+from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
+    default_start_date_fnc,
+    default_end_date_fnc,
+)
+from evdspy.EVDSlocal.index_requests.user_requests import RequestConfig
+
+import os
 
 # from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import *
 
@@ -19,6 +37,13 @@ try:
     import pytest
 except ImportError:
     pass
+
+
+@skip_if_gthub
+def test_get_apikey_while_testing():
+
+    a = get_api_key_while_testing()
+    assert a
 
 
 @skip_if_gthub
@@ -34,16 +59,16 @@ def test_ApiClassWhileTesting(capsys):
     with capsys.disabled():
         api_key = ApiClassWhileTesting().key
         # print(ApikeyClass().obscure(api_key))
-        print(Path('').absolute())
+        print(Path("").absolute())
 
 
 @skip_if_not_keyvalid
 @skip_if_gthub
 def test_get_series_bridge(capsys):
     with capsys.disabled():
-        df = get_series("bie_gsyhgycf",
-                        cache=False,
-                        api_key=get_env_api_key(check=True))
+        df = get_series(
+            "bie_gsyhgycf", cache=False, api_key=get_env_api_key(check=True)
+        )
         assert is_df(df)
 
 
@@ -65,8 +90,9 @@ def test_get_diff_series(capsys):
         TP_GSYIH15_GY_CF
         TP_GSYIH16_GY_CF
         """
-        df = get_series(template, debug=False, cache=False,
-                        api_key=get_env_api_key(check=True))
+        df = get_series(
+            template, debug=False, cache=False, api_key=get_env_api_key(check=True)
+        )
         assert is_df(df)
 
 
@@ -117,6 +143,7 @@ def test_template_series2(capsys):
 
 # @skip_if_not_keyvalid
 
+
 def test_template_series3(capsys):
     with capsys.disabled():
         balance_of_pay1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
@@ -152,11 +179,11 @@ def test_pickles():
 # def is_testing():
 #     return GithubActions().is_testing() and not key_valid()
 
+
 @skip_if_not_keyvalid
 def test_get_series2(capsys):
     with capsys.disabled():
-        df = get_series("TP.ODEMGZS.BDTTOPLAM",
-                        cache=False)
+        df = get_series("TP.ODEMGZS.BDTTOPLAM", cache=False)
         assert isinstance(df, pd.DataFrame)
 
 
@@ -176,17 +203,19 @@ def test_get_series2(capsys):
 def test_get_api_key_while_testing(capsys):
     with capsys.disabled():
         a = ApiClassWhileTesting().key
-        assert len(a) > 5 and 'lg' in a
+        assert len(a) > 5 and "lg" in a
 
 
 @skip_if_not_keyvalid
 def test_get_series(capsys):
     with capsys.disabled():
-        index = 'TP.YSSK.A1'
+        index = "TP.YSSK.A1"
         start_date = "01-01-2000"
         end_date = "01-01-2100"
         cache = True
-        df = get_series(index, start_date, end_date, cache, api_key=ApiClassWhileTesting()())
+        df = get_series(
+            index, start_date, end_date, cache, api_key=ApiClassWhileTesting()()
+        )
         print(df)
         assert is_df(df)
 
@@ -201,24 +230,26 @@ def test_aggr_types(capsys):
     """
     cache = True
     with capsys.disabled():
-        u1 = RequestConfig(balance_of_pay1,
-                           frequency="weekly",
-                           start_date=default_start_date_fnc(),
-                           end_date=default_end_date_fnc(),
-                           aggregation=("avg",),
-                           # proxy="http://127.0.0.1:8000",
-                           # proxies={"http": "http://127.0.0.1:8000"},
-                           cache=cache,
-                           )
-        u2 = RequestConfig(balance_of_pay2,
-                           frequency="weekly",
-                           start_date=default_start_date_fnc(),
-                           end_date=default_end_date_fnc(),
-                           aggregation=("avg",),
-                           # proxy="http://127.0.0.1:8000",
-                           # proxies={"http": "http://127.0.0.1:8000"},
-                           cache=cache,
-                           )
+        u1 = RequestConfig(
+            balance_of_pay1,
+            frequency="weekly",
+            start_date=default_start_date_fnc(),
+            end_date=default_end_date_fnc(),
+            aggregation=("avg",),
+            # proxy="http://127.0.0.1:8000",
+            # proxies={"http": "http://127.0.0.1:8000"},
+            cache=cache,
+        )
+        u2 = RequestConfig(
+            balance_of_pay2,
+            frequency="weekly",
+            start_date=default_start_date_fnc(),
+            end_date=default_end_date_fnc(),
+            aggregation=("avg",),
+            # proxy="http://127.0.0.1:8000",
+            # proxies={"http": "http://127.0.0.1:8000"},
+            cache=cache,
+        )
         assert u1 == u2
 
 
@@ -228,13 +259,31 @@ def test_correct(capsys):
         assert Formulas.level.value == 0
         assert Formulas.from_str("level").value == 0
         assert correct_types("level", Formulas) == 0
-        assert correct_types(("level", "level",), enum_class=Formulas) == (0, 0,)
+        assert correct_types(
+            (
+                "level",
+                "level",
+            ),
+            enum_class=Formulas,
+        ) == (
+            0,
+            0,
+        )
 
 
 def test_correct2(capsys):
     with capsys.disabled():
         assert correct_types("avg", AggregationType) == "avg"
-        assert correct_types(("avg", "min",), AggregationType) == ("avg", "min",)
+        assert correct_types(
+            (
+                "avg",
+                "min",
+            ),
+            AggregationType,
+        ) == (
+            "avg",
+            "min",
+        )
 
 
 @skip_if_not_keyvalid
