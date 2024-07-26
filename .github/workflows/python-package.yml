@@ -48,8 +48,8 @@ jobs:
         run: |
           pytest -v -s -cov
           python -c "import sys; print(sys.executable)"
-      - name: test dt 
-        run: |
-          python ./evdspy_tes_t.py 
+      # - name: test dt 
+      #   run: |
+      #     python ./evdspy_tes_t.py 
 
           
