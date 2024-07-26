@@ -9,16 +9,19 @@ from evdspy.EVDSlocal.series_format.series_creator import SeriesFileFormat, crea
 from evdspy.EVDSlocal.initial.start_args import Args
 from evdspy.EVDSlocal.components.options_class import *
 from evdspy.EVDSlocal.components.evds_seri_files import test_series_
-from ..common.table import Table, Table_
+from ..common.table import Table_
 from ..initial_setup.setup_folders import check_setup
 from ..messages.error_classes import *
 from evdspy.EVDSlocal.log_classes.log_template import deb
 from evdspy.EVDSlocal.config.config import ConfigBase
-from evdspy.EVDSlocal.manual_requests.prepare import basic_for_test, PrepareUrl
+from evdspy.EVDSlocal.manual_requests.prepare import basic_for_test
 from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
 from evdspy.EVDSlocal.utils.utils_general import *
 from ..common.colors import print_with_info_style
 import typing as t
+from dataclasses import dataclass  , field 
+from typing import Optional ,List 
+
 @dataclass
 class LoadModulesClass():
     options_: Optional[any] = field(default_factory=load_options)
@@ -122,7 +125,7 @@ class LoadModulesClass():
             except Exception as exc:
                 # print(exc)
                 # print(evds)
-                deb(str(exc))
+                ...
         return True
     # def display_items(self):
     #     _ = (x.display for x in self.evds_list)
@@ -143,8 +146,7 @@ class LoadModulesClass():
                 time.sleep(wait_num.get(index, 2))
         print_and_wait()
     def display_reading_message(self, len_):
-        from ..common.colors import print_with_info_style
-        msg2 = f"""
+        msg2 = """
         collecting...
 """
         msg3 = f"""
@@ -153,7 +155,7 @@ class LoadModulesClass():
         wait_num = {0: 4, 1: 3, 2: 3}
         self.display_messages(msg2, msg3, wait_num=wait_num)
     def display_items(self, evds_list: t.List[EvdsSorguSeries]):
-        msg1 = f"""
+        msg1 = """
             Now reading `config_series.cfg` file...
         """
         self.display_messages(msg1)
@@ -195,8 +197,6 @@ class LoadModulesClass():
         config = ConfigBase()
         options_copy_file_name = config.runtime_file_name_path
         user_options_file_name = config.user_options_file_name
-        deb(config)
-        # args = Args(sys.argv)
         ps = PopulateSeries()
         series_file_was_created = False
         f = Path(ps.input_file_name)
@@ -212,11 +212,11 @@ class LoadModulesClass():
             options_file_name = "options.cfg"
             options_file_created = Path(options_file_name).is_file()
             options_display = SingletonOptions().check()
-            if not 'NEXT_RELEASE' in str(Path.cwd()):
+            if 'NEXT_RELEASE' not in str(Path.cwd()):
                 workspace = str(Path.cwd()).replace(":", ".")
             else:
                 workspace = r'test_area3'
-            hiddenok = f"hidden"
+            hiddenok = "hidden"
             if not api_key_is_ok:
                 hiddenok = ""
             msg = f"""

@@ -5,6 +5,8 @@ from evdspy.EVDSlocal.messages.error_classes import *
 from evdspy.EVDSlocal.common.files import *
 from evdspy.EVDSlocal.series_format.populate_series_helper import *
 # from evdspy.EVDSlocal.series_format.series_creator import get_approval
+from dataclasses import dataclass 
+
 NEW_LINE = "\n"
 GSEP = "--++--"
 BeginS = "#Begin_series"
@@ -63,8 +65,7 @@ class PopulateSeries:
             msg = f"{self.input_file_name} may be corrupted. You may create a new one from the menu. (create series config file)"
             print(msg )
             raise SeriesFileDoesNotExists(msg)
-        deb(f"reading :  {self.input_file_name}", f"content: {self.series_file_content}")
-        deb(f"content: {self.series_file_content}")
+
     def extract_group(self, group: str):
         return [x for x in group.split(NEW_LINE) if x != '']
     @property

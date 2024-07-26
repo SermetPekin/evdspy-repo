@@ -21,7 +21,7 @@ explanations_config = [
     f"this date will be used as start date of series {NEW_LINE} Example 19-01-2015",
     f"if not special end date for the series was given in `config_series.cfg` file "
     f"this date will be used as end date of series {NEW_LINE} Example : 19-01-2030",
-    rf"if set False it will accept absolute paths such as C:\Users\Userx . default is True to protect users other folders from polluting"
+    r"if set False it will accept absolute paths such as C:\Users\Userx . default is True to protect users other folders from polluting"
 ]
 check_funcs_options = [TrueFunc, TrueFunc, TrueFunc, TrueFunc]
 default_answers_config = ['', '', '', 'True']

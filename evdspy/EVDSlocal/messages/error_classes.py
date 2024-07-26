@@ -1,5 +1,6 @@
 
-from ..common.common_imports import *
+
+from abc import ABC   
 ###########################  Base Exception Class ###########################
 class BaseException(Exception):
     def __init__(self, message="Something happpened"):

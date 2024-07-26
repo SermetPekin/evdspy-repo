@@ -1,6 +1,6 @@
 
-from dataclasses import dataclass, field
-from typing import List, Union, Tuple
+from dataclasses import dataclass
+from typing import Union, Tuple
 from evdspy.EVDSlocal.messages.error_classes import ApiKeyNotSetError, SeriesEmptyError
 from evdspy.EVDSlocal.config.config import config
 from evdspy.EVDSlocal.requests_.real_requests import RealRequestWithParam
@@ -8,7 +8,7 @@ CANCEL_REQUEST_TEMP = config.cancel_request_temp
 def test():
     p = PrepareUrl(series=('TP_ODEMGZS_NORVEC-8',), frequency=5, api_key='api_key')
     print(p.get_data())
-from rich import print, inspect
+from rich import print
 def basic_for_test(api_key):
     url = "https://evds2.tcmb.gov.tr/service/evds/series=TP.ODEMGZS.BDTTOPLAM-TP.ODEMGZS.ABD-TP.ODEMGZS.ARJANTIN-TP.ODEMGZS.BREZILYA-TP.ODEMGZS.KANADA-TP.ODEMGZS.KOLOMBIYA-TP.ODEMGZS.MEKSIKA-TP.ODEMGZS.SILI&startDate=01-01-2019&endDate=01-12-2030&frequency=5&aggregationTypes=avg-avg-avg-avg-avg-avg-avg-avg&formulas=0-0-0-0-0-0-0-0&type=csv"
     # url = f"{url}&key={api_key}"

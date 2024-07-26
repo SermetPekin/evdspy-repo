@@ -1,8 +1,6 @@
 
 from .index_classes import GeneralIndexesCategories
 from ..components.options_class import load_options
-from ..manual_requests.prepare import PrepareUrl
-from evdspy.EVDSlocal.common.files import Write, Read
 from ..requests_.ev_request import EVRequest
 def get_categories() -> str:
     """get_categories"""

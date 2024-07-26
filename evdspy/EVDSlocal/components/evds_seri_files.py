@@ -1,20 +1,16 @@
 
 from ..common.common_imports import *
 from ..common.files import *
-from dataclasses import dataclass
-import os
-from pathlib import Path
-from evdspy.EVDSlocal.messages.error_classes import BucketFromSeriesFolderCreateError
+from dataclasses import dataclass , field 
 from evdspy.EVDSlocal.config.config import *
 from ..config.apikey_class import ApikeyClass
-from ..initial.start_args import Args
 from ..components.options_class import Options, load_options, SingletonOptions, read_user_options_on_load
-from evdspy.EVDSlocal.initial.start_options import default_data_folder_name, Default_Prefix_
+from evdspy.EVDSlocal.initial.start_options import Default_Prefix_
 from evdspy.EVDSlocal.components.bucket_from_series import BucketFromSeriesFile, null_BucketFromSeriesFile
 from evdspy.EVDSlocal.components.url_class import URLClass
 from evdspy.EVDSlocal.components.api_params import Series, DateStart, DateEnd, dataTypeParam, dataTypeEnum
-from typing import Tuple, Union, List
-from rich import inspect
+from typing import Tuple , Optional 
+
 # ------------------------------------------------------------------------------
 # -------------------------------------------------EvdsSeri----------------------
 @dataclass
@@ -88,7 +84,6 @@ test_series_ = EvdsSeriesRequest(options_=load_options(), series_list=seri_evds_
 #
 # ------------------------------------------------------------------------------
 # */
-from abc import ABC, abstractmethod
 @dataclass
 class EvdsSeriesRequestWrapper():
     name: str

@@ -4,7 +4,7 @@ import typing as t
 from ..common.colors import print_with_failure_style
 from ..components.excel_class import correct_folder
 def make_date_first_column_helper(df, col_name):
-    if not col_name in df.columns:
+    if col_name not in df.columns:
         return df
     cols = [col_name] + [col for col in df if col != col_name]
     df = df[cols]

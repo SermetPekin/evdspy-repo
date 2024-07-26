@@ -2,7 +2,6 @@
 # from ..common.common_imports import *
 import time
 from dataclasses import dataclass
-from collections import namedtuple
 from typing import Callable, List, Tuple, Union
 from ..common.colors import *
 from evdspy.EVDSlocal.components.options_class import SingletonOptions
@@ -14,7 +13,6 @@ from evdspy.EVDSlocal.setup_project.user_setup_helper import series_title
 from evdspy.EVDSlocal.setup_project.user_options_config import items_from_user_config, \
     explanations_config, default_answers_config, check_funcs_options, transform_answers_options
 from evdspy.EVDSlocal.config.config import config
-from evdspy.EVDSlocal.initial.start_options import default_cache, default_end_date, default_start_date
 # ----------------------------------------------------SetupInputs---------------------------
 # -----------------------------------------------------------------------------------------
 # SetupInputsConfig = namedtuple('SetupInputsConfig', 'cache_freq gl_date_start gl_date_end')
@@ -83,7 +81,7 @@ class GetInputFromUserBase():
             return self.ask_user(msg, check_func)
         return ans
     def get_from_user(self, item, explanation, check_func):
-        window = f"*" * 50 + "\n"
+        window = "*" * 50 + "\n"
         msg = f"{window}**{item} \n {explanation} :"
         if config.current_mode_is_test:
             return 'pytest running'
@@ -145,7 +143,6 @@ def create_Input_Items(
         items=items, config_type=config_type
     )
     return GIF.process()
-from evdspy.EVDSlocal.components.evds_seri_files import EvdsSeri
 from typing import List
 from evdspy.EVDSlocal.common.folder_name_checks import check_remove_back_slash
 # -------------- GOES to Utils  ------------------------
@@ -305,7 +302,7 @@ def start_setup(
     instance.applyFunc(instance.SetupInputs(*CIS))
 # ----------------------------------------------------start_setup_series----------------------
 def start_setup_series():
-    msg = f"""
+    msg = """
     This process is going to add new series to your configuration file (config_series.cfg)....
     Program will ask couple of questions to complete your series block on your file.
     Pressing `Enter` will accept for default values for the questions.
@@ -319,7 +316,7 @@ def start_setup_series():
 # ----------------------------------------------------start_setup_config----------------------
 def start_setup_config(onsetup=False):
     file_name_options = "options.cfg"
-    msg = f"""
+    msg = """
         This process is going to create user options file  (options.cfg)....
         You may also update all info by opening file with your favorite file editor.
         --------------------------------------

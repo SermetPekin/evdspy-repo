@@ -1,5 +1,4 @@
 
-import evdspy
 from evdspy.EVDSlocal.session.session_ import *
 from evdspy.EVDSlocal.log_classes.log_template import *
 session = get_session()

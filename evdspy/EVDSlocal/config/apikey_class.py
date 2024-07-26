@@ -1,5 +1,5 @@
 from ..common.common_imports import *
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Union
 from enum import Enum, auto
 from ..config.config import config
@@ -63,7 +63,7 @@ class ApikeyClass(object):
         cls.current_key_using: Union[str, bool] = cls.APIKEYDict.runtime_apikey.value
 
     def no_api_msg(self):
-        template = f"""
+        template = """
         Api Key not set yet.
         --------------------------------------------
         how to set api key?

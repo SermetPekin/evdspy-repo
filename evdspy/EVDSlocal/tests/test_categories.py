@@ -1,7 +1,6 @@
 
 from ..index_requests.categories import get_categories
 from ..index_requests.datagroups import get_datagroups
-from ..tests.core_options_test import verbose
 # def test_get_categories(capsys):
 #     with capsys.disabled():
 #         a = get_categories()

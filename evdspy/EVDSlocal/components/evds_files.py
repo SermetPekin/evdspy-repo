@@ -8,14 +8,17 @@ from ..requests_.request_error_classes import Internal
 from ..utils.utils_general import *
 from ..requests_.my_cache import MyCache
 from ..components.options_class import Options, load_options
-from ..components.evds_seri_files import EvdsSeriesRequest, test_series_
+from ..components.evds_seri_files import EvdsSeriesRequest
 from evdspy.EVDSlocal.requests_.ev_request import EVRequest
 from ..config.credentials_file import Credentials
 from ..initial.start_args import *
 from ..config.apikey_class import *
 from dataclasses import dataclass
-from typing import Union, List, Tuple
+from typing import Tuple
 from ..common.colors import *
+from abc import ABC 
+
+import os 
 # ------------------------------------------------------------------------------
 m_cache = MyCache()
 number = 0
@@ -30,7 +33,6 @@ from evdspy.EVDSlocal.components.evds_seri_files import BucketFromSeriesFile
 from evdspy.EVDSlocal.components.request_or_cache import RequestOrCacheResultInfo
 from evdspy.EVDSlocal.state.current_state import CurrentState
 from evdspy.EVDSlocal.components.url_class import URLClass
-from evdspy.EVDSlocal.components.api_params import Series, DateStart, DateEnd
 current_state = CurrentState()
 class DfColumnsDoesNotMatch(BaseException):
     """DfColumnsDoNotMatch"""
@@ -232,7 +234,6 @@ ___________________
         """not implemented"""
         # return self.convert_csv_df(self.get_json(self.create_url()))
     def save_excel(self, file_name=None):
-        deb("not writing... evds_files. 175")
         return True
 #   ----------------------------------------------------------    / EvdsSorgu
 # ------------------------------------------------------------------------------

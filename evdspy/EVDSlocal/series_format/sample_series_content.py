@@ -1,5 +1,5 @@
 
-sample_series = f"""
+sample_series = """
 file:visitors
 subject:visitors
 TP.ODEMGZS.BDTTOPLAM

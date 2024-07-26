@@ -1,5 +1,5 @@
 
-from dataclasses import dataclass, field
+from dataclasses import field
 from enum import Enum
 from evdspy.EVDSlocal.components.url_class import URLClass
 class RequestType(Enum):

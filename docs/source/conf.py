@@ -51,13 +51,10 @@ source_suffix = {
     '.md': 'markdown',
 }
 
-import os
-import inspect
 from sphinx.util import logging
 
 logger = logging.getLogger(__name__)
 
-import time
 
 
 def linkcode_resolve(domain, info):

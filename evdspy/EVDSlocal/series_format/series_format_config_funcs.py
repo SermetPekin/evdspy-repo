@@ -37,7 +37,6 @@ def folder_format_check(folder: str):
         return True
         # print(f"checking ... {folder}")
     console.print(f"checked foldername :  {folder}", style="warning")
-    import string
     if isinstance(folder, str) and is_relative(folder):
         return True
     print("[danger]folder name does not fit to format[/danger]")

@@ -1,6 +1,5 @@
 
 from ..common.common_imports import *
-from collections import namedtuple
 from dataclasses import dataclass, field
 from ..config.config import *
 from evdspy.EVDSlocal.console.screen import *
@@ -10,7 +9,7 @@ from ..common.colors import *
 indent = " " * 15
 # MenuItem = namedtuple("MenuItem", "func disp sleeptime clear")
 # MenuItem = namedtuple("MenuItem", "func disp sleeptime clear")
-from typing import Union, List, Tuple, Callable
+from typing import Union, List, Callable
 do_nothing = lambda: True
 @dataclass
 class MenuItem:
@@ -45,7 +44,7 @@ class MenuItem:
 class MenuMaker:
     menu_items: field(default_factory=List[MenuItem])
     # menu_items_display : field(default_factory=list)
-    message: str = "\n" + " " * 25 + f"Selection ? "
+    message: str = "\n" + " " * 25 + "Selection ? "
     exit_item: bool = True
     exit_: bool = False
     exit_menu_call_back: Callable = do_nothing

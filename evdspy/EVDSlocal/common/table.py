@@ -28,7 +28,6 @@ class Table_:
         console.print(table)
 import typing as t
 from typing import List
-import typing as t
 @dataclass
 class Table2_:
     def get_color(self, items):

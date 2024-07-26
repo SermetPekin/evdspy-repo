@@ -2,12 +2,7 @@
 #### 1 ###############
 import base64
 import functools
-import locale
 # from babel.numbers import format_decimal
-import pickle
-import functools
-import weakref
-import functools
 import os.path
 from pathlib import Path
 import sys
@@ -21,7 +16,8 @@ from datetime import date
 today = date.today()
 stoday = str(today)
 import time
-import os
+import os 
+
 def ls():
     print(os.popen("ls -l").read())
 
@@ -58,7 +54,6 @@ def get_env_api_key(check=False):
 def do_if_callable(f):
     if callable(f):
         f()
-from pathlib import Path
 def URL_temizle(url: str):
     import string
     return url.translate({ord(c): None for c in string.whitespace})

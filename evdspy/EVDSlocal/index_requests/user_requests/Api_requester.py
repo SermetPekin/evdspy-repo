@@ -1,6 +1,7 @@
 # ...........................................................................................
 import traceback
 import requests
+from typing import Any 
 # ...........................................................................................
 from evdspy.EVDSlocal.index_requests.user_requests.Url_builder import UrlBuilder 
 from evdspy.EVDSlocal.index_requests.user_requests.Proxy_manager import ProxyManager 
@@ -80,7 +81,7 @@ class ApiRequester:
         response = False
         try:
             response = request_func(self.url)
-        except Exception as exc:
+        except Exception:
             traceback.print_exc()
         self.response = response
         if not self.is_response_ok(response):

@@ -17,12 +17,8 @@ def check_setup():
     return not check_folders_setup_necessary()
 def setup_folders():
     if not check_folders_setup_necessary():
-        deb(f"initial folders checked...{dirs} ")
-        # print_with_success_style("Setup => checked...")
-        # time.sleep(1)
         return
     for item in dirs:
-        # folder_ = cur_folder.absolute() / ".." / item
         folder_ = cur_folder.absolute() / item
         print_with_creating_style(f"Creating directory...{folder_}")
         create_directory(str(folder_))

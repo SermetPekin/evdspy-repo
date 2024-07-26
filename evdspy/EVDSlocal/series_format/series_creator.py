@@ -8,6 +8,8 @@ from evdspy.EVDSlocal.series_format.populate_series import *
 from evdspy.EVDSlocal.config.config import default_series_file_name
 import random
 from ..common.colors import *
+from typing   import List 
+
 GSEP = "--"
 # ------------------------------------------v1.0 refactored------------------------------------------------------
 from pathlib import Path
@@ -40,7 +42,7 @@ def series_file_info(file_name):
                           f"`{file_name}` you may change this file accordingly")
 from evdspy.EVDSlocal.components.bucket_from_series import BucketFromSeriesFile
 def get_locked_file_title():
-    title = f"""
+    title = """
 #package : evdspy
 #author  : sermet.pekin
 #Series_config_file_LOCKED :Please do not modify.

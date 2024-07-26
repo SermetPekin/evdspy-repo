@@ -7,6 +7,8 @@
 from ..common.common_imports import *
 from pathlib import Path
 import sys
+import os 
+
 def check_if_this_is_pytest():
     def check():
         path_ = Path(sys.argv[0])
@@ -46,7 +48,6 @@ if True:
     default_end_date = "01-12-2030"
     """default_start_date"""
     default_start_date = "01-01-2019"
-    import os
     # USERNAME = os.getenv("USERNAME")  # or hard coded "Username"
 #
 #

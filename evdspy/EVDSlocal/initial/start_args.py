@@ -1,7 +1,8 @@
 
 from ..common.common_imports import *
-from dataclasses import dataclass
-from ..log_classes.log_template import get_debugger
+from dataclasses import dataclass , field 
+from typing import TypeVar 
+
 Name_or_False = TypeVar('Name_or_False', str, bool)
 from typing import Optional
 @dataclass
@@ -26,6 +27,3 @@ class Args:
         return False
 import sys
 test_args = Args(sys.argv)
-deb("test_args" + ",".join(list(sys.argv)))
-# print(debug.log_file_name, debug.log_file_path)
-# print(debug)

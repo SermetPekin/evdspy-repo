@@ -1,5 +1,5 @@
 
-current_menu_appears = f"""
+current_menu_appears = """
         Quickly setup your work environment run commands from the menu.
         Currently you may choose one below or create your own functions and
         add to this list following instructions on Readme.md

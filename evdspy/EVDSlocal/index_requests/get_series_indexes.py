@@ -7,11 +7,7 @@ from evdspy.EVDSlocal.index_requests.user_requests.Request_config import Request
 
 def initial_api_process_when_given(api_key: Optional[str] = None) -> None:
     from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
-    from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
 
-    from evdspy.EVDSlocal.index_requests.user_requests import RequestConfig, ProxyManager, \
-        UrlBuilder, DataProcessor
-    from evdspy.EVDSlocal.index_requests.user_requests.Api_requester import ApiRequester
 
 
     if api_key is None:
@@ -23,7 +19,6 @@ def initial_api_process_when_given(api_key: Optional[str] = None) -> None:
 from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
     default_start_date_fnc,
     default_end_date_fnc,
-    correct_types,
 )
 
 def get_series(
@@ -79,8 +74,6 @@ def get_series(
     ValueError
         If an invalid API key is provided or required parameters are missing.
     """
-    from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
-    from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
 
     from evdspy.EVDSlocal.index_requests.user_requests import RequestConfig, ProxyManager, \
         UrlBuilder, DataProcessor

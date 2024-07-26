@@ -1,5 +1,5 @@
 
-site_visitors = rf"""
+site_visitors = r"""
 #Series_config_file
 E V D S P Y  _  C O N F I G  _  F I L E  ---------------------------------------------
 #

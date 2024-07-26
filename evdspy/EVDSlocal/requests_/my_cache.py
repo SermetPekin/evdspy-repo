@@ -1,7 +1,9 @@
 
-# from functools import lru_cache
 import shutil
-from ..common.common_imports import *
+from enum import Enum 
+from dataclasses import dataclass
+from datetime import datetime 
+import requests 
 from evdspy.EVDSlocal.utils.utils_general import *
 from ..components.api_params import get_enum_with_value
 from ..components.options_class import load_options, SingletonOptions
@@ -9,6 +11,9 @@ from ..common.url_clean import remove_api_key
 from evdspy.EVDSlocal.series_format.stats.save_stats_of_requests import Report
 from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
 from typing import Union
+import os 
+import pickle 
+
 # -----------------------------------------------------------------------------
 test_result_file_name = str(get_current_dir() / ".." / "requests_" / "test_reg_result")
 arg_sep = "_argSEP_"
@@ -50,7 +55,6 @@ class MyCache:
         if ApikeyClass().now_testing_is_key_is_valid:
             msg = "since this looks like a test, Program will be changing cache rulse to nocahce at all..."
             print(msg)
-            deb(msg)
     def report(self, content=None):
         if content is None:
             content = f"""
@@ -89,7 +93,8 @@ class MyCache:
         parameters = arg_sep.join(safe_list)
         return parameters
     def get_hash_alt1(self, st):
-        import hashlib, base64
+        import hashlib
+        import base64
         d = hashlib.md5(bytes(st, encoding="utf-8")).digest()
         d = base64.urlsafe_b64encode(d).decode('ascii')
         return d
@@ -138,7 +143,6 @@ def load_pickle(file_name: str, verbose=False) -> Union[bool, requests.models.Re
     else:
         print("<CacheFound>")
     return test_dict_reconstructed
-import shutil
 def delete_cache_folder():
     path = Path(pickle_folder)
     if not path.is_dir():

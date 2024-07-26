@@ -18,7 +18,7 @@ items_from_user_series = [
         "AggregateType",
 ]
 default_prefix = "EVPY_"
-freq = f"""
+freq = """
 Daily: 1
 Business: 2
 Weekly(Friday): 3
@@ -39,7 +39,7 @@ frequency_dict = {
         8: 'Annual',
 }
 default_freq = "5"
-formulas_ = f"""
+formulas_ = """
 Level: 0
 Percentage change: 1
 Difference: 2
@@ -62,7 +62,7 @@ formulas_dict = {
         8: "Moving Sum",
 }
 default_formulas_ = "0"
-AggregateType_ = f"""
+AggregateType_ = """
 Average: avg,
 Minimum: min,
 Maximum: max

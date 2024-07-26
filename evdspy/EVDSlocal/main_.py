@@ -46,7 +46,7 @@ def do_start(actions: t.Tuple[t.Callable]):
     if not check_folders_setup_necessary():
         for action in actions:
             if callable(action):
-                deb(f"....setting up....starting..{action.__name__}")
+                
                 action()
 def initial_checks_after_first_run():
     """initial_checks_after_first_run"""

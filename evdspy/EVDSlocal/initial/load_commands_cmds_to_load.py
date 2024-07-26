@@ -125,7 +125,7 @@ def check_if_api_set_before_get():
     if not check_api_key():
         print_with_failure_style(api_key_not_set_msg)
         wait(2)
-        if not get_input("yes/no ?  ").lower() in ["yes", "y"]:
+        if get_input("yes/no ?  ").lower() not in ["yes", "y"]:
             wait(2)
             return
         # below the function checks
@@ -160,7 +160,6 @@ def get_df_test():
     return LoadModulesClass().evds_list[0].df
 from ..config.apikey_class import *
 from evdspy.EVDSlocal.requests_.lower_energy import *
-from rich import inspect
 from typing import List
 from evdspy.EVDSlocal.index_requests.datagroups import get_and_process_datagroups_with_code, \
     get_all_groups, get_datagroups_with_code
@@ -256,9 +255,9 @@ def check_api_key_with_low_energy(api_key_from_user):
     # check api key with cache
     # send => basic_for_test > performance.lower_energy
     if not apikey_works(api_key_from_user):
-        print_with_failure_style(f"Api key did not work! ")
+        print_with_failure_style("Api key did not work! ")
         return False
-    print_with_success_style(f"Api key works")
+    print_with_success_style("Api key works")
     return True
 def obvious_checks_of_api_key(api_key: str) -> bool:
     conds: tuple = (isinstance(api_key, str), not len(api_key) < 10,)
@@ -339,7 +338,6 @@ def version():
     print_with_success_style(logo_version)
     print_with_info_style(reminder)
 def py_version():
-    from platform import python_version
     #
     # print_with_creating_style(sys.version_info)
     # print_with_creating_style(python_version())
@@ -369,7 +367,7 @@ def remove_cache():
           "this function was added to force making new requests ignoring recent ones. \n" \
           "Proceed? (Y/n)"
     ans = get_input(msg)
-    if not ans in ["y", "Y"]:
+    if ans not in ["y", "Y"]:
         print_with_failure_style("exited without removing the cache")
         return
     print_with_success_style("removing cache...")

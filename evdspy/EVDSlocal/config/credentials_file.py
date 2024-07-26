@@ -3,10 +3,12 @@ from ..common.common_imports import *
 from dataclasses import dataclass, field
 from ..utils.utils_general import *
 from ..components.options_class import Options
-from ..messages.error_classes import OptionsFileNotLoadedError
 from evdspy.EVDSlocal.initial_setup.api_key_save import get_api_key_from_file_improved
 from evdspy.EVDSlocal.config.apikey_class import *
 from ..components.options_class import load_options
+from typing import Optional 
+
+
 def get_if_attr_exist(pred, f):
     if pred:
         return f(pred)

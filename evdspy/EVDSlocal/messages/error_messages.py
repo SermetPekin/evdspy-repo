@@ -1,7 +1,7 @@
 
 from .help_messages import *
 from .cmd_formats import *
-api_key_not_set_msg = f"""
+api_key_not_set_msg = """
         ---------------------------------------------------------------
                WARNING
         ---------------------------------------------------------------
@@ -35,6 +35,6 @@ you_need_to_run_setup_options = f"""
 {setup_now_command}
 """
 copying_options_msg = "Found an options file... Trying to copy it to temporary env."
-series_file_not_found_error_msg = f"""
+series_file_not_found_error_msg = """
 create_series_file
 """

@@ -1,12 +1,13 @@
 
 import functools
-import random
 import time
+import os 
+
 # --------------------------------------------------------------------------------------
 if __name__ != "__main__":
     from evdspy.EVDSlocal.common.files import WriteBytes, ReadBytes, WriteBytesAdd
-    from evdspy.EVDSlocal.config.config import ConfigBase, config
-    from evdspy.EVDSlocal.manual_requests.prepare import basic_for_test, PrepareUrl
+    from evdspy.EVDSlocal.config.config import config
+    from evdspy.EVDSlocal.manual_requests.prepare import basic_for_test
 else:
     def WriteBytes(file_name: str, content_bytes: bytes):
         with open(file_name, 'wb+') as f:
@@ -175,7 +176,7 @@ def apikey_works_helper(api_key, check_func_request: Callable = basic_for_test, 
         print_with_creating_style("first part ", api_key, status_code_new)
     else:
         if api_key in common_test_words:
-            print_with_failure_style(f"api key does not look like a key. Returning...")
+            print_with_failure_style("api key does not look like a key. Returning...")
             return apikey_works_helper(api_key, testing_=True)
             # raise "cannot make a new request"
         # temp test forced

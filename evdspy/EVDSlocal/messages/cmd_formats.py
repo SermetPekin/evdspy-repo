@@ -1,5 +1,5 @@
 
-setup_now_command = f""" \
+setup_now_command = """ \
     from evdspy.main import *
     setup_now()
 """

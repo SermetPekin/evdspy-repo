@@ -1,6 +1,6 @@
 
 from evdspy.EVDSlocal.common.files import *
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 @dataclass
 class Report:

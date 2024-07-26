@@ -1,5 +1,4 @@
 
-import evdspy
 from evdspy.EVDSlocal.main_ import *
 def test_load_general():
     assert callable(setup_series), "setup_series is not callable"

@@ -1,19 +1,17 @@
 from pathlib import Path
-from typing import Any
 import pandas as pd
 from evdspy.EVDSlocal.index_requests.get_series_indexes import default_start_date_fnc, \
     default_end_date_fnc, get_series
-from evdspy.EVDSlocal.utils.github_actions import GithubActions
 from evdspy.EVDSlocal.utils.utils_general import get_env_api_key
-from evdspy.EVDSlocal.utils.utils_test import get_api_key_while_testing, ApiClassWhileTesting, get_api_key_file, \
+from evdspy.EVDSlocal.utils.utils_test import ApiClassWhileTesting, get_api_key_file, \
     skip_if_gthub, skip_if_not_keyvalid, is_df
 from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import Frequency, freq_enum, Formulas, AggregationType, \
     correct_types
 # from evdspy.EVDSlocal.index_requests.user_requests import
-from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
 from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import default_start_date_fnc, default_end_date_fnc
-from evdspy.EVDSlocal.index_requests.user_requests import (ProxyManager, UrlBuilder, UrlSeries,
-                                                           ApiRequester, DataProcessor, RequestConfig)
+from evdspy.EVDSlocal.index_requests.user_requests import (RequestConfig)
+
+import os 
 
 # from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import *
 
@@ -148,7 +146,6 @@ def test_freq(capsys):
 
 
 def test_pickles():
-    import os
     os.makedirs("pickles", exist_ok=True)
 
 
@@ -174,7 +171,6 @@ def test_get_series2(capsys):
 #             end_date="01-01-2030",
 #         )
 #         print(df)
-import os
 
 
 def test_get_api_key_while_testing(capsys):

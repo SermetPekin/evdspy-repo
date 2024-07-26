@@ -3,7 +3,7 @@ import time
 import pandas as pd
 from ..components.evds_files import DfColumnsDoesNotMatch
 from ..config.config import config
-from ..common.colors import print_with_failure_style, print_with_updating_style, print_with_info_style
+from ..common.colors import print_with_failure_style, print_with_info_style
 from .data_models import *
 from dataclasses import dataclass
 @dataclass

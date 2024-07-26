@@ -6,7 +6,7 @@ from evdspy import setup
 
 from evdspy.EVDSlocal.requests_.real_requests import *
 # ...........................................................................................
-from typing import Union, Callable
+from typing import Callable , Any 
 
 
 

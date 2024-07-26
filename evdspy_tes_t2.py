@@ -1,6 +1,5 @@
 
 from evdspy import *
-from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
 def get_api_key():
     import os
     return os.getenv("EVDS_API_KEY")

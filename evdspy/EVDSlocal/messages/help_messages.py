@@ -1,7 +1,6 @@
 
 from .cmd_formats import *
 from ..common.common_imports import *
-from ..common.files import Read, ReadBytes
 def display_help_messages_md():
     def ReadLocal(filename: str):
         long_des = ""
@@ -92,7 +91,7 @@ menu()                         # to see the menu()
 from rich import print
 from ..common.colors import *
 def welcome_message():
-    msg = f"""
+    msg = """
     Welcome to evsdpy python interface...
     --------------------------------------------------------------------------------------------------
     This message appears when you use evdspy as a command line prompt.

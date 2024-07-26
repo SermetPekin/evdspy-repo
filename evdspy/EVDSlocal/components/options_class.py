@@ -1,7 +1,7 @@
 from evdspy.EVDSlocal.common.files import Read
 from pathlib import Path
 
-from typing import Union, List
+from typing import Union
 
 """
 Usage :

@@ -1,9 +1,6 @@
 
 import pandas as pd
-from .datagroups_initial import data_models_dict, data_strategy
 from .index_classes import GeneralIndexesDatagroups
-from .error_classes_index import ContentFunctionError
-from .df_operations import DFOperations
 from ..common.table import Table2_
 from ..components.options_class import SingletonOptions
 from ..config.config import ConfigBase

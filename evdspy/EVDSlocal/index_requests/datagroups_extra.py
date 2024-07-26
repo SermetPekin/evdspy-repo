@@ -1,10 +1,7 @@
 
 from rich import inspect
-from .datagroups_initial import data_models_dict , data_strategy , GID_json , GID_csv
-from .index_classes import  GeneralIndexesDatagroups
-from .error_classes_index import ContentFunctionError
-from .df_operations import DFOperations
-from evdspy.EVDSlocal.common.files import Write, Read
+from .datagroups_initial import data_strategy
+from evdspy.EVDSlocal.common.files import Write
 import typing as t
 import json
 from .datagroups import get_datagroups_df

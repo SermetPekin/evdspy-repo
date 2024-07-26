@@ -2,17 +2,16 @@
 #   ----------------------------------------------------------      ExcelSaveClass
 from dataclasses import dataclass
 import pandas as pd
-from evdspy.EVDSlocal.common.colors import print_with_creating_style, print_with_failure_style, \
+from evdspy.EVDSlocal.common.colors import print_with_failure_style, \
     print_excel_created_style
 from evdspy.EVDSlocal.utils.utils_general import *
 from typing import List
 from evdspy.EVDSlocal.common.common_imports import *
 def replace_all(name, char, nchar):
-    if not char in name:
+    if char not in name:
         return name
     name = name.replace(char, nchar)
     return replace_all(name, char, nchar)
-import time
 def name_ext_format(name, ext):
     if "." + ext in name:
         return Path(f"{name}")

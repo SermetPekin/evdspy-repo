@@ -1,5 +1,4 @@
 
-from evdspy.EVDSlocal.messages.error_classes import ApiKeyNotSetError
 class BaseException_Request(Exception):
     """BaseException_Request"""
 class Req_NotFound(BaseException_Request):
