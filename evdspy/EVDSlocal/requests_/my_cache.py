@@ -18,7 +18,9 @@ import pickle
 test_result_file_name = str(get_current_dir() / ".." / "requests_" / "test_reg_result")
 arg_sep = "_argSEP_"
 p = Path()
-pickle_folder = p.absolute() / 'pickles'
+# pickle_folder = p.absolute() / 'pickles'
+pickle_folder = Path.home() / ".cache" / "evdspy"
+
 # -----------------------------------------------------------------------------
 class CacheDecider(Enum):
     day = date.today()
