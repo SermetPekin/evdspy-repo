@@ -220,10 +220,11 @@ class LoadModulesClass():
             hiddenok = "hidden"
             if not api_key_is_ok:
                 hiddenok = ""
-            msg = rf"""
+            # [{str(get_cache_folder()).replace(":", " ")}]
+            msg = f"""
 Workspace : {workspace}
 Folders created          :{folders_ok}
-Cache folder was created :{cache_folder_ok}  [{str(get_cache_folder()).replace(":", " ")}]
+Cache folder was created :{cache_folder_ok}  
 Series file was created  :{series_file_was_created} {indent} {ps.input_file_name}
 Options file was created :{options_file_created} {indent} {options_file_name}
 Api key was set          :{api_key_is_ok} {indent} {hiddenok}
