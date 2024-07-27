@@ -1,6 +1,3 @@
-
-# -------------------------------------------------------------------------
-# from evdspy.EVDSlocal.before_main_ import *
 from evdspy.EVDSlocal.components.evds_files import EvdsSorguSeries
 from evdspy.EVDSlocal.components.evds_seri_files import EvdsSeri, EvdsSeriesRequest, EvdsSeriesRequestWrapper
 from evdspy.EVDSlocal.series_format.populate_series import PopulateSeries
@@ -21,7 +18,7 @@ from ..common.colors import print_with_info_style
 import typing as t
 from dataclasses import dataclass  , field 
 from typing import Optional ,List 
-
+from .cache_folder import get_cache_folder
 @dataclass
 class LoadModulesClass():
     options_: Optional[any] = field(default_factory=load_options)
@@ -211,6 +208,10 @@ class LoadModulesClass():
         def display():
             options_file_name = "options.cfg"
             options_file_created = Path(options_file_name).is_file()
+
+            cache_folder_ok = get_cache_folder().is_dir()
+
+
             options_display = SingletonOptions().check()
             if 'NEXT_RELEASE' not in str(Path.cwd()):
                 workspace = str(Path.cwd()).replace(":", ".")
@@ -219,9 +220,10 @@ class LoadModulesClass():
             hiddenok = "hidden"
             if not api_key_is_ok:
                 hiddenok = ""
-            msg = f"""
+            msg = rf"""
 Workspace : {workspace}
 Folders created          :{folders_ok}
+Cache folder was created :{cache_folder_ok}  [{str(get_cache_folder()).replace(":", " ")}]
 Series file was created  :{series_file_was_created} {indent} {ps.input_file_name}
 Options file was created :{options_file_created} {indent} {options_file_name}
 Api key was set          :{api_key_is_ok} {indent} {hiddenok}
