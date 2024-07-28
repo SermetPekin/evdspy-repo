@@ -13,8 +13,9 @@
 ### api_key
 
 ### .env file 
-    You may create a .env file in your work environment and write your api key as follows.
-    Script will automaticall load your api key on each call. 
+
+You may create a .env file in your work environment and write your api key as follows.
+Script will load your api key from this file on load if available. 
 
 ```bash 
     #.env file  
