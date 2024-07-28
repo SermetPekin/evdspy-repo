@@ -10,7 +10,7 @@
 
 [evdspyChat](https://evdspychat-b11f96868cb6.herokuapp.com/)
 
-[tellme](https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02)](https://evdspychat-b11f96868cb6.herokuapp.com/)
+![tellme](https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02)](https://evdspychat-b11f96868cb6.herokuapp.com/)
 
 
 ## api_key
