@@ -13,12 +13,15 @@ Api Key is not required for only evdspy documentation related questions.
 [evdspyChat](https://evdspychat-b11f96868cb6.herokuapp.com/)
 
 [![tellme](https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02)](https://evdspychat-b11f96868cb6.herokuapp.com/)
-https://evdspychat-b11f96868cb6.herokuapp.com/
-https://evdspychat-b11f96868cb6.herokuapp.com/
+ 
+
+[![gold](https://github.com/user-attachments/assets/3e5d3ab4-df41-4d34-8e2a-e1ca3d19a190)](https://evdspychat-b11f96868cb6.herokuapp.com/)
+
+
+
+## api_key usage with evdspy python package
 
     api key will be read from .env file on load if available.  
-
-## api_key
 
 ### .env file  [Alternative 1] 
 
