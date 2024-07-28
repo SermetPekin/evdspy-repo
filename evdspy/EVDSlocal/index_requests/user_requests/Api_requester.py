@@ -54,6 +54,8 @@ class ApiRequester:
     def get_api_key(self, check=True) -> str:
         if PytestTesting().is_testing() or GithubActions().is_testing():
             api_key = self.get_api_key_while_testing()
+            if not api_key:
+                api_key = ApikeyClass().get_valid_api_key(check=check) 
         else:
             api_key = ApikeyClass().get_valid_api_key(check=check)
         return api_key

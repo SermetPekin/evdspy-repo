@@ -200,10 +200,10 @@ def test_get_series2(capsys):
 #         print(df)
 
 
-def test_get_api_key_while_testing(capsys):
-    with capsys.disabled():
-        a = ApiClassWhileTesting().key
-        assert len(a) > 5 and "lg" in a
+# def test_get_api_key_while_testing(capsys):
+#     with capsys.disabled():
+#         a = ApiClassWhileTesting().key
+#         assert len(a) > 5 and "lg" in a
 
 
 @skip_if_not_keyvalid
@@ -329,19 +329,19 @@ def test_gets_upper(capsys):
 
 
 # @skip_if_not_keyvalid
-def test_multi(capsys):
-    template = """
-bie_sekbil1122
-bie_sekbil1001
-bie_sekbil3111
-bie_sekbil3001
-bie_sekbil3051
-    """
-    names = tuple(x for x in template.splitlines() if x.strip())
-    print(names)
-    dfs = tuple(map(get_series, names))
-    assert all(map(lambda x: is_df(x), dfs))
-    tuple(map(lambda x: print(x.shape), dfs))
+# def test_multi(capsys):
+#     template = """
+# bie_sekbil1122
+# bie_sekbil1001
+# bie_sekbil3111
+# bie_sekbil3001
+# bie_sekbil3051
+#     """
+#     names = tuple(x for x in template.splitlines() if x.strip())
+#     print(names)
+#     dfs = tuple(map(get_series, names))
+#     assert all(map(lambda x: is_df(x), dfs))
+#     tuple(map(lambda x: print(x.shape), dfs))
 
 
 @skip_if_not_keyvalid

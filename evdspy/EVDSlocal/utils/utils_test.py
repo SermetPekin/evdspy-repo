@@ -16,6 +16,8 @@ except Exception:
 
 def get_api_key():
     import os
+    from dotenv import load_dotenv 
+    load_dotenv()
     return os.getenv("EVDS_API_KEY")
 
 
