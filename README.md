@@ -12,7 +12,7 @@
 > ! get_series function can be used for both datagroups and series
 ## api_key
 
-### .env file  [Alternative 1 ] 
+### .env file  [Alternative 1] 
 
 You may create a .env file in your work environment and write your api key as follows.
 Script will load your api key from this file on load if available. 
@@ -22,7 +22,7 @@ Script will load your api key from this file on load if available.
     EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
 ```
 
-### save command [Alternative 2 ]
+### save command [Alternative 2]
 api_key will be saved to a file if it was given to get_series function. It will ignore
 later calls if it was saved before.
 Alternatively save function can be used.
@@ -37,7 +37,7 @@ from evdspy import save
 save("MyApiKey")
 ```
 
-### api_key inside get_series function [Alternative 3 ]
+### api_key inside get_series function [Alternative 3]
 
 
 
