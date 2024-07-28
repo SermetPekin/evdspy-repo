@@ -28,7 +28,9 @@ class ApiKeyDict:
     def __init__(self):
         self.runtime_apikey = ApiKeyValue("runtime", False, ApiKeyType.runtime)
         self.from_file_apikey = ApiKeyValue("fromfile", False, ApiKeyType.from_file)
-        self.from_file_options_api_key = ApiKeyValue("fromfile_options", False, ApiKeyType.from_file_options)
+        self.from_file_options_api_key = ApiKeyValue(
+            "fromfile_options", False, ApiKeyType.from_file_options
+        )
 
     def set_value(self, type_: Union[str, ApiKeyType], value):
         if type_ in ["runtime", ApiKeyType.runtime]:
@@ -45,7 +47,7 @@ import time
 
 class ApikeyClass(object):
     def __new__(cls):
-        if not hasattr(cls, 'instance'):
+        if not hasattr(cls, "instance"):
             cls.instance = super(ApikeyClass, cls).__new__(cls)
             cls.post_init(cls)
         return cls.instance
@@ -105,6 +107,7 @@ class ApikeyClass(object):
     @staticmethod
     def obscure(key=None):
         from evdspy.EVDSlocal.utils.utils_general import encode
+
         if key is None:
             key = ApikeyClass().key
         if not isinstance(key, str):
@@ -131,7 +134,21 @@ class ApikeyClass(object):
         raise "set api not implemented"
 
     def get_api_keys(cls):
+        def get_env():
+            import os
+
+            try:
+                from dotenv import load_dotenv
+
+                load_dotenv()
+            except:
+                pass
+            api_key_env = os.getenv("EVDS_API_KEY")
+            api_key_env = api_key_env if len(str(api_key_env)) > 5 else False
+            return ApiKeyValue("dotenv", api_key_env)
+
         keys = [
+            get_env(),
             cls.instance.APIKEYDict.runtime_apikey,
             cls.instance.APIKEYDict.from_file_apikey,
             cls.instance.APIKEYDict.from_file_options_api_key,
