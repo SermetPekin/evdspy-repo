@@ -110,6 +110,11 @@ proxies = {
         }
 """
 ```
+
+## Documentation
+[Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
+
+
 ### Menu
 ```python
 from evdspy.main import menu
@@ -221,6 +226,11 @@ _________________________________
     $ evdspy save
     --------------
         asks for your api key to save a file in your environment named `APIKEY_FOLDER`
+
+## Documentation
+[Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
+
+
 ## How to get an API key?
 ***Get a CBRT EVDS API key***
 https://evds2.tcmb.gov.tr/index.php?/evds/login
