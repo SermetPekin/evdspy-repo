@@ -6,6 +6,13 @@
 ### Updated on this version
     api key will be read from .env file on load if available.  
 
+### evdspyChat application 
+
+[evdspyChat](https://evdspychat-b11f96868cb6.herokuapp.com/)
+
+![tellme](https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02)
+
+
 ## api_key
 
 ### .env file  [Alternative 1] 
