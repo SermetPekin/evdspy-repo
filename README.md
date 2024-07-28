@@ -112,6 +112,9 @@ proxies = {
 ```
 
 ## Documentation
+
+Here is the documentation for other functions and details. 
+
 [Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
 
 
@@ -228,6 +231,9 @@ _________________________________
         asks for your api key to save a file in your environment named `APIKEY_FOLDER`
 
 ## Documentation
+
+Here is the documentation for other functions and details. 
+
 [Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
 
 
