@@ -2,9 +2,23 @@ from ..common.common_imports import *
 from dataclasses import dataclass
 from typing import Union
 from enum import Enum, auto
+import os
+
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except:
+    pass
 from ..config.config import config
 
 from ..messages.error_classes import ApiKeyNotSetError
+
+
+def dot_get_env_evds():
+    api_key_env = os.getenv("EVDS_API_KEY")
+    api_key_env = api_key_env if len(str(api_key_env)) > 5 else False
+    return ApiKeyValue("dotenv", api_key_env)
 
 
 class ApiKeyType(Enum):
@@ -24,8 +38,10 @@ class ApiKeyDict:
     runtime_apikey: ApiKeyValue
     from_file_apikey: ApiKeyValue
     from_file_options_api_key: ApiKeyValue
+    dotenv_api_key: ApiKeyValue
 
     def __init__(self):
+        self.dotenv_api_key: ApiKeyValue = dot_get_env_evds()
         self.runtime_apikey = ApiKeyValue("runtime", False, ApiKeyType.runtime)
         self.from_file_apikey = ApiKeyValue("fromfile", False, ApiKeyType.from_file)
         self.from_file_options_api_key = ApiKeyValue(
@@ -134,21 +150,10 @@ class ApikeyClass(object):
         raise "set api not implemented"
 
     def get_api_keys(cls):
-        def get_env():
-            import os
-
-            try:
-                from dotenv import load_dotenv
-
-                load_dotenv()
-            except:
-                pass
-            api_key_env = os.getenv("EVDS_API_KEY")
-            api_key_env = api_key_env if len(str(api_key_env)) > 5 else False
-            return ApiKeyValue("dotenv", api_key_env)
 
         keys = [
-            get_env(),
+            # dot_get_env_evds(),
+            cls.instance.APIKEYDict.dotenv_api_key,
             cls.instance.APIKEYDict.runtime_apikey,
             cls.instance.APIKEYDict.from_file_apikey,
             cls.instance.APIKEYDict.from_file_options_api_key,
