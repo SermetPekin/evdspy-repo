@@ -1,10 +1,37 @@
-
 from enum import Enum
 from typing import Optional, Union
+import os
+
+import traceback
+
+try : 
+
+    from dotenv import load_dotenv
+    load_dotenv()
+except Exception:
+    
+    print("""[solution]
+          $ pip install python-dotenv 
+          """)
+    traceback.print_exc()
+    raise ModuleNotFoundError()
+
+
+def check_env(key_name: str, default_=None):
+    value = os.getenv(key_name)
+    if value:
+        return value
+    return default_
+
+
 def default_start_date_fnc():
-    return "01-01-2000"
+    return check_env("START_DATE", "01-01-2000")
+
+
 def default_end_date_fnc():
-    return "01-01-2100"
+    return check_env("END_DATE", "01-01-2100")
+
+
 class AggregationType(Enum):
     """
     avg : "avg"
@@ -14,14 +41,18 @@ class AggregationType(Enum):
     last : "last"
     sum : "sum"
     """
+
     avg = "avg"
     min = "min"
     max = "max"
     first = "first"
     last = "last"
     sum = "sum"
+
     def __str__(self):
         return self.value
+
+
 class Formulas(Enum):
     """Formulas
     Level: 0
@@ -34,6 +65,7 @@ class Formulas(Enum):
     Moving Average: 7
     Moving Sum: 8
     """
+
     level = 0
     percentage_change = 1
     difference = 2
@@ -43,8 +75,10 @@ class Formulas(Enum):
     difference_compared = 6
     moving_average = 7
     moving_sum = 8
+
     def __str__(self):
         return self.value
+
     @classmethod
     def from_str(cls, string: str):
         """Converts a string to a corresponding enum member."""
@@ -57,13 +91,15 @@ class Formulas(Enum):
             "percentage change compared": cls.percentage_change_compared,
             "difference compared": cls.difference_compared,
             "moving average": cls.moving_average,
-            "moving sum": cls.moving_sum
+            "moving sum": cls.moving_sum,
         }
         normalized_string = string.lower().replace("_", " ").strip()
         if normalized_string in mapping:
             return mapping[normalized_string]
         else:
             raise ValueError(f"Unknown formula type: {string}")
+
+
 class Frequency(Enum):
     daily = 1
     business = 2
@@ -74,10 +110,14 @@ class Frequency(Enum):
     semiannually = 7
     annual = 8
     annually = 8
+
     def __str__(self):
         return self.value
+
     def __call__(self, *args, **kwargs):
         return f"&frequency={self.value}"
+
+
 def freq_enum(frequency: Union[str, int]) -> str:
     def get_enum(value: str):
         obj = {
@@ -92,11 +132,15 @@ def freq_enum(frequency: Union[str, int]) -> str:
             "annually": Frequency.annually,
         }
         return obj.get(str(value).lower(), Frequency.daily)
+
     if isinstance(frequency, int):
         return f"&frequency={frequency}"
     return get_enum(frequency)()
-def correct_types(value: Optional[tuple], enum_class) -> Union[str, int, tuple ]:
-    if value is None: return value
+
+
+def correct_types(value: Optional[tuple], enum_class) -> Union[str, int, tuple]:
+    if value is None:
+        return value
     # first_type = type(next(iter(enum_class)).value)
     if isinstance(value, tuple):
         return tuple(map(lambda x: correct_types(x, enum_class), value))

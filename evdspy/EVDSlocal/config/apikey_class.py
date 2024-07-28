@@ -3,22 +3,25 @@ from dataclasses import dataclass
 from typing import Union
 from enum import Enum, auto
 import os
+import traceback
 
-try:
+try : 
+
     from dotenv import load_dotenv
-
     load_dotenv()
-except:
-    pass
+except Exception:
+    
+    print("""[solution]
+          $ pip install python-dotenv 
+          """)
+    traceback.print_exc()
+    raise ModuleNotFoundError()
 from ..config.config import config
 
 from ..messages.error_classes import ApiKeyNotSetError
 
 
-def dot_get_env_evds():
-    api_key_env = os.getenv("EVDS_API_KEY")
-    api_key_env = api_key_env if len(str(api_key_env)) > 5 else False
-    return ApiKeyValue("dotenv", api_key_env)
+
 
 
 class ApiKeyType(Enum):
@@ -32,6 +35,15 @@ class ApiKeyValue:
     name: str
     value: Union[str, bool] = False
     type_: ApiKeyType = ApiKeyType.runtime
+
+
+def dot_get_env_evds():
+    api_key_env = os.getenv("EVDS_API_KEY")
+    api_key_env = api_key_env if len(str(api_key_env)) > 5 else False
+    return ApiKeyValue("dotenv", api_key_env)
+
+
+# assert dot_get_env_evds().value
 
 
 class ApiKeyDict:
@@ -104,6 +116,8 @@ class ApikeyClass(object):
             return cls.now_testing_is_key_is_valid
         key_objs = cls.get_api_keys()
         if not key_objs:
+            print(key_objs)
+            
             if check:
                 cls.no_api_msg()
                 time.sleep(4)

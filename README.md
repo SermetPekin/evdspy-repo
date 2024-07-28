@@ -3,15 +3,20 @@
 ## Documentation
 [Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
 ## evdspy
-### Updated on this version
-    api key will be read from .env file on load if available.  
 
-### evdspyChat application 
+### Updated on this version
+
+#### evdspyChat application was added. 
+
+Api Key is not required for only evdspy documentation related questions.
 
 [evdspyChat](https://evdspychat-b11f96868cb6.herokuapp.com/)
 
 [![tellme](https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02)](https://evdspychat-b11f96868cb6.herokuapp.com/)
+https://evdspychat-b11f96868cb6.herokuapp.com/
+https://evdspychat-b11f96868cb6.herokuapp.com/
 
+    api key will be read from .env file on load if available.  
 
 ## api_key
 
