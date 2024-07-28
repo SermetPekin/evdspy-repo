@@ -4,8 +4,12 @@
 [Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
 ## evdspy
 ### Updated on this version
-    api key will be read from .env file on load if available.  
-
+    * The API key parameter has been moved to the HTTP header as required by recent updates from EDDS data provider.
+    This change enhances security by ensuring that sensitive information is not exposed in URLs.
+    * `get_series` function was added
+    * [soon will be deprecated] **get_datagroup** function will be depreciated in the future versions.
+    **get_series** function will be able to handle both series and datagroups.
+> ! get_series function can be used for both datagroups and series
 ## api_key
 
 ### .env file  [Alternative 1] 
@@ -17,13 +21,31 @@ Script will load your api key from this file on load if available.
     #.env file  
     EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
 ```
- 
 
-### api_key inside get_series function [Alternative 2]
+### save command [Alternative 2]
+api_key will be saved to a file if it was given to get_series function. It will ignore
+later calls if it was saved before.
+Alternatively save function can be used.
+#### save("MyApiKey"):
+    Program will store your api key in your environment in a safe folder
+    called APIKEY_FOLDER
+    and only use it when you run a new request which was not requested
+    recently depending on your cache preference.
+.
+```python
+from evdspy import save
+save("YOUR_API_KEY_HERE")
+```
+
+### api_key inside get_series function [Alternative 3]
+
+
 
 ```python
 from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
+# datagroup `bie_gsyhgycf`
 df1 = get_series("bie_gsyhgycf", cache=False, api_key="YOUR_API_KEY_HERE")
+# series    `TP_GSYIH01_GY_CF ...`
 template = """TP_GSYIH01_GY_CF
         TP_GSYIH02_GY_CF
         TP_GSYIH03_GY_CF
@@ -152,6 +174,118 @@ or
 ### menu()
 ![image](https://user-images.githubusercontent.com/96650846/198966008-77302f42-f8f5-430c-962d-a988abe57bb7.png)
 ![image](https://user-images.githubusercontent.com/96650846/198966318-35a8ba8b-68e9-46f9-827e-cf06377ec960.png)
+## OPTION 1
+_________________________________
+#### FROM THE CONSOLE
+    create_series_file()
+or
+    csf()
+or from selection menu choose create series file (config_series.cfg) option.
+With this command program will create file similar to below. You may later add new series info
+or modify this file or delete and create a new on from menu or console using commands summarized in this file.
+#### config_series.cfg content example
+    #Series_config_file
+    E V D S P Y  _  C O N F I G  _  F I L E  ---------------------------------------------
+    #
+    # This file will be used by evdspy package (python) in order to help updating
+    # your series.
+    # Script will be adding this file when you setup a new project.
+    # Deleting or modifying its content may require to setup configuration from the beginning
+    # ----------------------------------------------------------------------------------------
+    #
+    #About alternative params
+    # ----------------------------------------------------------------------------------------
+              Frequencies
+              -----------------
+              Daily: 1
+              Business: 2
+              Weekly(Friday): 3
+              Twicemonthly: 4
+              Monthly: 5
+              Quarterly: 6
+              Semiannual: 7
+              Annual: 8
+              `Formulas`s
+              -----------------
+              Level: 0
+              Percentage change: 1
+              Difference: 2
+              Year-to-year Percent Change: 3
+              Year-to-year Differences: 4
+              Percentage Change Compared to End-of-Previous Year: 5
+              Difference Compared to End-of-Previous Year : 6
+              Moving Average: 7
+              Moving Sum: 8
+              Aggregate types
+              -----------------
+              Average: avg,
+              Minimum: min,
+              Maximum: max
+              Beginning: first,
+              End: last,
+              Cumulative: sum
+    #Begin_series
+    ---Series---------------------------------
+    foldername : visitors\annual
+    abs_path : visitors\annual
+    subject  : visitors
+    prefix   : EVPY_
+    frequency : 8 # annually
+    formulas : 0 # Level
+    aggregateType : avg
+    ------------SERIES CODES------------------
+    TP.ODEMGZS.BDTTOPLAM
+    TP.ODEMGZS.ABD
+    TP.ODEMGZS.ARJANTIN
+    TP.ODEMGZS.BREZILYA
+    TP.ODEMGZS.KANADA
+    TP.ODEMGZS.KOLOMBIYA
+    TP.ODEMGZS.MEKSIKA
+    TP.ODEMGZS.SILI
+    ------------/SERIES CODES------------------
+    ---/Series---------------------------------
+    --++--
+    ---Series---------------------------------
+    foldername : visitors\monthly
+    abs_path : C:\Users\User\SeriesData\visitors\monthly
+    subject  : visitors
+    prefix   : EVPY_
+    frequency : 5 # Monthly
+    formulas : 0 # Level
+    aggregateType : avg
+    ------------SERIES CODES------------------
+    TP.ODEMGZS.BDTTOPLAM
+    TP.ODEMGZS.ABD
+    TP.ODEMGZS.ARJANTIN
+    TP.ODEMGZS.BREZILYA
+    TP.ODEMGZS.KANADA
+    TP.ODEMGZS.KOLOMBIYA
+    TP.ODEMGZS.MEKSIKA
+    TP.ODEMGZS.SILI
+    ------------/SERIES CODES------------------
+    ---/Series---------------------------------
+    --++--
+### initial commands
+    from evdspy import *
+#### help_evds():
+    see a list of popular commands of this package to create setup folder and files, and request data.
+        'easy_setup',
+    'setup',
+    'setup_series',
+    "setup_series_steps",
+    'help_evds',
+    'check',
+    'get',
+### help
+    'h',
+    'help_evdspy',
+    'help_',
+### series file
+    'create_series_file',
+    'csf',
+### options file
+    'create_options_file',
+    'cof'
 ### menu , console
     'console',
     'menu',
@@ -167,7 +301,7 @@ or
 #### setup()   :
     creates folders and files
     ____Folders_______________
-            `caches`
+            `pickles`
                 will be used to store some request results to ovoid redundant requests from the EVDS api
             `SeriesData`
                 to save results of requests or caches to an excel file using information on user option files
@@ -187,7 +321,33 @@ or
     # to provide other cache options such as nocache / daily / hourly you may change your
     # defaults or give arguments such as
         get()
-
+#### save("MyApiKey"):
+    Program will store your api key in your environment in a safe folder
+    called APIKEY_FOLDER
+    and only use it when you run a new request which was not requested
+    recently depending on your cache preference.
+.
+       save("MyApiKey")
+#### save()
+        When you call it without any argument, program will ask for your key and do the same
+    above
+#### create_series_file()  or csf() :
+--------------------------------
+    # creates example `config_series.cfg` file on your work environment. evdspy input file (EIF) formatted
+    # you may modify it according to your preferences.
+--------------------------------
+    create_series_file()
+    # or
+    csf()
+## Options File
+-------------------------------------------------------------------
+          #Global Options File (options.cfg)
+          # G L O B A L   O P T I O N S   F I L E   -------------------------------------------------------
+          cache_freq : daily
+          gl_date_start : 01-01-2010
+          gl_date_end : 01-12-2030
+### `create_options`
+    create_options()
 ## OPTION 2
 _________________________________
 #### FROM THE MENU
