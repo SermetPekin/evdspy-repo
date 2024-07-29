@@ -4,6 +4,10 @@
 [Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
 ## evdspy
 
+### installation
+    pip install evdspy -U
+
+    
 ### Updated on this version
 
 #### evdspyChat application was added. 
@@ -19,7 +23,7 @@ Api Key is not required for only evdspy documentation related questions.
 [![a2](https://github.com/user-attachments/assets/3e5d3ab4-df41-4d34-8e2a-e1ca3d19a190)](https://evdspychat-b11f96868cb6.herokuapp.com/)
 
 
-
+    
 ## api_key usage with evdspy python package
 
     api key will be read from .env file on load if available.  
@@ -158,9 +162,10 @@ It is a Python interface to make requests from (CBRT) EVDS API Server. Fast, eff
 Caches results to avoid redundant requests. Creates excel files reading configuration text file that can be easily
 created from the menu or console. Provides visual menu to the user. It is extendable and importable for user's own
 python projects.
-#### [Please see the disclaimer below](#Disclaimer)
+
 ### installation
-    pip install evdspy
+    pip install evdspy -U
+
 ### importing
     from evdspy import *
     check()
