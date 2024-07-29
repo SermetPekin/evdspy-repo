@@ -14,24 +14,9 @@ Api Key is not required for only evdspy documentation related questions.
 
    [![tellme](https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02)](https://evdspychat-b11f96868cb6.herokuapp.com/)
    
+[![askyourself](https://github.com/user-attachments/assets/2cece3e0-958a-454b-8876-5dbdfea1e1a4)](https://evdspychat-b11f96868cb6.herokuapp.com/)
 
-
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-
-  <div style="flex: 1; margin: 5px;">
-    <img src="https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02" alt="Screenshot 1" style="width: 100%;"/>
-  </div>
-  <div style="flex: 1; margin: 5px;">
-    <img src="https://github.com/user-attachments/assets/3e5d3ab4-df41-4d34-8e2a-e1ca3d19a190" alt="Screenshot 2" style="width: 100%;"/>
-  </div>
- 
-
-</div>
-
-
-
-
-
+[![a2](https://github.com/user-attachments/assets/3e5d3ab4-df41-4d34-8e2a-e1ca3d19a190)](https://evdspychat-b11f96868cb6.herokuapp.com/)
 
 
 
