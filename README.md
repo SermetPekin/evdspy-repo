@@ -134,11 +134,18 @@ Here is the documentation for other functions and details.
 [Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
 
 
-### Menu
+### Menu 
+python script 
 ```python
-from evdspy.main import menu
+from evdspy import menu
 menu()
 ```
+command line / Terminal 
+```bash
+$ evdspy menu 
+
+```
+
 ![image](https://user-images.githubusercontent.com/96650846/198966008-77302f42-f8f5-430c-962d-a988abe57bb7.png)
 ## Visual Menu to request data
 ![image](https://user-images.githubusercontent.com/96650846/200393634-6d1d95cc-6fb5-4f2a-aff8-f444265df814.png)
