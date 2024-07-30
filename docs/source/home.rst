@@ -23,6 +23,21 @@ What's New
 - Added a new function, ``get_series``, which enhances the way data groups and series are handled.
 - Deprecated: The ``get_datagroup`` function will be deprecated in future versions; ``get_series`` will cover its functionalities.
 
+### Updated on this version
+
+#### evdspyChat application was added. 
+
+Api Key is not required for only evdspy documentation related questions.
+
+[evdspyChat](https://evdspychat-b11f96868cb6.herokuapp.com/)
+
+   [![tellme](https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02)](https://evdspychat-b11f96868cb6.herokuapp.com/)
+   
+[![askyourself](https://github.com/user-attachments/assets/2cece3e0-958a-454b-8876-5dbdfea1e1a4)](https://evdspychat-b11f96868cb6.herokuapp.com/)
+
+[![a2](https://github.com/user-attachments/assets/3e5d3ab4-df41-4d34-8e2a-e1ca3d19a190)](https://evdspychat-b11f96868cb6.herokuapp.com/)
+
+
 Key Features
 ------------
 - **API Key Management**: Automatically saves the API key to a file when provided to the ``get_series`` function, ignoring subsequent entries unless explicitly updated.
