@@ -34,7 +34,7 @@ def get_series(
     aggregation: Union[
         Literal["avg", "min", "max", "first", "last", "sum", None], None
     ] = None,
-    cache: bool = False,
+    cache: bool = True ,
     proxy: Optional[str] = None,
     proxies: Optional[dict[str, str]] = None,
     debug: bool = False,
