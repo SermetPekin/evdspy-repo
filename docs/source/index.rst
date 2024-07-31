@@ -11,6 +11,7 @@ Welcome to evdspy's documentation!
 
    home
    get_series
+   get_series_exp
    setup
    save
    menu
