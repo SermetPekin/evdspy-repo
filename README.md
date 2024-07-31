@@ -17,7 +17,7 @@
 
 - ***get_series_exp*** function was added 
 
-    see [Documentation](https://evdspy-repo.readthedocs.io/en/latest/) for its usage and result data types 
+    see [Documentation](https://evdspy-repo.readthedocs.io/en/latest/home.html)  for its usage and result data types 
 
     
 - evdspyChat application was added. 
@@ -269,8 +269,9 @@ _________________________________
 ## Documentation
 
 Here is the documentation for other functions and details. 
+[Documentation](https://evdspy-repo.readthedocs.io/en/latest/home.html)
 
-[Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
+ 
 
 
 ## How to get an API key?
