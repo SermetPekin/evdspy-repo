@@ -4,6 +4,7 @@ __pycache__/
 SCRAT*/
 scra*.py
 *.ipynb 
+*.xlsx
 
 *.py[cod]
 *$py.class

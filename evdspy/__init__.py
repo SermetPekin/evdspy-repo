@@ -6,8 +6,10 @@
 from evdspy.EVDSlocal.main_ import *
 from evdspy.EVDSlocal.index_requests.get_series_indexes import (
 
-    get_series,
+    get_series
 )
+
+from evdspy.EVDSlocal.index_requests.get_series_indexes_exp import get_series_exp
 
 from evdspy.EVDSlocal.utils.utils_general import ls
 
@@ -16,8 +18,6 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
     default_end_date_fnc,
     correct_types,
 )
-
-
 
 # __all__ = [
 
