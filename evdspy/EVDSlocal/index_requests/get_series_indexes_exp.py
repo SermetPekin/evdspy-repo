@@ -41,6 +41,36 @@ def get_metadata_for_index(index: Union[str, tuple[Any, ...]], proxy_manager: An
     return pd.concat(metas, axis="rows", join="outer")
 
 
+@dataclass
+class Result:
+    """
+    get_series_exp function returns instance of this class
+    data : pd.DataFrame
+    metadata : pd.DataFrame
+    write : creates and Excel file with data and metadadata of two sheets
+    to_excel : same with write to meet pandas to_excel function
+    """
+    data: field(default_factory=pd.DataFrame)
+    metadata: field(default_factory=pd.DataFrame)
+    write: Callable
+
+    def __post_init__(self):
+        self.to_excel = self.write
+
+    def __str__(self):
+        content = super.__str__(self)
+
+        return """
+    ! get_series_exp function returns instance of this class 
+    <Result>
+    data     : pd.DataFrame  => contains data [ same as what get_series function returns ] 
+    metadata : pd.DataFrame  => contains metadata if available 
+    write    : Callable      => creates and Excel file with data and metadadata of two sheets 
+    to_excel : Callable      =>  same with write to meet pandas to_excel function 
+    
+        """ + content
+
+
 def get_series_exp(
         index: Union[str, tuple[Any, ...]],
         start_date: str = default_start_date_fnc(),
@@ -61,6 +91,49 @@ def get_series_exp(
         debug: bool = False,
         api_key: Optional[str] = None,
 ) -> dict[str, pd.DataFrame]:
+    """
+    Retrieves economic data series from the specified API and returns it as a pandas DataFrame.
+    Parameters
+    ----------
+    index : str or tuple of str
+        The identifier(s) for the data series to fetch. Can be a single string for one series or a tuple of strings for multiple series.
+    start_date : str, optional
+        The start date for the data retrieval in 'DD-MM-YYYY' format, by default calls default_start_date_fnc().
+    end_date : str, optional
+        The end date for the data retrieval in 'DD-MM-YYYY' format, by default calls default_end_date_fnc().
+    frequency : str, optional
+        The frequency at which data should be retrieved.
+        monthly | weekly | annually | semimonthly | semiannually | business
+    formulas : str or tuple of str, optional
+        The computation methods to apply to the data series
+        level | percentage_change | difference | year_to_year_percent_change | year_to_year_differences
+    aggregation : str or tuple of str, optional
+        The aggregation methods to apply to the data, similar to formulas.
+        avg |min | max | first | last | sum
+    cache : bool, optional
+        If True, uses cached data when available to speed up the data retrieval process, by default False.
+    meta_cache : bool, optional
+        If True, uses cached data for metadata when available to speed up the data retrieval process, by default False.
+    proxy : str, optional
+        The URL of the proxy server to use for the requests, by default None.
+    proxies : dict, optional
+        A dictionary of proxies to use for the request, by default None.
+    debug : bool, optional
+        If True, runs the function in debug mode, providing additional debug information without making a real API request, by default False.
+    api_key : str, optional
+        The API key required for accessing the data, by default None.
+        When it was given for the first time it will be saved to a file for the subsequent requests.
+        alternatively it may be saved by save("APIKEY") function or $ evdspy save [from console]
+    Returns
+    -------
+    pd.DataFrame
+        A pandas DataFrame containing the retrieved data series.
+    Raises
+    ------
+    ValueError
+        If an invalid API key is provided or required parameters are missing.
+    """
+
     from evdspy.EVDSlocal.index_requests.user_requests import (
         RequestConfig,
         ProxyManager,
@@ -113,12 +186,6 @@ def get_series_exp(
                     res = True
         if res:
             print(f" writing file :  [{file_name}] ")
-
-    @dataclass
-    class Result:
-        data: field(default_factory=pd.DataFrame)
-        metadata: field(default_factory=pd.DataFrame)
-        write: Callable
 
     return Result(main_data, metadata_, build_df)
 
