@@ -1,3 +1,4 @@
+from .dotenv import load_env
 from ..common.common_imports import *
 from dataclasses import dataclass
 from typing import Union
@@ -5,20 +6,25 @@ from enum import Enum, auto
 import os
 import traceback
 
-try : 
-
-    from dotenv import load_dotenv
-    load_dotenv()
-except Exception:
-    
-    print("""[solution]
-          $ pip install python-dotenv 
-          """)
-    traceback.print_exc()
-    raise ModuleNotFoundError()
+# try :
+#
+#     from dotenv import load_dotenv
+#     load_dotenv()
+# except Exception:
+#
+#     print("""[solution]
+#           $ pip install python-dotenv
+#           """)
+#     traceback.print_exc()
+#     raise ModuleNotFoundError()
 from ..config.config import config
 
 from ..messages.error_classes import ApiKeyNotSetError
+
+"""
+    ========================== load_env ==========================
+"""
+load_env()
 
 
 

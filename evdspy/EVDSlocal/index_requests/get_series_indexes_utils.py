@@ -4,17 +4,25 @@ import os
 
 import traceback
 
-try : 
+from evdspy.EVDSlocal.config.dotenv import load_env
+#
+# try :
+#
+#     from dotenv import load_dotenv
+#     load_dotenv()
+# except Exception:
+#
+#     print("""[solution]
+#           $ pip install python-dotenv
+#           """)
+#     traceback.print_exc()
+#     raise ModuleNotFoundError()
 
-    from dotenv import load_dotenv
-    load_dotenv()
-except Exception:
-    
-    print("""[solution]
-          $ pip install python-dotenv 
-          """)
-    traceback.print_exc()
-    raise ModuleNotFoundError()
+
+"""
+    ========================== load_env ==========================
+"""
+load_env()
 
 
 def check_env(key_name: str, default_=None):

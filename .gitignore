@@ -1,6 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 
+*Chat*/
+*chat*
+
 SCRAT*/
 scra*.py
 *.ipynb 
