@@ -9,7 +9,7 @@ try:
     from dotenv import load_dotenv
 
 
-    def load_env(verbose=True):
+    def load_env(verbose=False):
         """Load environment variables from a .env file in the current directory."""
         dotenv_path = Path(".") / '.env'
         if verbose:
