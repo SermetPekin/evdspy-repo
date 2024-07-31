@@ -23,6 +23,8 @@ api_key.txt
 apikey.txt
 !apikey_class.py
 !api_key_save.py
+
+!Example*.ipynb
 #IGNORED NAME FORMATS --------------------------------
 ignore*.*
 ---/
