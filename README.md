@@ -10,9 +10,16 @@
     
 ### Updated on this version
 
-#### evdspyChat application was added. 
 
-Api Key is not required for only evdspy documentation related questions.
+
+
+
+- ***get_series_exp*** function was added 
+
+    see [Documentation](https://evdspy-repo.readthedocs.io/en/latest/) for its usage and result data types 
+
+    
+- evdspyChat application was added. 
 
 [evdspyChat](https://evdspychat-b11f96868cb6.herokuapp.com/)
 
@@ -23,7 +30,7 @@ Api Key is not required for only evdspy documentation related questions.
 [![a2](https://github.com/user-attachments/assets/3e5d3ab4-df41-4d34-8e2a-e1ca3d19a190)](https://evdspychat-b11f96868cb6.herokuapp.com/)
 
 
-    
+- 
 ## api_key usage with evdspy python package
 
     api key will be read from .env file on load if available.  
@@ -34,7 +41,7 @@ You may create a .env file in your work environment and write your api key as fo
 Script will load your api key from this file on load if available. 
 
 ```bash 
-    #.env file  
+    # example `.env`  file content 
     EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
 ```
  
