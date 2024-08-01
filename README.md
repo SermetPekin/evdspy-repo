@@ -49,7 +49,7 @@ Script will load your api key from this file on load if available.
 ## Proxy from .env file 
 
 You may also define your proxies as below in your `.env` file. 
-Script will load your proxies this file if available. 
+Script will load your proxies from this file if they exist. 
 
 ```bash 
 # example `.env`  file content 
