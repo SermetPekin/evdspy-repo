@@ -7,8 +7,7 @@ from ..common.prog import rich_sim
 from ..common.colors import *
 # from evdspy.utils.utils_general import *
 indent = " " * 15
-# MenuItem = namedtuple("MenuItem", "func disp sleeptime clear")
-# MenuItem = namedtuple("MenuItem", "func disp sleeptime clear")
+
 from typing import Union, List, Callable
 do_nothing = lambda: True
 @dataclass
