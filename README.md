@@ -22,9 +22,9 @@
     
 - evdspyChat application was added. 
 
-[evdspyChat](https://evdspychat.onrender.com/)
+[evdspyChat](https://evdspychat-b11f96868cb6.herokuapp.com/)
 
-   [![tellme](https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02)](https://evdspychat.onrender.com/)
+   [![tellme](https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02)](https://evdspychat-b11f96868cb6.herokuapp.com/)
    
 [![askyourself](https://github.com/user-attachments/assets/2cece3e0-958a-454b-8876-5dbdfea1e1a4)](https://evdspychat.onrender.com/)
 
