@@ -1,7 +1,7 @@
 get_series_exp Function
-===================
+=======================
 
-The ``get_series_exp`` function fetches economic data series from a specified API and returns it formatted as a pandas DataFrame, making extensive use of various parameters to fine-tune the data retrieval process.
+The ``get_series_exp`` function fetches economic data series from a specified API and returns it formatted as a pandas DataFrame. This function offers various parameters to fine-tune the data retrieval process.
 
 .. autofunction:: evdspy.get_series_exp
 
@@ -42,7 +42,7 @@ formulas : str or tuple, optional
     - **moving sum (8)**: Moving sum of data points.
 
 aggregation : str or tuple, optional
-    Aggregation methods to apply to the data, options include:
+    Aggregation methods to apply to the data. Options include:
 
     - **avg**: Average value over the specified period.
     - **min**: Minimum value over the specified period.
@@ -51,10 +51,11 @@ aggregation : str or tuple, optional
     - **last**: Last value within the specified period.
     - **sum**: Sum of all values within the specified period.
 
-cache : bool, optional [when it is False refreshes data on each call ]
+cache : bool, optional
     If True, uses cached data when available to speed up the data retrieval process. Default is False.
-meta_cache : bool, optional [when it is False refreshes metadata on each call ]
-    If True, uses cached data when available to speed up the data retrieval process. Default is False.
+
+meta_cache : bool, optional
+    If True, uses cached metadata when available to speed up the data retrieval process. Default is False.
 
 proxy : str, optional
     The URL of the proxy server to use for the requests. Default is None.
@@ -71,14 +72,19 @@ api_key : str, optional
 Returns
 -------
 Result Class
-data     : pd.DataFrame
-    contains data [ same as what get_series function returns ]
-metadata : pd.DataFrame
-    contains metadata if available
-write    : Callable
-    creates and Excel file with data and metadadata of two sheets
-to_excel : Callable
-    same with write to meet pandas to_excel function
+    An object containing the following attributes:
+
+    data : pd.DataFrame
+        The retrieved data series.
+
+    metadata : pd.DataFrame
+        Metadata associated with the data series, if available.
+
+    write : Callable
+        Function to create an Excel file with data and metadata in two sheets.
+
+    to_excel : Callable
+        Same as `write`, for compatibility with pandas' `to_excel` function.
 
 Raises
 ------
@@ -98,7 +104,6 @@ Basic usage:
     result.write('output.xlsx')
     result.to_excel('output.xlsx')
 
-
 Using multiple indexes and cache:
 
 .. code-block:: python
@@ -114,12 +119,9 @@ Applying formulas and aggregation:
 
 .. code-block:: python
 
-    template = "TP.ODEMGZS.BDTTOPLAM"
-    df = get_series(template,  formulas="level", aggregation="sum")
-    result = get_series_exp(indexes,  formulas="level", aggregation="sum"))
+    indexes = "TP.ODEMGZS.BDTTOPLAM"
+    result = get_series_exp(indexes, formulas="level", aggregation="sum")
     print(result.data.head())
     print(result.metadata)
     result.write('output.xlsx')
     result.to_excel('output.xlsx')
-
-
