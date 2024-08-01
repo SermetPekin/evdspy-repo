@@ -45,7 +45,21 @@ Script will load your api key from this file on load if available.
     # example `.env`  file content 
     EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
 ```
- 
+
+## Proxy from .env file 
+
+You may also define your proxies as below in your `.env` file. 
+Script will load your proxies this file if available. 
+
+```bash 
+# example `.env`  file content 
+EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
+PROXY_http=http://proxy.example.com:80
+PROXY_https=http://proxy.example.com:80
+
+```
+
+
 
 ### api_key inside get_series function [Alternative 2]
 

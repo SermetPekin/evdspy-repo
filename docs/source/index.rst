@@ -15,7 +15,7 @@ Welcome to evdspy's documentation!
    setup
    save
    menu
-
+   proxy
 
 Indices and tables
 ==================
