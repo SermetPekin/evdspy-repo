@@ -1,7 +1,7 @@
-
 # ------------------------------------------------------------------------------
-import requests  
+import requests
 from evdspy.EVDSlocal.components.url_class import URLClass
+from evdspy.EVDSlocal.console.proxy_for_menu import get_proxies_env
 from evdspy.EVDSlocal.utils.utils_general import *
 from evdspy.EVDSlocal.requests_.my_cache import MyCache, save_pickle_for_test, lru_cache_patched, load_test_pickle
 from evdspy.EVDSlocal.components.options_class import Options
@@ -17,11 +17,14 @@ from evdspy.EVDSlocal.common.url_clean import remove_api_key
 from dataclasses import dataclass
 from evdspy.EVDSlocal.requests_.mock_req import *
 from evdspy.EVDSlocal.requests_.real_requests import *
-from typing import Optional 
-from dataclasses import dataclass , field 
+from typing import Optional
+from dataclasses import dataclass, field
+
 # ------------------------------------------------------------------------------
 m_cache = MyCache()
 CANCEL_REQUEST_TEMP = config.cancel_request_temp
+
+
 def do_first_true_order(funcs, preds, url):
     conds = zip(funcs, preds)
     for func, pred in conds:
@@ -29,6 +32,8 @@ def do_first_true_order(funcs, preds, url):
             v = func(url)
             return v
     return False
+
+
 def decide_request_for_test_real(url: str, proxies=None):
     """ Finally ready to make request """
     if config.current_mode_is_test and not config.temp_cancel_mock_request:
@@ -42,6 +47,8 @@ def decide_request_for_test_real(url: str, proxies=None):
     if proxies is None:
         return requests.get(url)
     return requests.get(url, proxies=proxies)
+
+
 @dataclass
 class EVRequest:
     options_: Options
@@ -51,6 +58,7 @@ class EVRequest:
     last_url_checked: str = "NoneURL"
     URL_Instance: field(default_factory=URLClass) = field(default_factory=URLClass)
     force_no_cache = False
+
     # report : post init
     def __post_init__(self):
         # self.URL_Instance = field(default_factory=URLClass) # None
@@ -61,33 +69,49 @@ class EVRequest:
         request by using cache results...
         """
         self.report = Report("stats_requests.txt")
+
     def get_request_with_proxy(self, url: str, proxy: str):
         proxies = {
-                'http': proxy,
-                'https': proxy,
+            'http': proxy,
+            'https': proxy,
         }
         return decide_request_for_test_real(url, proxies=proxies)
+
     def get_proxies(self):
+        env_proxies = get_proxies_env()
         if self.args.proxy is None:
+            if env_proxies:
+                return env_proxies
             return None
         proxy = self.args.proxy
         proxies = {
-                'http': proxy,
-                'https': proxy,
+            'http': proxy,
+            'https': proxy,
         }
         return proxies
+
     def proxy_from_file(self, url: str):
         print("using proxy from file")
         return self.get_request_with_proxy(url, self.args.proxy)
+
     def proxy_from_cmd_line(self, url: str):
         print("using proxy from commandline")
         return self.get_request_with_proxy(url, self.args.proxy)
+
+    def proxy_from_env(self, url: str):
+        print("using proxy from .env file ")
+        env_proxies = get_proxies_env()
+        if env_proxies:
+            return self.get_request_with_proxy(url, env_proxies)
+        return self.proxy_from_cmd_line(url)
+
     def check_any_apikey(self):
         if not config.current_mode_is_test:
             return True
         if not ApikeyClass().get_valid_api_key():
             raise ApiKeyNotSetError
         return True
+
     def check_if_request_ok(self, status_code: int):
         corrects = (200,)
         if status_code in corrects:
@@ -102,11 +126,12 @@ class EVRequest:
             # raise ExceptionClass(self.__doc__)
         else:
             print(
-                    f"Program was checking request status code and noticed "
-                    f"{status_code} not included in  `REQUEST_ERROR_CODES`"
+                f"Program was checking request status code and noticed "
+                f"{status_code} not included in  `REQUEST_ERROR_CODES`"
             )
         self.report.add(f"{status_code} returned. ")
         return False
+
     def post_urls(self, url: str) -> tuple:
         # url = url.translate({ord(c): None for c in string.whitespace})
         url = URL_temizle(url)  # whitespace etc.
@@ -114,20 +139,24 @@ class EVRequest:
         self.report.add(f"{no_apikey_url} will be requested. ")
         self.last_url_checked = url
         return (url, no_apikey_url)
+
     def get_request_alternatives(self, url):
         result = do_first_true_order(
-                funcs=[
-                        self.proxy_from_cmd_line,
-                        self.proxy_from_file,
-                        decide_request_for_test_real
-                ],
-                preds=[
-                        self.args.proxy,
-                        self.credentials.proxy,
-                        True],
-                url=url
+            funcs=[
+                self.proxy_from_env,
+                self.proxy_from_cmd_line,
+                self.proxy_from_file,
+                decide_request_for_test_real
+            ],
+            preds=[
+                get_proxies_env(),
+                self.args.proxy,
+                self.credentials.proxy,
+                True],
+            url=url
         )
         return result
+
     def check_result(self, result):
         if any(
                 (
@@ -139,6 +168,7 @@ class EVRequest:
             print(f"request returned an error code {result.status_code} , url : {self.no_apikey_url}")
             return False
         return True
+
     def get_request_before_cache(self, url: str):
         """
         decorated version of this function needs to be
@@ -152,6 +182,7 @@ class EVRequest:
         if not self.check_any_apikey():
             return False
         return self.get_request(url)
+
     def get_request(self, url: str):
         """
         first will check cache if there is cache
@@ -161,18 +192,22 @@ class EVRequest:
         #     return self.get_request_by_checking_NO_CACHE(url)
         return self.get_request_by_checking_cache(url)
         # return self.get_request_helper(url )
+
     @lru_cache_patched
     @m_cache.cache
     def get_request_by_checking_cache(self, url: str):
         """
         """
         return self.get_request_common(url)
+
     def get_request_by_checking_NO_CACHE(self, url: str):
         """
         """
         return self.get_request_common(url)
+
     def get_request_w_param(self, url: str, proxies=None):
         return RealRequestWithParam(url, proxies).request()
+
     def get_request_common(self, url: str):
         """
         first will check cache if there is cache

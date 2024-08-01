@@ -2,6 +2,8 @@
 from dataclasses import dataclass
 from typing import Optional, Any
 
+from evdspy.EVDSlocal.console.proxy_for_menu import get_proxies_env
+
 
 @dataclass
 class ProxyManager:
@@ -9,9 +11,13 @@ class ProxyManager:
     proxies: Optional[dict[Any, Any]] = None
 
     def get_proxies(self) -> Optional[dict[Any, Any]]:
+        env_proxy = get_proxies_env()
         if self.proxies is None:
             if self.proxy is None:
-                proxies = None
+                if env_proxy:
+                    proxies = env_proxy
+                else:
+                    proxies = None
             else:
                 proxies = self.get_proxies_helper()
         else:
