@@ -376,14 +376,7 @@ def remove_cache():
         print_with_success_style("cahce folder removed...")
     else:
         print_with_failure_style("cahce folder coould not be removed...")
-def testt_the_latest():
-    get_all_groups()
-    # get_and_process_datagroups_with_code(3)
-    # def __():
-    #     *coming, last = get_datagroups_df('json', None, True)
-    #     print(coming)
-    #     print(last)
-    #     print(last())
+
 def main_exit_function():
     ...
 def menu_display():
@@ -405,8 +398,7 @@ def menu_display():
             ("py version", py_version),
             ("check compatibility of your python version", check_compat),
     ]
-    if 'NEXT_RELEASE' in str(Path().cwd()):
-        funcs.append(('test_the latest', testt_the_latest))
+
     menu_items = list(map(lambda x: MenuItem(x[1], x[0]), funcs))
     MenuMaker(
             menu_items=menu_items,
@@ -418,6 +410,10 @@ def menu_helper():
     global menu_already_displayed
     menu_already_displayed = True
     menu_display()
+
+
+
+
 def menu_onload():
     if CurrentState().menu_will_open:
         menu_helper()

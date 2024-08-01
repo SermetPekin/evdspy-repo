@@ -65,13 +65,3 @@ def get_all_groups():
         except Exception as exc:
             print(exc)
             pass
-import warnings
-def get_datagroups() -> str:
-    warnings.warn("get_datagroups will be removed in future version. Please use get_series istead [...]",
-                  DeprecationWarning)
-    return GeneralIndexesDatagroups(EVRequest_=EVRequest(options_=SingletonOptions())).create_url()
-# def process_datagroups(data_model_type, content):
-#     df_op = DFOperations(data_model_type(data=content))
-#     df_op.convert_to_df_abstract()
-#     df = pd.DataFrame.from_records(content)
-#     df.to_excel("t123.xlsx")
