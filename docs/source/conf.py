@@ -5,6 +5,8 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+from sphinx.util import logging
+import os
 
 html_build_dir = '../docs'
 # html_build_dir = 'docs'
@@ -44,14 +46,13 @@ exclude_patterns = []
 html_theme = 'sphinx_book_theme'
 
 html_static_path = ['static']
-
+os.makedirs(html_static_path[0])
 source_suffix = {
     '.rst': 'restructuredtext',
     '.txt': 'markdown',
     '.md': 'markdown',
 }
 
-from sphinx.util import logging
 
 logger = logging.getLogger(__name__)
 
