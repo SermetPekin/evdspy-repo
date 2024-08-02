@@ -11,6 +11,6 @@ Create a `.env` file in the root directory of your project and define your proxi
 ```bash
 # Example .env file content
 EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
-PROXY_http=http://proxy.example.com:80
-PROXY_https=http://proxy.example.com:80
+http_proxy=http://proxy.example.com:80
+https_proxy=http://proxy.example.com:80
 ```

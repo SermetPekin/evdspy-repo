@@ -54,8 +54,8 @@ Script will load your proxies from this file if they exist.
 ```bash 
 # example `.env`  file content 
 EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
-PROXY_http=http://proxy.example.com:80
-PROXY_https=http://proxy.example.com:80
+http_proxy=http://proxy.example.com:80
+https_proxy=http://proxy.example.com:80
 
 ```
 
