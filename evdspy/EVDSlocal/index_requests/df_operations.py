@@ -59,7 +59,8 @@ class DFOperations():
         try:
             self.df = self.df[columns].astype(float)
         except:
-            print_with_failure_style("Could not convert some columns to float type...")
+            # print_with_failure_style("Could not convert some columns to float type...")
+            ...
         for other_column in other_cols:
             self.df[other_column] = old_df[other_column]
     def convert_to_df_abstract(self):

@@ -185,7 +185,8 @@ ___________________
             for other_column in other_cols:
                 self.df[other_column] = old_df[other_column]
         except:
-            print_with_failure_style("Could not convert some columns to float type...")
+            # print_with_failure_style("Could not convert some columns to float type...")
+            ...
     def convert_csv_df(self, csv_buffer: str):
         if not csv_buffer:
             return False
