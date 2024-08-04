@@ -47,25 +47,23 @@ doctest_test_doctest_blocks = 'false'
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-<<<<<<< HEAD
+# <<<<<<< HEAD
 html_theme = 'sphinx_book_theme'  # Theme for HTML output
 html_static_path = ['_static']  # Static files path
 
-=======
-html_static_path = ['static']
+#=======
+#html_static_path = ['static']
 os.makedirs(html_static_path[0])
->>>>>>> f106125c794f7eeb8348e421c7d0ba4b3edee5e1
+#>>>>>>> f106125c794f7eeb8348e421c7d0ba4b3edee5e1
 source_suffix = {
     '.rst': 'restructuredtext',
     '.txt': 'markdown',
     '.md': 'markdown',
 }
 
-<<<<<<< HEAD
-from sphinx.util import logging
-=======
 
->>>>>>> f106125c794f7eeb8348e421c7d0ba4b3edee5e1
+from sphinx.util import logging
+
 logger = logging.getLogger(__name__)
 
 def linkcode_resolve(domain, info):
