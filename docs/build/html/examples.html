@@ -44,6 +44,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Proxy Configuration" href="proxy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -106,8 +107,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -150,7 +149,7 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="home.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="get_series.html">get_series Function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="get_series_exp.html">get_series_exp Function</a></li>
@@ -160,6 +159,7 @@
 <li class="toctree-l1"><a class="reference internal" href="proxy.html">Proxy Configuration</a></li>
 
 
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Examples</a></li>
 </ul>
 
     </div>
@@ -314,11 +314,7 @@ document.write(`
 <h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h1>
 <p>Some examples to retrieve data</p>
 <p>Basic usage:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">evds2</span><span class="o">.</span><span class="n">tcmb</span><span class="o">.</span><span class="n">gov</span><span class="o">.</span><span class="n">tr</span><span class="o">/</span><span class="n">service</span><span class="o">/</span><span class="n">evds</span><span class="o">/</span><span class="n">series</span><span class="o">=</span>
-<span class="o">..</span> <span class="n">TP</span><span class="o">.</span><span class="n">DK</span><span class="o">.</span><span class="n">USD</span><span class="o">.</span><span class="n">A</span><span class="o">-</span><span class="n">TP</span><span class="o">.</span><span class="n">DK</span><span class="o">.</span><span class="n">EUR</span><span class="o">.</span><span class="n">A</span><span class="o">-</span><span class="n">TP</span><span class="o">.</span><span class="n">DK</span><span class="o">.</span><span class="n">CHF</span><span class="o">.</span><span class="n">A</span><span class="o">-</span><span class="n">TP</span><span class="o">.</span><span class="n">DK</span><span class="o">.</span><span class="n">GBP</span><span class="o">.</span><span class="n">A</span><span class="o">-</span><span class="n">TP</span><span class="o">.</span><span class="n">DK</span><span class="o">.</span><span class="n">JPY</span><span class="o">.</span><span class="n">A</span><span class="o">&amp;</span><span class="n">startDate</span><span class="o">=</span><span class="mi">01</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">2017</span><span class="o">&amp;</span><span class="n">endDate</span><span class="o">=</span><span class="mi">01</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">2017</span><span class="o">&amp;</span><span class="nb">type</span><span class="o">=</span><span class="n">xml</span>
-
-
-<span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">TP.DK.USD.A</span>
 <span class="s2">TP.DK.EUR.A</span>
 <span class="s2">TP.DK.CHF.A</span>
@@ -356,6 +352,15 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="proxy.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Proxy Configuration</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
