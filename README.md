@@ -44,7 +44,7 @@ You may create a .env file in your work environment and write your api key as fo
 Script will load your api key from this file on load if available. 
 
 ```bash 
-    # example `.env`  file content 
+    # filename : `.env`  
     EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
 ```
 
