@@ -8,33 +8,33 @@
 from sphinx.util import logging
 import os
 
-html_build_dir = '../docs'  # Directory for HTML build output
+html_build_dir = "../docs"  # Directory for HTML build output
 
-project = 'evdspy'
-copyright = '2024, Sermet Pekin'
-author = 'Sermet Pekin'
+project = "evdspy"
+copyright = "2024, Sermet Pekin"
+author = "Sermet Pekin"
 
 # The short X.Y version
-version = ''
+version = ""
 # The full version, including alpha/beta/rc tags
-release = ''
+release = ""
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.inheritance_diagram',
-    'sphinx.ext.autosummary',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.todo",
+    "sphinx.ext.ifconfig",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.inheritance_diagram",
+    "sphinx.ext.autosummary",
     # 'myst_parser'  # Uncomment if you use MyST markdown
 ]
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 exclude_patterns = []
 
 doctest_global_setup = """
@@ -42,23 +42,24 @@ doctest_global_setup = """
 """
 
 # Disable execution of doctest blocks
-doctest_test_doctest_blocks = 'false'
+doctest_test_doctest_blocks = "false"
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-# <<<<<<< HEAD
-html_theme = 'sphinx_book_theme'  # Theme for HTML output
-html_static_path = ['_static']  # Static files path
 
-#=======
-#html_static_path = ['static']
-os.makedirs(html_static_path[0])
-#>>>>>>> f106125c794f7eeb8348e421c7d0ba4b3edee5e1
+html_theme = "sphinx_book_theme"  # Theme for HTML output
+html_static_path = ["_static"]  # Static files path
+
+try:
+    os.makedirs(html_static_path[0])
+except:
+    pass
+
 source_suffix = {
-    '.rst': 'restructuredtext',
-    '.txt': 'markdown',
-    '.md': 'markdown',
+    ".rst": "restructuredtext",
+    ".txt": "markdown",
+    ".md": "markdown",
 }
 
 
@@ -66,14 +67,15 @@ from sphinx.util import logging
 
 logger = logging.getLogger(__name__)
 
+
 def linkcode_resolve(domain, info):
     """
     Resolve the link to the source code for documentation.
     """
     print(domain, info, "Domain info ")
-    if domain != 'py':
+    if domain != "py":
         return None
-    if not info['module']:
+    if not info["module"]:
         return None
-    filename = info['module'].replace('.', '/')
+    filename = info["module"].replace(".", "/")
     return f"https://github.com/SermetPekin/evdspy-repo/{filename}.py"
