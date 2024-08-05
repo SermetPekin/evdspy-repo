@@ -75,12 +75,14 @@ To install evdspy, simply run the following command:
 
 Quick Start
 -----------
+
 Here's a quick example to get you started with using evdspy:
+
 
 using get_series function from evdspy 
 
 .. code-block:: python
-    
+
     from evdsy import get_series 
     index = "TP.ODEMGZS.BDTTOPLAM"
     df = get_series(index, start_date="21-01-2020", end_date="31-12-2021", frequency="monthly")
@@ -88,6 +90,7 @@ using get_series function from evdspy
 
 
 using get_series_exp function from evdspy 
+
 
 .. code-block:: python
 
