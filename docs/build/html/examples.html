@@ -312,7 +312,37 @@ document.write(`
                   
   <section id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">save</span></code> function is designed to save an API key into your application’s configuration or a designated storage mechanism. It ensures the API key is valid and prompts the user for input if the provided key is not valid or if no key is provided.</p>
+<p>Some examples to retrieve data</p>
+<p>Basic usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">evds2</span><span class="o">.</span><span class="n">tcmb</span><span class="o">.</span><span class="n">gov</span><span class="o">.</span><span class="n">tr</span><span class="o">/</span><span class="n">service</span><span class="o">/</span><span class="n">evds</span><span class="o">/</span><span class="n">series</span><span class="o">=</span>
+<span class="o">..</span> <span class="n">TP</span><span class="o">.</span><span class="n">DK</span><span class="o">.</span><span class="n">USD</span><span class="o">.</span><span class="n">A</span><span class="o">-</span><span class="n">TP</span><span class="o">.</span><span class="n">DK</span><span class="o">.</span><span class="n">EUR</span><span class="o">.</span><span class="n">A</span><span class="o">-</span><span class="n">TP</span><span class="o">.</span><span class="n">DK</span><span class="o">.</span><span class="n">CHF</span><span class="o">.</span><span class="n">A</span><span class="o">-</span><span class="n">TP</span><span class="o">.</span><span class="n">DK</span><span class="o">.</span><span class="n">GBP</span><span class="o">.</span><span class="n">A</span><span class="o">-</span><span class="n">TP</span><span class="o">.</span><span class="n">DK</span><span class="o">.</span><span class="n">JPY</span><span class="o">.</span><span class="n">A</span><span class="o">&amp;</span><span class="n">startDate</span><span class="o">=</span><span class="mi">01</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">2017</span><span class="o">&amp;</span><span class="n">endDate</span><span class="o">=</span><span class="mi">01</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">2017</span><span class="o">&amp;</span><span class="nb">type</span><span class="o">=</span><span class="n">xml</span>
+
+
+<span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">TP.DK.USD.A</span>
+<span class="s2">TP.DK.EUR.A</span>
+<span class="s2">TP.DK.CHF.A</span>
+<span class="s2">TP.DK.GBP.A</span>
+<span class="s2">TP.DK.JPY.A</span>
+
+
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2017&quot;</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;31-12-2017&quot;</span> <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Using multiple indexes and cache:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">indexes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;TP.ODEMGZS.BDTTOPLAM&quot;</span><span class="p">,</span> <span class="s2">&quot;TP.ODEMGZS.ABD&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span><span class="n">indexes</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2020&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;monthly&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Applying formulas and aggregation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;TP.ODEMGZS.BDTTOPLAM&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2020&quot;</span><span class="p">,</span> <span class="n">formulas</span><span class="o">=</span><span class="s2">&quot;level&quot;</span><span class="p">,</span> <span class="n">aggregation</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
 </section>
 
 
