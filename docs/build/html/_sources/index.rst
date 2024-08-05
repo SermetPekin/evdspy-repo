@@ -16,6 +16,7 @@ Welcome to evdspy's documentation!
    save
    menu
    proxy
+   examples
 
 Indices and tables
 ==================
