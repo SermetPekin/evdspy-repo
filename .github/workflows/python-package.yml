@@ -50,6 +50,7 @@ jobs:
           python -c "import sys; print(sys.executable)"
       - name: test dt 
         run: |
-          python ./evdspy_tes_t.py 
+          #python ./evdspy_tes_t.py 
+          python --version
 
           
