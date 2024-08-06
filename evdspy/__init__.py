@@ -19,8 +19,10 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
     correct_types,
 )
 
-# __all__ = [
+from evdspy.EVDSlocal.common.clear_cache_folder import clear_cache
 
+
+# __all__ = [
 #         "default_start_date_fnc",
 #         "default_end_date_fnc",
 #         "correct_types",

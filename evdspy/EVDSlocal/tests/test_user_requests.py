@@ -173,7 +173,8 @@ def test_freq(capsys):
 
 
 def test_pickles():
-    os.makedirs("pickles", exist_ok=True)
+    pickle_folder = Path.home() / ".cache" / "evdspy"
+    os.makedirs(pickle_folder, exist_ok=True)
 
 
 # def is_testing():

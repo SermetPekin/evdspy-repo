@@ -6,7 +6,7 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
     default_start_date_fnc,
     default_end_date_fnc,
 )
-
+from evdspy.EVDSlocal.index_requests.get_series_indexes import get_series
 
 def initial_api_process_when_given(api_key: Optional[str] = None) -> None:
     from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
@@ -84,8 +84,8 @@ def get_series_exp(
         aggregation: Union[
             Literal["avg", "min", "max", "first", "last", "sum", None], None
         ] = None,
-        cache: bool = True,
-        meta_cache: bool = True,
+        cache: bool = False ,
+        meta_cache: bool = False ,
         proxy: Optional[str] = None,
         proxies: Optional[dict[str, str]] = None,
         debug: bool = False,
@@ -154,23 +154,27 @@ def get_series_exp(
         aggregation=aggregation,
         cache=cache,
     )
-    # ............ProxyManager................................
+    # # ............ProxyManager................................
     proxy_manager = ProxyManager(proxy=proxy, proxies=proxies)
-    # ............UrlBuilder..................................
-    url_builder = UrlBuilder(config, url_type=None)
-    # ............ApiRequester................................
-    api_requester = ApiRequester(url_builder, proxy_manager)
-    if debug:
-        return api_requester.dry_request()
-    # ............DataProcessor................................
-    data_processor = DataProcessor(api_requester())
+    # # ............UrlBuilder..................................
+    # url_builder = UrlBuilder(config, url_type=None)
+    # # ............ApiRequester................................
+    # api_requester = ApiRequester(url_builder, proxy_manager)
+    # if debug:
+    #     return api_requester.dry_request()
+    # # ............DataProcessor................................
+    # data_processor = DataProcessor(api_requester())
 
-    # Fetch the main data
-    main_data = data_processor()
+    # main_data = data_processor()
+    main_data = get_series(index ,
+                           start_date=start_date,
+        end_date=end_date,
+        frequency=frequency,
+        formulas=formulas,
+        aggregation=aggregation,
+        cache=cache )
 
-    # Fetch metadata for each index
     metadata_: pd.DataFrame = get_metadata_for_index(index, proxy_manager, cache=meta_cache)
-    # return pd.DataFrame(liste)
 
     result = {
         "main_data": main_data,

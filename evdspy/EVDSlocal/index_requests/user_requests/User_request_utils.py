@@ -47,9 +47,10 @@ def test_cache_or_raw_fnc(capsys):
 
 
 # ..................................................................................
+cache_ = MyCache().cache
 
 def create_cache_version(fnc: Callable):
-    @MyCache().cache
+    @cache_
     def fnc_cache(*args, **kw):
         return fnc(*args, **kw)
 
