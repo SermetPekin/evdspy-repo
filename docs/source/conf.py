@@ -49,7 +49,8 @@ doctest_test_doctest_blocks = "false"
 
 
 html_theme = "sphinx_book_theme"  # Theme for HTML output
-html_static_path = ["_static"]  # Static files path
+# html_static_path = ["_static"]  # Static files path
+html_static_path = ["static"]  # Static files path
 
 try:
     os.makedirs(html_static_path[0])
