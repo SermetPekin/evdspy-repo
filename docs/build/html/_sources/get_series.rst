@@ -76,21 +76,54 @@ Raises
 ValueError
     Raised if an invalid API key is provided or required parameters are missing.
 
+
+Creating a `.env` File
+=============
+
+Create a `.env` file in the root directory of your project and define your proxies as shown below:
+
+
+.. code-block:: bash 
+
+    # Example .env file content
+    EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
+    
 Examples
 --------
 Basic usage:
 
 .. code-block:: python
 
-    index = "TP.ODEMGZS.BDTTOPLAM"
-    df = get_series(index, start_date="01-01-2020", end_date="01-01-2021", frequency="monthly")
+    from evdspy import get_series 
+    index = """
+    TP.DK.USD.A
+    TP.DK.EUR.A
+    TP.DK.CHF.A
+    TP.DK.GBP.A
+    TP.DK.JPY.A
+    
+    """
+
+    df = get_series(index,  api_key ="ABCDEFGHIJKLM" )
+    print(df.head())
+
+
+.. code-block:: python
+
+
+    from evdspy import get_series , get_series_exp , menu 
+
+    index = ["TP.MEVDUAT.I006", "TP.MEVDUAT.I012"]
+    df = get_series(
+        index, start_date="01-01-2010", end_date="01-01-2020", frequency="monthly"
+    )
     print(df.head())
 
 Using multiple indexes and cache:
 
 .. code-block:: python
 
-    indexes = ("TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD")
+    indexes = ("TP.ENFBEK.PKA12ENF", "TP.ENFBEK.IYA12ENF")
     df = get_series(indexes, start_date="01-01-2020", frequency="monthly", cache=True)
     print(df.head())
 
@@ -98,7 +131,15 @@ Applying formulas and aggregation:
 
 .. code-block:: python
 
-    template = "TP.ODEMGZS.BDTTOPLAM"
+    template = """
+    
+    TP.KREDI.L002
+    TP.BFTUKKRE.L004 
+    TP.BFTUKKRE.L056
+    TP.BFTUKKRE.L193 
+    TP.BFTUKKRE.L234 
+    """
+
     df = get_series(template, start_date="01-01-2020", formulas="level", aggregation="sum")
     print(df.head())
 

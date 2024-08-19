@@ -59,6 +59,9 @@ Quick Start
 
 Here's a quick example to get you started with using **evdspy**:
 
+! 
+
+
 Using the ``get_series`` function from evdspy:
 
 .. code-block:: python

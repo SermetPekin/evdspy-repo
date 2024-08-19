@@ -45,7 +45,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="get_series_exp Function" href="get_series_exp.html" />
-    <link rel="prev" title="Introduction" href="home.html" />
+    <link rel="prev" title="Proxy Configuration" href="api_key.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -152,14 +152,20 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="home.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_key.html">Proxy Configuration</a></li>
+
+
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">get_series Function</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="get_series_exp.html">get_series_exp Function</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="setup.html">setup Function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="save.html">save Function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="menu.html">menu Function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proxy.html">Proxy Configuration</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 </ul>
 
     </div>
@@ -308,12 +314,19 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">get_series Function</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evdspy.get_series"><code class="docutils literal notranslate"><span class="pre">get_series()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Returns</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Raises</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-env-file">Creating a <cite>.env</cite> File</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
 </ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -450,22 +463,56 @@ alternatively it may be saved by save(“APIKEY”) function or $ evdspy save [f
 </dd>
 </dl>
 </section>
+</section>
+<section id="creating-a-env-file">
+<h1>Creating a <cite>.env</cite> File<a class="headerlink" href="#creating-a-env-file" title="Link to this heading">#</a></h1>
+<p>Create a <cite>.env</cite> file in the root directory of your project and define your proxies as shown below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example .env file content</span>
+<span class="nv">EVDS_API_KEY</span><span class="o">=</span>AxByCzDsFoGmHeIgJaKrLbMaNgOe
+</pre></div>
+</div>
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
 <p>Basic usage:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;TP.ODEMGZS.BDTTOPLAM&quot;</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2020&quot;</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;01-01-2021&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;monthly&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">evdspy</span> <span class="kn">import</span> <span class="n">get_series</span>
+<span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">TP.DK.USD.A</span>
+<span class="s2">TP.DK.EUR.A</span>
+<span class="s2">TP.DK.CHF.A</span>
+<span class="s2">TP.DK.GBP.A</span>
+<span class="s2">TP.DK.JPY.A</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span><span class="n">index</span><span class="p">,</span>  <span class="n">api_key</span> <span class="o">=</span><span class="s2">&quot;ABCDEFGHIJKLM&quot;</span> <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">evdspy</span> <span class="kn">import</span> <span class="n">get_series</span> <span class="p">,</span> <span class="n">get_series_exp</span> <span class="p">,</span> <span class="n">menu</span>
+
+<span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TP.MEVDUAT.I006&quot;</span><span class="p">,</span> <span class="s2">&quot;TP.MEVDUAT.I012&quot;</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span>
+    <span class="n">index</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2010&quot;</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;01-01-2020&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;monthly&quot;</span>
+<span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 <p>Using multiple indexes and cache:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">indexes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;TP.ODEMGZS.BDTTOPLAM&quot;</span><span class="p">,</span> <span class="s2">&quot;TP.ODEMGZS.ABD&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">indexes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;TP.ENFBEK.PKA12ENF&quot;</span><span class="p">,</span> <span class="s2">&quot;TP.ENFBEK.IYA12ENF&quot;</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span><span class="n">indexes</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2020&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;monthly&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 <p>Applying formulas and aggregation:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;TP.ODEMGZS.BDTTOPLAM&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">TP.KREDI.L002</span>
+<span class="s2">TP.BFTUKKRE.L004</span>
+<span class="s2">TP.BFTUKKRE.L056</span>
+<span class="s2">TP.BFTUKKRE.L193</span>
+<span class="s2">TP.BFTUKKRE.L234</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
 <span class="n">df</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2020&quot;</span><span class="p">,</span> <span class="n">formulas</span><span class="o">=</span><span class="s2">&quot;level&quot;</span><span class="p">,</span> <span class="n">aggregation</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
@@ -485,12 +532,12 @@ alternatively it may be saved by save(“APIKEY”) function or $ evdspy save [f
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="home.html"
+       href="api_key.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Introduction</p>
+        <p class="prev-next-title">Proxy Configuration</p>
       </div>
     </a>
     <a class="right-next"
@@ -518,12 +565,19 @@ alternatively it may be saved by save(“APIKEY”) function or $ evdspy save [f
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">get_series Function</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evdspy.get_series"><code class="docutils literal notranslate"><span class="pre">get_series()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Returns</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Raises</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-env-file">Creating a <cite>.env</cite> File</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>

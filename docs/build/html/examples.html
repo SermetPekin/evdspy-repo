@@ -151,6 +151,9 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="home.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_key.html">Proxy Configuration</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="get_series.html">get_series Function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="get_series_exp.html">get_series_exp Function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">setup Function</a></li>
@@ -328,15 +331,34 @@ document.write(`
 </pre></div>
 </div>
 <p>Using multiple indexes and cache:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">indexes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;TP.ODEMGZS.BDTTOPLAM&quot;</span><span class="p">,</span> <span class="s2">&quot;TP.ODEMGZS.ABD&quot;</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span><span class="n">indexes</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2020&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;monthly&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">evdspy</span> <span class="kn">import</span> <span class="n">get_series</span> <span class="p">,</span> <span class="n">get_series_exp</span>
+<span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">TP.DK.USD.A</span>
+<span class="s2">TP.DK.EUR.A</span>
+<span class="s2">TP.DK.CHF.A</span>
+<span class="s2">TP.DK.GBP.A</span>
+<span class="s2">TP.DK.JPY.A</span>
+
+
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">get_series_exp</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2017&quot;</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;31-12-2017&quot;</span> <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Applying formulas and aggregation:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;TP.ODEMGZS.BDTTOPLAM&quot;</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2020&quot;</span><span class="p">,</span> <span class="n">formulas</span><span class="o">=</span><span class="s2">&quot;level&quot;</span><span class="p">,</span> <span class="n">aggregation</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<p>cache True for eficient requests. Only checks request result for the current day.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">evdspy</span> <span class="kn">import</span> <span class="n">get_series</span> <span class="p">,</span> <span class="n">get_series_exp</span>
+<span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">TP.DK.USD.A</span>
+<span class="s2">TP.DK.EUR.A</span>
+<span class="s2">TP.DK.CHF.A</span>
+<span class="s2">TP.DK.GBP.A</span>
+<span class="s2">TP.DK.JPY.A</span>
+
+
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">get_series_exp</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">cache</span> <span class="o">=</span> <span class="kc">True</span>  <span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01-01-2017&quot;</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;31-12-2017&quot;</span> <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

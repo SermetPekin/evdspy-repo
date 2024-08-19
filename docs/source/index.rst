@@ -10,6 +10,7 @@ Welcome to evdspy's documentation!
    :caption: Contents:
 
    home
+   api_key
    get_series
    get_series_exp
    setup

@@ -151,6 +151,9 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../../home.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api_key.html">Proxy Configuration</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="../../../../get_series.html">get_series Function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../get_series_exp.html">get_series_exp Function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../setup.html">setup Function</a></li>
@@ -159,6 +162,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../proxy.html">Proxy Configuration</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
 </ul>
 
     </div>
@@ -649,14 +653,7 @@ document.write(`
         <span class="n">print_with_success_style</span><span class="p">(</span><span class="s2">&quot;cahce folder removed...&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">print_with_failure_style</span><span class="p">(</span><span class="s2">&quot;cahce folder coould not be removed...&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">testt_the_latest</span><span class="p">():</span>
-    <span class="n">get_all_groups</span><span class="p">()</span>
-    <span class="c1"># get_and_process_datagroups_with_code(3)</span>
-    <span class="c1"># def __():</span>
-    <span class="c1">#     *coming, last = get_datagroups_df(&#39;json&#39;, None, True)</span>
-    <span class="c1">#     print(coming)</span>
-    <span class="c1">#     print(last)</span>
-    <span class="c1">#     print(last())</span>
+
 <span class="k">def</span> <span class="nf">main_exit_function</span><span class="p">():</span>
     <span class="o">...</span>
 <span class="k">def</span> <span class="nf">menu_display</span><span class="p">():</span>
@@ -678,8 +675,7 @@ document.write(`
             <span class="p">(</span><span class="s2">&quot;py version&quot;</span><span class="p">,</span> <span class="n">py_version</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;check compatibility of your python version&quot;</span><span class="p">,</span> <span class="n">check_compat</span><span class="p">),</span>
     <span class="p">]</span>
-    <span class="k">if</span> <span class="s1">&#39;NEXT_RELEASE&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()):</span>
-        <span class="n">funcs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;test_the latest&#39;</span><span class="p">,</span> <span class="n">testt_the_latest</span><span class="p">))</span>
+
     <span class="n">menu_items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">MenuItem</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">funcs</span><span class="p">))</span>
     <span class="n">MenuMaker</span><span class="p">(</span>
             <span class="n">menu_items</span><span class="o">=</span><span class="n">menu_items</span><span class="p">,</span>
@@ -691,6 +687,10 @@ document.write(`
     <span class="k">global</span> <span class="n">menu_already_displayed</span>
     <span class="n">menu_already_displayed</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">menu_display</span><span class="p">()</span>
+
+
+
+
 <span class="k">def</span> <span class="nf">menu_onload</span><span class="p">():</span>
     <span class="k">if</span> <span class="n">CurrentState</span><span class="p">()</span><span class="o">.</span><span class="n">menu_will_open</span><span class="p">:</span>
         <span class="n">menu_helper</span><span class="p">()</span>

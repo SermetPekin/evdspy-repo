@@ -91,37 +91,71 @@ Raises
 ValueError
     Raised if an invalid API key is provided or required parameters are missing.
 
+
+Creating a `.env` File
+=============
+
+Create a `.env` file in the root directory of your project and define your proxies as shown below:
+
+
+.. code-block:: bash 
+
+    # Example .env file content
+    EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
+    
 Examples
 --------
 Basic usage:
 
 .. code-block:: python
 
-    index = "TP.ODEMGZS.BDTTOPLAM"
+    from evdspy import get_series_exp
+
+    template = """
+
+    TP.KREDI.L002
+    TP.BFTUKKRE.L004 
+    TP.BFTUKKRE.L056
+    TP.BFTUKKRE.L193 
+    TP.BFTUKKRE.L234 
+    """
+
     result = get_series_exp(index, start_date="01-01-2020", end_date="01-01-2021", frequency="monthly")
     print(result.data.head())
     print(result.metadata)
-    result.write('output.xlsx')
-    result.to_excel('output.xlsx')
+    result.write('output1.xlsx')
+    result.to_excel('output2.xlsx')
 
 Using multiple indexes and cache:
 
 .. code-block:: python
+    
+    from evdspy import get_series_exp
 
-    indexes = ("TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD")
+    indexes = ("TP.ENFBEK.PKA12ENF", "TP.ENFBEK.IYA12ENF")
     result = get_series_exp(indexes, start_date="01-01-2020", end_date="01-01-2021", frequency="monthly")
     print(result.data.head())
     print(result.metadata)
-    result.write('output.xlsx')
-    result.to_excel('output.xlsx')
+    result.write('output1.xlsx')
+    result.to_excel('output2.xlsx')
 
 Applying formulas and aggregation:
 
 .. code-block:: python
 
-    indexes = "TP.ODEMGZS.BDTTOPLAM"
-    result = get_series_exp(indexes, formulas="level", aggregation="sum")
+    from evdspy import get_series_exp
+
+    template = """
+    
+    TP.KREDI.L002
+    TP.BFTUKKRE.L004 
+    TP.BFTUKKRE.L056
+    TP.BFTUKKRE.L193 
+    TP.BFTUKKRE.L234 
+    """
+
+    result = get_series_exp(template, formulas="level", aggregation="sum")
     print(result.data.head())
     print(result.metadata)
     result.write('output.xlsx')
-    result.to_excel('output.xlsx')
+    result.to_excel('output2.xlsx')

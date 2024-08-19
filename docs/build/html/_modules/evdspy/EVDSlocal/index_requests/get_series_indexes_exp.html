@@ -151,6 +151,9 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../../home.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api_key.html">Proxy Configuration</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="../../../../get_series.html">get_series Function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../get_series_exp.html">get_series_exp Function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../setup.html">setup Function</a></li>
@@ -159,6 +162,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../proxy.html">Proxy Configuration</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
 </ul>
 
     </div>
@@ -270,7 +274,7 @@ document.write(`
     <span class="n">default_start_date_fnc</span><span class="p">,</span>
     <span class="n">default_end_date_fnc</span><span class="p">,</span>
 <span class="p">)</span>
-
+<span class="kn">from</span> <span class="nn">evdspy.EVDSlocal.index_requests.get_series_indexes</span> <span class="kn">import</span> <span class="n">get_series</span>
 
 <span class="k">def</span> <span class="nf">initial_api_process_when_given</span><span class="p">(</span><span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">evdspy.EVDSlocal.config.apikey_class</span> <span class="kn">import</span> <span class="n">ApikeyClass</span>
@@ -350,8 +354,8 @@ document.write(`
         <span class="n">aggregation</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
             <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">,</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="kc">None</span>
         <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">meta_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span> <span class="p">,</span>
+        <span class="n">meta_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span> <span class="p">,</span>
         <span class="n">proxy</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">proxies</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -420,23 +424,27 @@ document.write(`
         <span class="n">aggregation</span><span class="o">=</span><span class="n">aggregation</span><span class="p">,</span>
         <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="c1"># ............ProxyManager................................</span>
+    <span class="c1"># # ............ProxyManager................................</span>
     <span class="n">proxy_manager</span> <span class="o">=</span> <span class="n">ProxyManager</span><span class="p">(</span><span class="n">proxy</span><span class="o">=</span><span class="n">proxy</span><span class="p">,</span> <span class="n">proxies</span><span class="o">=</span><span class="n">proxies</span><span class="p">)</span>
-    <span class="c1"># ............UrlBuilder..................................</span>
-    <span class="n">url_builder</span> <span class="o">=</span> <span class="n">UrlBuilder</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">url_type</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="c1"># ............ApiRequester................................</span>
-    <span class="n">api_requester</span> <span class="o">=</span> <span class="n">ApiRequester</span><span class="p">(</span><span class="n">url_builder</span><span class="p">,</span> <span class="n">proxy_manager</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">api_requester</span><span class="o">.</span><span class="n">dry_request</span><span class="p">()</span>
-    <span class="c1"># ............DataProcessor................................</span>
-    <span class="n">data_processor</span> <span class="o">=</span> <span class="n">DataProcessor</span><span class="p">(</span><span class="n">api_requester</span><span class="p">())</span>
+    <span class="c1"># # ............UrlBuilder..................................</span>
+    <span class="c1"># url_builder = UrlBuilder(config, url_type=None)</span>
+    <span class="c1"># # ............ApiRequester................................</span>
+    <span class="c1"># api_requester = ApiRequester(url_builder, proxy_manager)</span>
+    <span class="c1"># if debug:</span>
+    <span class="c1">#     return api_requester.dry_request()</span>
+    <span class="c1"># # ............DataProcessor................................</span>
+    <span class="c1"># data_processor = DataProcessor(api_requester())</span>
 
-    <span class="c1"># Fetch the main data</span>
-    <span class="n">main_data</span> <span class="o">=</span> <span class="n">data_processor</span><span class="p">()</span>
+    <span class="c1"># main_data = data_processor()</span>
+    <span class="n">main_data</span> <span class="o">=</span> <span class="n">get_series</span><span class="p">(</span><span class="n">index</span> <span class="p">,</span>
+                           <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
+        <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span>
+        <span class="n">frequency</span><span class="o">=</span><span class="n">frequency</span><span class="p">,</span>
+        <span class="n">formulas</span><span class="o">=</span><span class="n">formulas</span><span class="p">,</span>
+        <span class="n">aggregation</span><span class="o">=</span><span class="n">aggregation</span><span class="p">,</span>
+        <span class="n">cache</span><span class="o">=</span><span class="n">cache</span> <span class="p">)</span>
 
-    <span class="c1"># Fetch metadata for each index</span>
     <span class="n">metadata_</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">get_metadata_for_index</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">proxy_manager</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">meta_cache</span><span class="p">)</span>
-    <span class="c1"># return pd.DataFrame(liste)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;main_data&quot;</span><span class="p">:</span> <span class="n">main_data</span><span class="p">,</span>
