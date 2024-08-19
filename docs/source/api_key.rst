@@ -1,10 +1,10 @@
 Api Key Configuration
-=============
+==========================
 
 You can configure api_key and proxies for your application by defining them in a `.env` file. The script will load your proxies from this file if it is available.
 
 Creating a `.env` File
-=============
+==========================
 
 Create a `.env` file in the root directory of your project and define your proxies as shown below:
 
@@ -45,7 +45,7 @@ To set environment variables on Windows, you can use the `setx` command in the C
 
 
 Linux and macOS
-----------
+------------------
 To set environment variables on Linux or macOS, you can use the `export` command in the terminal:
 
 .. code-block:: bash
