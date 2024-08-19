@@ -87,22 +87,31 @@ template = """TP_GSYIH01_GY_CF
 df2 = get_series(template, debug=False, cache=False)
 ```
 ```python
-from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
-index1 = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
-index2 = """
-    TP.ODEMGZS.BDTTOPLAM #
-    TP.ODEMGZS.ABD #
-    """
-cache = True
-df = get_series(index1,
-                frequency="monthly",
-                start_date=default_start_date_fnc(),
-                end_date=default_end_date_fnc(),
-                aggregation=("avg",),
-                cache=cache,
-                debug=False)
-print(df)
+
+from evdspy import get_series , get_series_exp 
+CPI = """
+TP.FG.J0  # Consumer Price Index 
+"""
+
+inf_exp_market_part = """
+
+TP.ENFBEK.PKA12ENF # Annual inflation expectations of market participants (12-month ahead, %) 
+
+"""
+inf_exp_real_sector = """
+
+TP.ENFBEK.IYA12ENF # Annual inflation expectations of real sector (12-month ahead, %) 
+
+"""
+
+
+for index  in [CPI, inf_exp_market_part, inf_exp_real_sector]:
+    res = get_series_exp(index , cache = True  , start_date = "01-01-2010" )
+    print(res.data)
+    print(res.metadata)
+
 ```
+
 ### Some more examples
 ```python
 from evdspy import get_series
