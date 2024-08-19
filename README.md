@@ -112,6 +112,36 @@ for index  in [CPI, inf_exp_market_part, inf_exp_real_sector]:
 
 ```
 
+### datagroup names can be used to retrieve multiple series 
+
+```python 
+
+
+from evdspy import get_series_exp 
+cpi_table = """
+bie_tukfiy4  # CPI 
+"""
+inf_exp_table = """
+bie_enfbek   # inflation expectations 
+
+"""
+reserves_table = """
+bie_abres2   # reserves 
+
+"""
+
+def clean_name(name : str ) : 
+    return name.replace("\n" , "" ).replace(" " , "") 
+
+
+for index in [cpi_table, inf_exp_table, reserves_table]:
+    res = get_series_exp(index, cache=True, start_date="01-01-2010")
+    print(res.data)
+    print(res.metadata)
+    res.to_excel(clean_name(index) + ".xlsx")
+
+```
+
 ### Some more examples
 ```python
 from evdspy import get_series
