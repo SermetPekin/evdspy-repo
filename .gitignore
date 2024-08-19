@@ -189,7 +189,10 @@ instance/
 # Scrapy stuff:
 .scrapy
 
-docs/api_key.rst 
+!docs/api_key.rst 
+!docs/*.rst 
+!docs/source/*.rst 
+
 
 # Sphinx documentation
 #docs/_build/
