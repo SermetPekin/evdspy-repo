@@ -189,6 +189,8 @@ instance/
 # Scrapy stuff:
 .scrapy
 
+docs/api_key.rst 
+
 # Sphinx documentation
 #docs/_build/
 
