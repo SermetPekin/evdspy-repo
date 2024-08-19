@@ -87,3 +87,49 @@ cache True for eficient requests. Only checks request result for the current day
         print(res.data)
         print(res.metadata)
 
+
+.. code-block:: python
+
+
+    from evdspy import get_series_exp
+
+    reserves = """
+    TP.AB.TOPLAM # Central Bank Reserves 
+    """
+
+
+    result = get_series_exp(reserves, frequency="monthly", start_date="01-01-1994" , aggregation ="avg")
+    df = result.data
+    print(df.head())  
+    df.to_excel("data.xlsx") # only data 
+    result.to_excel("result.xlsx") # data and metadata sheets together 
+
+
+.. code-block:: python
+
+
+    from evdspy import get_series_exp 
+    cpi_table = """
+    bie_tukfiy4  # CPI 
+    """
+    inf_exp_table = """
+    bie_enfbek   # inflation expectations 
+
+    """
+    reserves_table = """
+    bie_abres2   # reserves 
+
+    """
+
+    def clean_name(name : str ) : 
+        return name.replace("\n" , "" ).replace(" " , "") 
+
+
+    for index in [cpi_table, inf_exp_table, reserves_table]:
+        res = get_series_exp(index, cache=True, start_date="01-01-2010")
+        print(res.data)
+        print(res.metadata)
+        res.to_excel(clean_name(index) + ".xlsx")
+
+
+
