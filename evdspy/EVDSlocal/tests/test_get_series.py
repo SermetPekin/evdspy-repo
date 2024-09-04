@@ -63,7 +63,6 @@ def get_options():
 
             
 def test_get_series_2(capsys):
-    with capsys.disabled(): 
         for _ in range(2) :
             kw = get_options()
             kwargs = tuple(kw)[0]
