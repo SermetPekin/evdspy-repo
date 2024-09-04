@@ -37,16 +37,14 @@ def fnc(item: Any) -> Result:
 
 DF = pd.DataFrame
 
-
 def test_get_series_exp(capsys):
-    with capsys.disabled():
         items = [index1, index2, indexes, index_table]
 
         for item in items:
             result: Result = fnc(item)
-            # we will check if this function handles all data types correctly
-            # then examine the last one to see what we get as a result from the function
+
             assert isinstance(result.data, DF)
             assert isinstance(result.metadata, DF)
             assert callable(result.write)
             assert callable(result.to_excel)
+            
