@@ -7,36 +7,21 @@
 
 ### installation
     pip install evdspy -U
-
     
 ### Updated on this version
-
-
-
-
-
 - ***get_series_exp*** function was added 
 
     see [Documentation](https://evdspy-repo.readthedocs.io/en/latest/home.html)  for its usage and result data types 
 
-    
-- evdspyChat application was added. 
+### evdschat
 
-[evdspyChat](https://evdspychat-b11f96868cb6.herokuapp.com/)
+> please see  [evdschat](https://github.com/SermetPekin/evdschat) 
+ package for extended usage of evdspy package.
 
-   [![tellme](https://github.com/user-attachments/assets/14024132-4d41-4879-9ea8-3e510b2f8f02)](https://evdspychat.onrender.com/)
-   
-[![askyourself](https://github.com/user-attachments/assets/2cece3e0-958a-454b-8876-5dbdfea1e1a4)](https://evdspychat.onrender.com/)
 
-[![a2](https://github.com/user-attachments/assets/3e5d3ab4-df41-4d34-8e2a-e1ca3d19a190)](https://evdspychat.onrender.com/)
+### api_key usage with evdspy python package
 
- [![commercialloans]( https://github.com/user-attachments/assets/2fdcea2e-91bc-4066-bd5d-a821e32db2c2 )](https://evdspychat.onrender.com/)
-
- 
-- 
-## api_key usage with evdspy python package
-
-    api key will be read from .env file on load if available.  
+ >   api key will be read from .env file on load if available.  
 
 ### .env file  [Alternative 1] 
 
