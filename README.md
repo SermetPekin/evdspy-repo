@@ -13,10 +13,18 @@
 
     see [Documentation](https://evdspy-repo.readthedocs.io/en/latest/home.html)  for its usage and result data types 
 
+### other alternative libraries 
 ### evdschat
+**[![evdschat](https://img.shields.io/badge/evdschat-python-green)](https://github.com/SermetPekin/evdschat)**
+ 
+package for extended usage of evdspy package.  – An open-source RAG application for data aggregation with PyPI.
+ 
+### evdscpp
+**[ ![evdscpp](https://img.shields.io/badge/evdscpp-C++-brightgreen) ](https://github.com/SermetPekin/evdscpp)**
+C++ library to retrieve data from CBRT API.
+package for extended usage of C++ header only package.
 
-> please see  [evdschat](https://github.com/SermetPekin/evdschat) 
- package for extended usage of evdspy package.
+
 
 
 ### api_key usage with evdspy python package
@@ -237,41 +245,7 @@ or
 ### menu()
 ![image](https://user-images.githubusercontent.com/96650846/198966008-77302f42-f8f5-430c-962d-a988abe57bb7.png)
 ![image](https://user-images.githubusercontent.com/96650846/198966318-35a8ba8b-68e9-46f9-827e-cf06377ec960.png)
-### menu , console
-    'console',
-    'menu',
-### version
-    'version',
-### api key
-    'save_apikey',
-    'save',
-### cache
-    'remove_cache',
-#### check():
-    check setup and create required folders and see current installation status.
-#### setup()   :
-    creates folders and files
-    ____Folders_______________
-            `caches`
-                will be used to store some request results to ovoid redundant requests from the EVDS api
-            `SeriesData`
-                to save results of requests or caches to an excel file using information on user option files
-    ____Files_______________
-            `options.cfg`
-                a text file consisting global user options such as start date, end date and caching period.
-            `config_series.cfg`
-                this file consists information regarding individual sets of series. From the menu user can add
-            new series that will be requesting from the server. Program will produce on for example and this file
-            can be modified and new sets of series can be added following the example format.
-    from evdspy.main import *
-    setup_now()
-#### get():
-    # this will check for your current series.txt file
-    # if proper data series codes are given it will either download them
-    # or use the latest cache from your local environment
-    # to provide other cache options such as nocache / daily / hourly you may change your
-    # defaults or give arguments such as
-        get()
+
 
 ## OPTION 2
 _________________________________
@@ -283,29 +257,32 @@ _________________________________
 ## OPTION 3
 _________________________________
 #### FROM THE OS COMMAND LINE
-(Windows Command line / Linux Terminal / Mac Terminal) ( > , $ , $ as $ )
+
+(Windows Command line / Linux Terminal / Mac Terminal) 
+
 ![image](https://user-images.githubusercontent.com/96650846/198182696-c5bbe840-a9cd-45b5-806f-ee9b7d0e88b8.png)
-    $ evdspy setup
-    --------------
-        creates initial folders for your environment to save data and caches
-    $ evdspy menu
-    --------------
-        Launces evdspy and loads the menu
-    $ evdspy create series
-    --------------
-        Creates series file (leaves untouched if exists)
-    $ evdspy help
-    --------------
-        shows help and some documentation from command line
-    $ evdspy create options
-    --------------
-        creates options on the current folder
-    $ evdspy get
-    --------------
-        makes request from EVDS API and creates excel files regarding information on your series file
-    $ evdspy save
-    --------------
-        asks for your api key to save a file in your environment named `APIKEY_FOLDER`
+
+        $ evdspy setup
+        --------------
+            creates initial folders for your environment to save data and caches
+        $ evdspy menu
+        --------------
+            Launces evdspy and loads the menu
+        $ evdspy create series
+        --------------
+            Creates series file (leaves untouched if exists)
+        $ evdspy help
+        --------------
+            shows help and some documentation from command line
+        $ evdspy create options
+        --------------
+            creates options on the current folder
+        $ evdspy get
+        --------------
+            makes request from EVDS API and creates excel files regarding information on your series file
+        $ evdspy save
+        --------------
+            asks for your api key to save a file in your environment named `APIKEY_FOLDER`
 
 ## Documentation
 
