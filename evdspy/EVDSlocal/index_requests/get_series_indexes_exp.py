@@ -8,6 +8,7 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
 )
 from evdspy.EVDSlocal.index_requests.get_series_indexes import get_series
 
+
 def initial_api_process_when_given(api_key: Optional[str] = None) -> None:
     from evdspy.EVDSlocal.config.apikey_class import ApikeyClass
 
@@ -84,13 +85,13 @@ def get_series_exp(
         aggregation: Union[
             Literal["avg", "min", "max", "first", "last", "sum", None], None
         ] = None,
-        cache: bool = False ,
-        meta_cache: bool = False ,
+        cache: bool = False,
+        meta_cache: bool = False,
         proxy: Optional[str] = None,
         proxies: Optional[dict[str, str]] = None,
         debug: bool = False,
         api_key: Optional[str] = None,
-) -> dict[str, pd.DataFrame]:
+) -> Result:
     """
     Retrieves economic data series from the specified API and returns it as a pandas DataFrame.
     Parameters
@@ -166,13 +167,13 @@ def get_series_exp(
     # data_processor = DataProcessor(api_requester())
 
     # main_data = data_processor()
-    main_data = get_series(index ,
+    main_data = get_series(index,
                            start_date=start_date,
-        end_date=end_date,
-        frequency=frequency,
-        formulas=formulas,
-        aggregation=aggregation,
-        cache=cache )
+                           end_date=end_date,
+                           frequency=frequency,
+                           formulas=formulas,
+                           aggregation=aggregation,
+                           cache=cache)
 
     metadata_: pd.DataFrame = get_metadata_for_index(index, proxy_manager, cache=meta_cache)
 
