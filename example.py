@@ -1,35 +1,22 @@
-import pandas as pd
 
-from evdspy import get_series, get_series_exp
+from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
+import pandas as pd  
+def get_api_key():
+    import os
+    return os.getenv("EVDS_API_KEY")
 
-template = """TP_GSYIH01_GY_CF
-TP_GSYIH02_GY_CF
-TP_GSYIH03_GY_CF
-TP_GSYIH04_GY_CF
-TP_GSYIH05_GY_CF
-TP_GSYIH06_GY_CF
-TP_GSYIH07_GY_CF
-TP_GSYIH08_GY_CF
-TP_GSYIH09_GY_CF
-TP_GSYIH10_GY_CF
-TP_GSYIH11_GY_CF
-TP_GSYIH14_GY_CF
-TP_GSYIH15_GY_CF
-TP_GSYIH16_GY_CF
-"""
+assert isinstance(get_api_key(), str) and len(get_api_key()) == 10
 
-# pandas dataframe
-df = get_series(template, cache=False)
-print(df)
-
-# Result Class instance
-#   .data       : pd.DataFrame (data)        e.g. result.data
-#   .metadata   : pd.DataFrame (metadata)    e.g. result.metadata
-#   .write()    : Callable                   e.g. result.write("example.xlsx")
-result = get_series_exp(template, cache=False)
-
-print(result)  # Result
-print(result.data)  # pd.DataFrame
-print(result.metadata)  # pd.DataFrame
-
-result.write("example.xlsx")
+def t1():
+    df = get_series("TP.ODEMGZS.BDTTOPLAM",
+                    frequency="monthly",
+                    start_date=default_start_date_fnc(),
+                    end_date=default_end_date_fnc(),
+                    aggregation=("avg",),
+                    cache=False,
+                    debug=False,
+                    api_key=get_api_key())
+    print(df)
+    assert isinstance(df, pd.DataFrame)
+if __name__ == "__main__":
+    t1()
