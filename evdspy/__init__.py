@@ -9,7 +9,7 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes import (
     get_series
 )
 
-from evdspy.EVDSlocal.index_requests.get_series_indexes_exp import get_series_exp
+from evdspy.EVDSlocal.index_requests.get_series_indexes_exp import get_series_exp, Result
 
 from evdspy.EVDSlocal.utils.utils_general import ls
 
@@ -20,7 +20,6 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
 )
 
 from evdspy.EVDSlocal.common.clear_cache_folder import clear_cache
-
 
 # __all__ = [
 #         "default_start_date_fnc",
