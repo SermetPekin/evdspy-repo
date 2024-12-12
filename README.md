@@ -59,6 +59,8 @@ https_proxy=http://proxy.example.com:80
 
 ### api_key inside get_series function [Alternative 2]
 
+> if `.env` file exists in the current working directory, function does not need `api_key` parameter.
+
 ```python
 from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
 df1 = get_series("bie_gsyhgycf", cache=False, api_key="YOUR_API_KEY_HERE")
