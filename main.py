@@ -23,6 +23,7 @@ TP_GSYIH16_GY_CF
 df = get_series(template, cache=False)
 print(df)
 
+
 # Result Class instance
 #   .data       : pd.DataFrame (data)        e.g. result.data
 #   .metadata   : pd.DataFrame (metadata)    e.g. result.metadata
