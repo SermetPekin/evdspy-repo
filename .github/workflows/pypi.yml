@@ -1,4 +1,4 @@
-name: Pypi Windows Server
+name: Pypi Ubuntu Server
 
 on:
   push:
