@@ -15,6 +15,8 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.9",  "3.10" ,"3.11", "3.12", "3.13"]
+    env:
+        EVDS_API_KEY : ${{ secrets.EVDS_API_KEY }}  
 
     steps:
       - name: Checkout code
@@ -37,8 +39,9 @@ jobs:
 
       - name: Run tests
         env:
-          JAVA_CRUNCHER_BIN: ${{ github.workspace }}/jwsacruncher/jwsacruncher-2.2.5/bin
+          EVDS_API_KEY : ${{ secrets.EVDS_API_KEY }}  
         run: |
-          set PATH=$JAVA_CRUNCHER_BIN;$PATH
+          
           pytest -v -x
           # python -c 'import os;print(os.environ["JAVA_CRUNCHER_BIN"])'
+          python ./main.py 
