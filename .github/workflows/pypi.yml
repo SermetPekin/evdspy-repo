@@ -1,4 +1,4 @@
-name: Pypi Ubuntu Server
+name: On Ubuntu / Mac
 
 on:
   push:
