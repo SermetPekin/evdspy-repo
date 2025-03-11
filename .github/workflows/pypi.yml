@@ -1,4 +1,4 @@
-name: On Ubuntu / Mac [py 3.9, 3.10, 3.11, 3.12, 3.13]
+name: Ubuntu/Mac [py3.9,3.10,3.11,3.12,3.13]
 
 on:
   push:
