@@ -45,3 +45,5 @@ jobs:
           pytest -v -x
           # python -c 'import os;print(os.environ["JAVA_CRUNCHER_BIN"])'
           python ./main.py 
+          evdspy help 
+            
