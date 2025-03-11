@@ -30,9 +30,9 @@ To set environment variables on Windows, you can use the `setx` command in the C
 
 .. code-block:: bash
   
-    setx EVDS_API_KEY "AxByCzDsFoGmHeIgJaKrLbMaNgOe"
-    setx http_proxy "http://proxy.example.com:80"  
-    setx https_proxy "http://proxy.example.com:80"
+    set EVDS_API_KEY=AxByCzDsFoGmHeIgJaKrLbMaNgOe
+    set http_proxy=http://proxy.example.com:80  
+    set https_proxy=http://proxy.example.com:80
 
 
 
