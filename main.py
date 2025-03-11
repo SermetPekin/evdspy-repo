@@ -18,6 +18,7 @@ TP_GSYIH15_GY_CF
 TP_GSYIH16_GY_CF
 """
 
+
 # pandas dataframe
 df = get_series(template, cache=False)
 print(df)
