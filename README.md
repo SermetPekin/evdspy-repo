@@ -12,7 +12,8 @@
 
 ### installation
     pip install evdspy -U
-    
+
+
 ### Updated on this version
 - ***get_series_exp*** function was added 
 
