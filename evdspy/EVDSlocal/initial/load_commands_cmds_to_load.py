@@ -381,22 +381,25 @@ def main_exit_function():
     ...
 def menu_display():
     funcs = [
+            ("help", help_),
+           
             ("check setup", check),
             ("setup", setup),
-            ("create user options file", create_options_file),
-            ("create series file", create_series_file),
-            ("add new series group ", setup_series_steps),
-            ("get data", get),
-            ("get categories (get all series of a datagroup)", get_categories_main),  # next version
+            # ("add new series group ", setup_series_steps),
+     
+            ("Data", get_categories_main),  # next version
+            ("(auto) get series from file", get),
             # ("get data groups (on development) ", get_datagroups_data_main),  # next version
-            ("help", help_),
             ("show api key", show_apikey),
             ("save api key to file", set_apikey_input),
+            ("create user options file", create_options_file),
+            ("create series file", create_series_file),
+           
             ("remove cache folders", remove_cache),
             ("evdspy as a command line prompt", console_main_from_the_menu),
-            ("version", version),
+            # ("version", version),
             ("py version", py_version),
-            ("check compatibility of your python version", check_compat),
+            # ("check compatibility of your python version", check_compat),
     ]
 
     menu_items = list(map(lambda x: MenuItem(x[1], x[0]), funcs))
