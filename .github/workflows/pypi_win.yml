@@ -2,9 +2,7 @@ name: Windows [py3.9,3.10,3.11,3.12,3.13]
 
 on:
   push:
-    paths: 
-      - "**.py"
-      - "*.yml"
+
   pull_request:
     branches: ["main"]
 
