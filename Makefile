@@ -1,7 +1,6 @@
 # Variables
 VENV = venv
-PYTHON = $(VENV)/bin/python
-PIP = $(VENV)/bin/pip
+PYTHON = $(VENV)
 TEST_DIR = tests
 
 # Targets
@@ -9,42 +8,42 @@ all: install test
 
 .PHONY: venv
 venv:
-	python3 -m venv $(VENV)
+	python -m venv $(VENV)
 
 .PHONY: install
 install: venv
-	$(PIP) install --upgrade pip
-	$(PIP) install -r requirements.txt
+	$(VENV)/Scripts/python -m pip install --upgrade pip
+	$(VENV)/Scripts/python -m pip install -r requirements.txt
 
 .PHONY: test
 test:
-	python3.11 -m pip install -r ./requirements-dev.txt
-	pytest -v 
-	tox run 
+	python -m pip install -r requirements-dev.txt
+	pytest -v
+	tox
 .PHONY: lint
 lint:
-	$(PYTHON) -m flake8 .
+	python -m flake8 .
 
 .PHONY: format
 format:
-	$(PYTHON) -m black .
+	python -m black .
 
 .PHONY: check
 check:
-	ruff check 
-	tox run 
+	ruff check
+	tox
 
 .PHONY: security
 security:
-	python3.11 -m pip install safety
-	python3.11 -m safety check --ignore=70612
+	python -m pip install safety
+	python -m safety check --ignore=70612
 
 
 
 clean:
-	rm -rf $(VENV)
-	find . -type f -name "*.pyc" -delete
-	find . -type d -name "__pycache__" -delete
+	python -c "import shutil; shutil.rmtree('$(VENV)', ignore_errors=True)"
+	python -c "import os; [os.remove(f) for d,_,fs in os.walk('.') for f in [os.path.join(d,ff) for ff in fs if ff.endswith('.pyc')]]"
+	python -c "import os; [shutil.rmtree(os.path.join(d,'__pycache__'), ignore_errors=True) for d,dirs,fs in os.walk('.') if '__pycache__' in dirs]"
 
 .PHONY: help
 help:
