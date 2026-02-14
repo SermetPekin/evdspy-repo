@@ -9,6 +9,7 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
+      
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -23,6 +24,8 @@ jobs:
       - name: Build package
         run: python -m build
       - name: Run tests
+        env:
+          EVDS_API_KEY : ${{ secrets.EVDS_API_KEY }}  
         run: pytest
       - name: Publish to PyPI
         env:
