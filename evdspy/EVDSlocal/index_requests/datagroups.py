@@ -6,7 +6,7 @@ from ..components.options_class import SingletonOptions
 from ..config.config import ConfigBase
 from ..requests_.ev_request import EVRequest
 config = ConfigBase()
-# https://evds2.tcmb.gov.tr/service/evds/datagroup=bie_yssk&startDate=01-06-2017&endDate=07-09-2030&type=json&key=XXYYZZ
+# https://evds3.tcmb.gov.tr/igmevdsms-dis/datagroup=bie_yssk&startDate=01-06-2017&endDate=07-09-2030&type=json&key=XXYYZZ
 def get_datagroups_with_code(code=1):
     gid = GeneralIndexesDatagroups(code=code, EVRequest_=EVRequest(options_=SingletonOptions()))  #
     json_content = gid.get_json()

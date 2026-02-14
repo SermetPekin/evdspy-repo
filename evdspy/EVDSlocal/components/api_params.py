@@ -5,7 +5,14 @@ from enum import Enum
 from typing import Callable, List, Tuple, Union
 from datetime import datetime
 from evdspy.EVDSlocal.components.api_params_enums import *
-default_api_domain = "https://evds2.tcmb.gov.tr/service/evds/"
+default_api_domain = "https://evds3.tcmb.gov.tr/igmevdsms-dis/"
+"""
+
+https://evds2.tcmb.gov.tr/service/evds
+https://evds3.tcmb.gov.tr/igmevdsms-dis
+"""
+
+
 @dataclass
 class ApiDomain(ABC):
     domain: str

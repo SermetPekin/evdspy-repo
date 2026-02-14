@@ -51,7 +51,7 @@ def get_datagroup_individual_with_code_helper(
     json_content = gid.get_json()
     return json_content
 def get_series_list_of_subject(code_str: str):
-    # https://evds2.tcmb.gov.tr/service/evds/serieList/key=XXXXX&type=csv&code=bie_yssk
+    # https://evds3.tcmb.gov.tr/igmevdsms-dis/serieList/key=XXXXX&type=csv&code=bie_yssk
     gid = GeneralIndexesDatagroupSeriesList(code=0, EVRequest_=EVRequest(
         options_=SingletonOptions()))  # this number will be overriten . does not matter what number
     gid.create_url_first_part()
@@ -83,7 +83,7 @@ def get_df_datagroup(
         end_date : str
             e.g. `31-01-2030`
     """
-    # https://evds2.tcmb.gov.tr/service/evds/datagroup=bie_yssk&startDate=01-06-2017&endDate=07-09-2017&type=csv&key=XXXX
+    # https://evds3.tcmb.gov.tr/igmevdsms-dis/datagroup=bie_yssk&startDate=01-06-2017&endDate=07-09-2017&type=csv&key=XXXX
     json_content = get_datagroup_individual_with_code_helper(datagroup, start_date, end_date)
     df = json_to_df(json_content)
     df = make_df_float(df)

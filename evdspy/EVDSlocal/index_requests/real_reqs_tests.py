@@ -8,7 +8,7 @@ def test1_real_reqs():
     credits_template = ("TP.BFTUKKRE.L001", "TP.BFTUKKRE.L010", "TP.BFTUKKRE.L011", "TP.BFTUKKRE.L012",)
     ur = UserRequest("TP.ODEMGZS.BDTTOPLAM")
     print(ur.url)
-    assert ur.url == "https://evds2.tcmb.gov.tr/service/evds/series=TP.ODEMGZS.BDTTOPLAM&startDate=01-01-2000&endDate=01-01-2100&type=json"
+    assert ur.url == "https://evds3.tcmb.gov.tr/igmevdsms-dis/series=TP.ODEMGZS.BDTTOPLAM&startDate=01-01-2000&endDate=01-01-2100&type=json"
     print(ur)
     balance_of_pay = "TP.ODEMGZS.BDTTOPLAM", "TP.ODEMGZS.ABD"
     cache = False
