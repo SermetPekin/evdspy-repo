@@ -18,7 +18,7 @@ class Credentials:
     options_: Options = field(default_factory=load_options)
     apiKey: Optional[any] = False
     proxy = False
-    address: str = "https://evds2.tcmb.gov.tr/service/evds/"
+    address: str = "https://evds3.tcmb.gov.tr/igmevdsms-dis/"
     def __post_init__(self):
         self.apikeyobj = field(default_factory=ApikeyClass)  # ApikeyClass()
         self.get_api_keys()

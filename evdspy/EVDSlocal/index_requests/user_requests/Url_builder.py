@@ -88,12 +88,12 @@ class HelpUrlBuilder:
     @property
     def basic_url(self) -> str:
         """
-        https://evds2.tcmb.gov.tr/service/evds/serieList/type=xml&code=TP.DK.USD.A
-        https://evds2.tcmb.gov.tr/service/evds/serieList/type=csv&code=bie_yssk
-        https://evds2.tcmb.gov.tr/service/evds/serieList/type=json&code=TP.GSYIH02.GY.CF
+        https://evds3.tcmb.gov.tr/igmevdsms-dis/serieList/type=xml&code=TP.DK.USD.A
+        https://evds3.tcmb.gov.tr/igmevdsms-dis/serieList/type=csv&code=bie_yssk
+        https://evds3.tcmb.gov.tr/igmevdsms-dis/serieList/type=json&code=TP.GSYIH02.GY.CF
         :return:
         """
-        return f"https://evds2.tcmb.gov.tr/service/evds/serieList/type=json&code={self.index}"
+        return f"https://evds3.tcmb.gov.tr/igmevdsms-dis/serieList/type=json&code={self.index}"
 
     @property
     def url(self) -> str:

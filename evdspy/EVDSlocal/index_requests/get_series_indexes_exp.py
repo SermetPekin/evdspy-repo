@@ -21,7 +21,7 @@ def initial_api_process_when_given(api_key: Optional[str] = None) -> None:
 
 
 def create_metadata_url(series_code: str, response_type: str = 'json') -> str:
-    base_url = "https://evds2.tcmb.gov.tr/service/evds/serieList"
+    base_url = "https://evds3.tcmb.gov.tr/igmevdsms-dis/serieList"
     return f"{base_url}?type={response_type}&code={series_code}&mode=2"
 
 

@@ -10,7 +10,7 @@ def test():
     print(p.get_data())
 from rich import print
 def basic_for_test(api_key):
-    url = "https://evds2.tcmb.gov.tr/service/evds/series=TP.ODEMGZS.BDTTOPLAM-TP.ODEMGZS.ABD-TP.ODEMGZS.ARJANTIN-TP.ODEMGZS.BREZILYA-TP.ODEMGZS.KANADA-TP.ODEMGZS.KOLOMBIYA-TP.ODEMGZS.MEKSIKA-TP.ODEMGZS.SILI&startDate=01-01-2019&endDate=01-12-2030&frequency=5&aggregationTypes=avg-avg-avg-avg-avg-avg-avg-avg&formulas=0-0-0-0-0-0-0-0&type=csv"
+    url = "https://evds3.tcmb.gov.tr/igmevdsms-dis/series=TP.ODEMGZS.BDTTOPLAM-TP.ODEMGZS.ABD-TP.ODEMGZS.ARJANTIN-TP.ODEMGZS.BREZILYA-TP.ODEMGZS.KANADA-TP.ODEMGZS.KOLOMBIYA-TP.ODEMGZS.MEKSIKA-TP.ODEMGZS.SILI&startDate=01-01-2019&endDate=01-12-2030&frequency=5&aggregationTypes=avg-avg-avg-avg-avg-avg-avg-avg&formulas=0-0-0-0-0-0-0-0&type=csv"
     # url = f"{url}&key={api_key}"
     req = RealRequestWithParam(url, api_key=api_key)
     response = req.request()
@@ -18,7 +18,7 @@ def basic_for_test(api_key):
     # response = p_basic.get_data_with_url(url)
     return getattr(response, "status_code") and response.status_code in (200,)
 def basic_for_testOLD(api_key):
-    url = "https://evds2.tcmb.gov.tr/service/evds/series=TP.ODEMGZS.BDTTOPLAM-TP.ODEMGZS.ABD-TP.ODEMGZS.ARJANTIN-TP.ODEMGZS.BREZILYA-TP.ODEMGZS.KANADA-TP.ODEMGZS.KOLOMBIYA-TP.ODEMGZS.MEKSIKA-TP.ODEMGZS.SILI&startDate=01-01-2019&endDate=01-12-2030&frequency=5&aggregationTypes=avg-avg-avg-avg-avg-avg-avg-avg&formulas=0-0-0-0-0-0-0-0&type=csv"
+    url = "https://evds3.tcmb.gov.tr/igmevdsms-dis/series=TP.ODEMGZS.BDTTOPLAM-TP.ODEMGZS.ABD-TP.ODEMGZS.ARJANTIN-TP.ODEMGZS.BREZILYA-TP.ODEMGZS.KANADA-TP.ODEMGZS.KOLOMBIYA-TP.ODEMGZS.MEKSIKA-TP.ODEMGZS.SILI&startDate=01-01-2019&endDate=01-12-2030&frequency=5&aggregationTypes=avg-avg-avg-avg-avg-avg-avg-avg&formulas=0-0-0-0-0-0-0-0&type=csv"
     url = f"{url}&key={api_key}"
     p_basic = PrepareUrl()
     response = p_basic.get_data_with_url(url)
@@ -91,7 +91,7 @@ class PrepareUrl:
     def series_to_str(self, series):
         return "-".join(series)
     def create_url(self, series, api_key, startDate, endDate, frequency, aggregateType):
-        domain: str = "https://evds2.tcmb.gov.tr/service/evds/"
+        domain: str = "https://evds3.tcmb.gov.tr/igmevdsms-dis/"
         if series is None:
             raise SeriesEmptyError
         if api_key is None:
