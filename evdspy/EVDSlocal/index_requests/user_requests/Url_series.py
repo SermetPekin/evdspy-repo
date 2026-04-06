@@ -2,11 +2,12 @@
 class UrlSeries:
     @property
     def domain(self) -> str:
-        return "https://evds2.tcmb.gov.tr/service/evds"
+        return "https://evds3.tcmb.gov.tr/igmevdsms-dis/"
 
     @property
     def alias(self):
         return "series="
+
 
 
 
