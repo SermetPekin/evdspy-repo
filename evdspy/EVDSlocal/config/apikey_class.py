@@ -122,7 +122,7 @@ class ApikeyClass(object):
             return cls.now_testing_is_key_is_valid
         key_objs = cls.get_api_keys()
         if not key_objs:
-            print(key_objs)
+            # print(key_objs)
             
             if check:
                 cls.no_api_msg()
