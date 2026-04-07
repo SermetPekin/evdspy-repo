@@ -12,6 +12,11 @@ class DataProcessor:
     def __init__(self, data: Any):
         self.data = data
 
+    def set_index(self, df: pd.DataFrame) -> pd.DataFrame:
+        if "Tarih" in df.columns:
+            df.set_index("Tarih", inplace=True)
+        return df
+    
     def process_to_dataframe(self) -> T_maybeDf:
         if self.data is False:
             return False
@@ -23,6 +28,7 @@ class DataProcessor:
             return None
         if isinstance(df, pd.DataFrame):
             df = make_df_float(df)
+            df = self.set_index(df)
         return df
 
     def __call__(self, *args, **kwargs) -> T_maybeDf:
