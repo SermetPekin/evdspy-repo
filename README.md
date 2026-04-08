@@ -3,7 +3,7 @@
 
 
 [![Pypi Windows Server](https://github.com/SermetPekin/evdspy-repo/actions/workflows/pypi_win.yml/badge.svg?1)](https://github.com/SermetPekin/evdspy-repo/actions/workflows/pypi_win.yml?1)
-[![Pypi Ubuntu Server](https://github.com/SermetPekin/evdspy-repo/actions/workflows/pypi.yml/badge.svg?1)](https://github.com/SermetPekin/evdspy-repo/actions/workflows/pypi.yml?1)
+[![Pypi Ubuntu Server](https://github.com/SermetPekin/evdspy-repo/actions/workflows/pypi.yml/badge.svg?2)](https://github.com/SermetPekin/evdspy-repo/actions/workflows/pypi.yml?2)
 
 ## Documentation
 [Documentation](https://evdspy-repo.readthedocs.io/en/latest/home.html)
