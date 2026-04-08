@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 
 class DataProcessor:
-    def __init__(self, data: Any, config: "RequestConfig"):
+    def __init__(self, data: Any, config: "RequestConfig" = None ):
         self.data = data
         self.config = config
 
@@ -36,7 +36,8 @@ class DataProcessor:
     def _try_date(self, df: pd.DataFrame):
         if df.index.name is None:
             return df
-        return try_date(df, frequency=self.config.frequency)
+        frequency = self.config.frequency if hasattr(self.config , "frequency")  else None 
+        return try_date(df, frequency=frequency)
 
     def process_to_dataframe(self) -> T_maybeDf:
         if self.data is False:
@@ -60,5 +61,5 @@ class DataProcessor:
 
 def test_DataProcessor(capsys):
     with capsys.disabled():
-        d = DataProcessor(False)
+        d = DataProcessor(False , config = None )
         print(d)
