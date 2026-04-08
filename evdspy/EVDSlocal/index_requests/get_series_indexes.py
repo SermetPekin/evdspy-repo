@@ -27,14 +27,20 @@ def get_series(
     end_date: str = default_end_date_fnc(),
     frequency: Union[
         Literal[
-            "monthly", "weekly", "annually", "semimonthly", "semiannually", "business" , None 
+            "monthly",
+            "weekly",
+            "annually",
+            "semimonthly",
+            "semiannually",
+            "business",
+            None,
         ]
     ] = None,
     formulas: Union[Literal["level", "percentage_change", "difference"], None] = None,
     aggregation: Union[
         Literal["avg", "min", "max", "first", "last", "sum", None], None
     ] = None,
-    cache: bool = False ,
+    cache: bool = False,
     proxy: Optional[str] = None,
     proxies: Optional[dict[str, str]] = None,
     debug: bool = False,
@@ -110,7 +116,7 @@ def get_series(
     if debug:
         return api_requester.dry_request()
     # ............DataProcessor................................
-    data_processor = DataProcessor(api_requester())
+    data_processor = DataProcessor(api_requester(), config=config)
     return data_processor()
 
 
