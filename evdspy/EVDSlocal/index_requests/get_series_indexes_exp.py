@@ -187,7 +187,7 @@ def get_series_exp(
         with pd.ExcelWriter(file_name) as writer:
             for sheet_name, df in result.items():
                 if isinstance(df, pd.DataFrame):
-                    df.to_excel(writer, sheet_name=sheet_name, index=False)
+                    df.to_excel(writer, sheet_name=sheet_name, index=True)
                     res = True
         if res:
             print(f" writing file :  [{file_name}] ")
