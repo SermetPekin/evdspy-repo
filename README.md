@@ -202,23 +202,6 @@ Here is the documentation for other functions and details.
 
 [Documentation](https://evdspy-repo.readthedocs.io/en/latest/)
 
-
-### Menu 
-python script 
-```python
-from evdspy import menu
-menu()
-```
-command line / Terminal 
-```bash
-$ evdspy menu 
-
-```
-
-![image](https://user-images.githubusercontent.com/96650846/198966008-77302f42-f8f5-430c-962d-a988abe57bb7.png)
-## Visual Menu to request data
-![image](https://user-images.githubusercontent.com/96650846/200393634-6d1d95cc-6fb5-4f2a-aff8-f444265df814.png)
-![image](https://user-images.githubusercontent.com/96650846/200393889-915a1908-bff9-41fc-b549-d83b1cf9dafd.png)
 ### About
 ***evdspy*** is an open source python interface which helps you make efficient requests by caching results (storing a
 dict using hashable parameters in order to avoid redundant requests), it provides a user friendly
@@ -231,82 +214,24 @@ python projects.
 ### installation
     pip install evdspy -U
 
-### importing
-    from evdspy import *
-    check()
-    get()
-    help_evds()
-or
-    import evdspy as ev
-    ev.check()
-    ev.get()
-    ev.help_evds()
-### menu
-    from evdspy import *
-    menu()
-or
-    import evdspy as ev
-    ev.menu()
-    Menu function will display a friendly menu to setup project, creating output folders and some setup files to
-    create some set of series to make a request and download from EVDS server save your api key to get data from EVDS.
-    Than it will convert this data to a pandas dataframe and create some folders on your local area.
-### menu()
-![image](https://user-images.githubusercontent.com/96650846/198966008-77302f42-f8f5-430c-962d-a988abe57bb7.png)
-![image](https://user-images.githubusercontent.com/96650846/198966318-35a8ba8b-68e9-46f9-827e-cf06377ec960.png)
-
-
-## OPTION 2
-_________________________________
-#### FROM THE MENU
-### menu()
-![image](https://user-images.githubusercontent.com/96650846/198966008-77302f42-f8f5-430c-962d-a988abe57bb7.png)
-> > *checking*....
-![image](https://user-images.githubusercontent.com/96650846/200316924-de6c5d4c-e9d1-4122-a49b-45e1a4b5923b.png)
-## OPTION 3
-_________________________________
-#### FROM THE OS COMMAND LINE
-
-(Windows Command line / Linux Terminal / Mac Terminal) 
-
-![image](https://user-images.githubusercontent.com/96650846/198182696-c5bbe840-a9cd-45b5-806f-ee9b7d0e88b8.png)
-
-        $ evdspy setup
-        --------------
-            creates initial folders for your environment to save data and caches
-        $ evdspy menu
-        --------------
-            Launces evdspy and loads the menu
-        $ evdspy create series
-        --------------
-            Creates series file (leaves untouched if exists)
-        $ evdspy help
-        --------------
-            shows help and some documentation from command line
-        $ evdspy create options
-        --------------
-            creates options on the current folder
-        $ evdspy get
-        --------------
-            makes request from EVDS API and creates excel files regarding information on your series file
-        $ evdspy save
-        --------------
-            asks for your api key to save a file in your environment named `APIKEY_FOLDER`
-
 ## Documentation
 
 Here is the documentation for other functions and details. 
 [Documentation](https://evdspy-repo.readthedocs.io/en/latest/home.html)
 
- 
+
 
 
 ## How to get an API key?
 ***Get a CBRT EVDS API key***
-https://evds2.tcmb.gov.tr/index.php?/evds/login
+https://evds3.tcmb.gov.tr/login
+
 #### Main page of CBRT EVDS API
-https://evds2.tcmb.gov.tr
+https://evds3.tcmb.gov.tr
+
 #### CBRT EVDS API Docs
-https://evds2.tcmb.gov.tr/index.php?/evds/userDocs
+https://evds3.tcmb.gov.tr/dokumanlar
+
 ### About
 ***evdspy*** is an open source python interface which helps you make efficient requests by caching results (storing a
 dict using hashable parameters in order to avoid redundant requests), it provides a user friendly
