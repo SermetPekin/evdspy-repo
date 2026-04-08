@@ -4,6 +4,64 @@ from ..common.colors import print_with_failure_style
 from ..components.excel_class import correct_folder
 
 
+def try_date(df: pd.DataFrame, frequency="monthly"):
+    if df.index.name is None:
+        return df
+    df = df.copy()
+
+    def with_month(df: pd.DataFrame):
+        try:
+            df["year"], df["month"] = zip(*df.index.str.split("-"))
+            df["day"] = ["1" for x in range(len(df))]
+            return helper(df)
+
+        except:
+
+            return df
+
+    def helper(df, remove_cols=("year", "month", "day")):
+        df.index = pd.to_datetime(
+            df[["year", "month", "day"]].astype(str), format="%Y-%m-%d", errors="coerce"
+        )
+        df.index = df.index.strftime("%d-%m-%Y")
+        df = df.drop(columns=list(remove_cols))
+        return df
+
+    def with_quarter(df: pd.DataFrame):
+        try:
+            e = df.copy()
+            xs = []
+            ys = []
+            for x, y in e.index.str.split("-Q", expand=True):
+                xs.append(x)
+                ys.append(y)
+
+            e["year"] = xs
+            e["quarter"] = ys
+            e["year"] = e["year"].astype(int)
+            e["quarter"] = e["quarter"].astype(int)
+            e["month"] = e["quarter"].apply(lambda x: 3 * (x - 1) + 1)
+            e["day"] = ["1" for x in range(len(e))]
+
+            return helper(e, remove_cols=("year", "month", "day", "quarter"))
+        except:
+            return df
+
+    def with_generic(df: pd.DataFrame):
+        try:
+            df.index = pd.to_datetime(df.index, format="%d-%m-%Y")
+            return df
+        except:
+            return df
+
+    fncs = {"monthly": with_month, "quarterly": with_quarter, None: with_generic}
+    fnc = fncs.get(frequency, with_generic)
+
+    df = fnc(df)
+
+    return df
+
+
 def make_date_first_column_helper(df, col_name):
     if col_name not in df.columns:
         return df
@@ -13,22 +71,25 @@ def make_date_first_column_helper(df, col_name):
 
 
 def make_date_first_column(df):
-    col_names = ('YEARWEEK', 'Tarih',)
+    col_names = (
+        "YEARWEEK",
+        "Tarih",
+    )
     for col_name in col_names:
         df = make_date_first_column_helper(df, col_name)
     return df
 
 
 def drop_unix(df):
-    UnixTime = 'UNIXTIME'
+    UnixTime = "UNIXTIME"
     if UnixTime in df.columns:
         df.drop(UnixTime, axis=1, inplace=True)
     return df
 
 
 def json_to_df(json_content: t.Union[list, dict]):
-    if hasattr(json_content, 'items'):
-        json_content = json_content['items']
+    if hasattr(json_content, "items"):
+        json_content = json_content["items"]
     df = pd.DataFrame.from_records(json_content)
     df = drop_unix(df)
     df = make_date_first_column(df)
