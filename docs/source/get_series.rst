@@ -132,9 +132,9 @@ Applying formulas and aggregation:
 .. code-block:: python
 
     template = """
-    
-    TP.KREDI.L002
-    TP.BFTUKKRE.L004 
+    #Some comment 
+    TP.KREDI.L002 #some explanation can be here 
+    TP.BFTUKKRE.L004  #here too 
     TP.BFTUKKRE.L056
     TP.BFTUKKRE.L193 
     TP.BFTUKKRE.L234 
