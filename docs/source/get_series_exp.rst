@@ -3,7 +3,6 @@ get_series_exp Function
 
 The ``get_series_exp`` function fetches economic data series from a specified API and returns it formatted as a pandas DataFrame. This function offers various parameters to fine-tune the data retrieval process.
 
-.. autofunction:: evdspy.get_series_exp
 
 Parameters
 ----------
