@@ -28,6 +28,7 @@ def get_series(
     frequency: Union[
         Literal[
             "monthly",
+            "quarterly",
             "weekly",
             "annually",
             "semimonthly",
