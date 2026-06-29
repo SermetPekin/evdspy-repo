@@ -78,7 +78,7 @@ def get_series_exp(
         end_date: str = default_end_date_fnc(),
         frequency: Union[
             Literal[
-                "monthly", "weekly", "annually", "semimonthly", "semiannually", "business", None
+                "monthly", "weekly", "quarterly",  "annually", "semimonthly", "semiannually", "business", None
             ]
         ] = None,
         formulas: Union[Literal["level", "percentage_change", "difference"], None] = None,
