@@ -3,8 +3,6 @@ get_series Function
 
 The ``get_series`` function fetches economic data series from a specified API and returns it formatted as a pandas DataFrame, making extensive use of various parameters to fine-tune the data retrieval process.
 
-.. autofunction:: evdspy.get_series
-
 Parameters
 ----------
 index : str or tuple
