@@ -3,25 +3,22 @@ import pandas as pd
 from evdspy import get_series_exp
 from evdspy.EVDSlocal.index_requests.get_series_indexes_exp import Result
 
-index1 = "TP.GSYIH02.GY.CF"
-index2 = "TP.GSYIH02.GY.CF"
+index1 = "TP.GSYIH20.BY.B1GQ"
+index2 = "TP.GSYIH20.BY.P311"
 
-indexes = """TP_GSYIH01_GY_CF
-TP_GSYIH02_GY_CF
-TP_GSYIH03_GY_CF
-TP_GSYIH04_GY_CF
-TP_GSYIH05_GY_CF
-TP_GSYIH06_GY_CF
-TP_GSYIH07_GY_CF
-TP_GSYIH08_GY_CF
-TP_GSYIH09_GY_CF
-TP_GSYIH10_GY_CF
-TP_GSYIH11_GY_CF
-TP_GSYIH14_GY_CF
-TP_GSYIH15_GY_CF
-TP_GSYIH16_GY_CF
+indexes = """ 
+TP.GSYIH20.BY.B1GQ	     # Gayrisafi Yurt İçi Hasıla (Harcama Yöntemiyle, Cari Fiyatlarla)-Düzey		
+TP.GSYIH20.BY.P311       # Yerleşik Hanehalklarının Tüketimi (Harcama Yöntemiyle, Cari Fiyatlarla)-Düzey		
+TP.GSYIH20.BY.P312       # Hanehalkına Hizmet Eden Kar Amacı Olmayan Kuruluşların Tüketimi (Harcama Yöntemiyle, Cari Fiyatlarla)-Düzey		
+TP.GSYIH20.BY.P32        # Devletin Nihai Tüketim Harcamaları (Harcama Yöntemiyle, Cari Fiyatlarla)-Düzey		
+TP.GSYIH20.BY.P51G	     # Gayrisafi Sabit Sermaye Oluşumu (Harcama Yöntemiyle, Cari Fiyatlarla)-Düzey		
+TP.GSYIH20.BY.P52	     # Stoktaki Değişiklikler (Harcama Yöntemiyle, Cari Fiyatlarla)-Düzey		
+TP.GSYIH20.BY.P6	     # Mal ve Hizmet İhracatı (Harcama Yöntemiyle, Cari Fiyatlarla)-Düzey		
+TP.GSYIH20.BY.P7         # (Eksi) Mal ve Hizmet İthalatı (Harcama Yöntemiyle, Cari Fiyatlarla)-Düzey		
+
 """
-index_table = "bie_gsyhgycf"
+index_table = "bie_gsyhhrccar"
+
 
 from typing import Any
 import time
