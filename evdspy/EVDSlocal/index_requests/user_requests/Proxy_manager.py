@@ -8,9 +8,10 @@ from evdspy.EVDSlocal.console.proxy_for_menu import get_proxies_env
 class ProxyManager:
     proxy: Optional[str] = None
     proxies: Optional[dict[Any, Any]] = None
-
+    no_proxy : bool = False 
+    
     def get_proxies(self) -> Optional[dict[Any, Any]]:
-        if set_without_proxy(): # if no_proxy was set 
+        if set_without_proxy() or self.no_proxy :  
             return None 
         env_proxy = get_proxies_env()
         if self.proxies is None:
@@ -26,7 +27,7 @@ class ProxyManager:
         return proxies
 
     def get_proxies_helper(self) -> Optional[dict[Any, Any]]:
-        if self.proxy is None:
+        if self.proxy is None or self.no_proxy :
             return None
         proxy = self.proxy
         proxies = {
