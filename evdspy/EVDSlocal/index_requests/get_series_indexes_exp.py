@@ -91,6 +91,7 @@ def get_series_exp(
         proxies: Optional[dict[str, str]] = None,
         debug: bool = False,
         api_key: Optional[str] = None,
+        basic: bool = True 
 ) -> Result:
     """
     Retrieves economic data series from the specified API and returns it as a pandas DataFrame.
@@ -173,7 +174,12 @@ def get_series_exp(
                            frequency=frequency,
                            formulas=formulas,
                            aggregation=aggregation,
-                           cache=cache)
+                           cache=cache,  
+                           proxy = proxy,
+                           proxies  = proxies,
+                           debug = debug,
+                           api_key = api_key,
+                           basic = basic)
 
     metadata_: pd.DataFrame = get_metadata_for_index(index, proxy_manager, cache=meta_cache)
 
