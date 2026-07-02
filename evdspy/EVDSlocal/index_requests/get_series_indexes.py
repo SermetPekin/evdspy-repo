@@ -46,6 +46,7 @@ def get_series(
     proxies: Optional[dict[str, str]] = None,
     debug: bool = False,
     api_key: Optional[str] = None,
+    basic :bool = True , 
 ) -> Union[pd.DataFrame, RequestConfig]:
     """
     Retrieves economic data series from the specified API and returns it as a pandas DataFrame.
@@ -94,7 +95,7 @@ def get_series(
         UrlBuilder,
         DataProcessor,
     )
-    from evdspy.EVDSlocal.index_requests.user_requests.Api_requester import ApiRequester, ApiRequesterNoProxy
+    from evdspy.EVDSlocal.index_requests.user_requests.Api_requester import ApiRequester 
 
     # ............initial_api_process_when_given...............
     initial_api_process_when_given(api_key)
@@ -110,117 +111,30 @@ def get_series(
     )
     # ............ProxyManager................................
     proxy_manager = ProxyManager(proxy=proxy, proxies=proxies)
-    
-           
     # ............UrlBuilder..................................
     url_builder = UrlBuilder(config, url_type=None)
     # ............ApiRequester................................
     api_requester = ApiRequester(url_builder, proxy_manager)
-    if set_without_proxy():
-        api_requester = ApiRequesterNoProxy(url_builder, proxy_manager= None )
     
     if debug:
         return api_requester.dry_request()
     # ............DataProcessor................................
     data_processor = DataProcessor(api_requester(), config=config)
-    return data_processor()
+    df = data_processor()
+    if basic: 
+        df = convert(df)
+    return df 
 
-
-import os
-from typing import List, Union
-
-def is_no_proxy_configured(domains: Union[str, List[str]]) -> bool:
-    
-    if isinstance(domains, str):
-        domains = [domains]
-
-    no_proxy = os.environ.get("no_proxy", "").lower()
-    if not no_proxy:
-        return False
-
-    no_proxy_domains = [d.strip().lower() for d in no_proxy.split(",") if d.strip()]
-
-    for domain in domains:
-        domain = domain.strip().lower()
-        if not domain:
-            continue
-
-        if domain in no_proxy_domains:
-            return True
-
-        if domain.startswith("*"):
-            wildcard_suffix = domain[1:]   
-            for no_proxy_domain in no_proxy_domains:
-                if no_proxy_domain.endswith(wildcard_suffix):
-                    return True
-
-    return False
-
-def set_without_proxy():
-    import os 
-    domains_to_check = ["evds3.tcmb.gov.tr", "*.tcmb.gov.tr" ] 
-    return is_no_proxy_configured(domains_to_check)
+def convert(df):
+    try : 
+        df.reset_index(inplace=True) 
+        df["Tarih"] = df["Tarih"].dt.date 
+        df.drop(["Tarih_string"], inplace=True, axis=1)
+        return df 
+    except: 
+        return df 
+        
             
-    
-
-def get_series2(
-    index: Union[str, tuple[Any, ...]],
-    start_date: str = default_start_date_fnc(),
-    end_date: str = default_end_date_fnc(),
-    frequency: Union[
-        Literal[
-            "monthly",
-            "quarterly",
-            "weekly",
-            "annually",
-            "semimonthly",
-            "semiannually",
-            "business",
-            None,
-        ]
-    ] = None,
-    formulas: Union[Literal["level", "percentage_change", "difference"], None] = None,
-    aggregation: Union[
-        Literal["avg", "min", "max", "first", "last", "sum", None], None
-    ] = None,
-    cache: bool = False,
-    proxy: Optional[str] = None,
-    proxies: Optional[dict[str, str]] = None,
-    debug: bool = False,
-    api_key: Optional[str] = None,
-) -> Union[pd.DataFrame, RequestConfig]:
-    
-    from evdspy.EVDSlocal.index_requests.user_requests import (
-        RequestConfig,
-        ProxyManager,
-        UrlBuilder,
-        DataProcessor,
-    )
-    from evdspy.EVDSlocal.index_requests.user_requests.Api_requester import ApiRequester, ApiRequesterNoProxy
-
-    # ............initial_api_process_when_given...............
-    initial_api_process_when_given(api_key)
-    # ............RequestConfig................................
-    config = RequestConfig(
-        index=index,
-        start_date=start_date,
-        end_date=end_date,
-        frequency=frequency,
-        formulas=formulas,
-        aggregation=aggregation,
-        cache=cache,
-    )
-    # ............ProxyManager................................
-    proxy_manager = ProxyManager(proxy=None, proxies=None)
-    # ............UrlBuilder..................................
-    url_builder = UrlBuilder(config, url_type=None)
-    # ............ApiRequester................................
-    api_requester = ApiRequesterNoProxy(url_builder, proxy_manager= None )
-    if debug:
-        return api_requester.dry_request()
-    # ............DataProcessor................................
-    data_processor = DataProcessor(api_requester(), config=config)
-    return data_processor()
 
 
 def test_get_series2(capsys):
