@@ -41,12 +41,14 @@ class ProxyManager:
 import os
 from typing import List, Union
 
+
 def is_no_proxy_configured(domains: Union[str, List[str]]) -> bool:
-    
     if isinstance(domains, str):
         domains = [domains]
 
-    no_proxy = os.environ.get("no_proxy", "").lower()
+    no_proxy = os.environ.get("no_proxy") or os.environ.get("NO_PROXY", "")
+    no_proxy = no_proxy.lower()
+
     if not no_proxy:
         return False
 
@@ -61,7 +63,7 @@ def is_no_proxy_configured(domains: Union[str, List[str]]) -> bool:
             return True
 
         if domain.startswith("*"):
-            wildcard_suffix = domain[1:]   
+            wildcard_suffix = domain[1:]
             for no_proxy_domain in no_proxy_domains:
                 if no_proxy_domain.endswith(wildcard_suffix):
                     return True
