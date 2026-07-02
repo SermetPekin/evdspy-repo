@@ -89,9 +89,11 @@ def get_series_exp(
         meta_cache: bool = False,
         proxy: Optional[str] = None,
         proxies: Optional[dict[str, str]] = None,
+        no_proxy: bool= False ,
         debug: bool = False,
         api_key: Optional[str] = None,
-        basic: bool = True 
+        basic: bool = True,
+        
 ) -> Result:
     """
     Retrieves economic data series from the specified API and returns it as a pandas DataFrame.
@@ -157,7 +159,7 @@ def get_series_exp(
         cache=cache,
     )
     # # ............ProxyManager................................
-    proxy_manager = ProxyManager(proxy=proxy, proxies=proxies)
+    proxy_manager = ProxyManager(proxy=proxy, proxies=proxies, no_proxy=no_proxy)
     # # ............UrlBuilder..................................
     # url_builder = UrlBuilder(config, url_type=None)
     # # ............ApiRequester................................
@@ -176,7 +178,8 @@ def get_series_exp(
                            aggregation=aggregation,
                            cache=cache,  
                            proxy = proxy,
-                           proxies  = proxies,
+                           proxies = proxies,
+                           no_proxy=no_proxy,
                            debug = debug,
                            api_key = api_key,
                            basic = basic)
