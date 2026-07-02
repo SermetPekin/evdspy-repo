@@ -44,9 +44,10 @@ def get_series(
     cache: bool = False,
     proxy: Optional[str] = None,
     proxies: Optional[dict[str, str]] = None,
+    no_proxy: bool= False,   
     debug: bool = False,
     api_key: Optional[str] = None,
-    basic :bool = True , 
+    basic :bool = True, 
 ) -> Union[pd.DataFrame, RequestConfig]:
     """
     Retrieves economic data series from the specified API and returns it as a pandas DataFrame.
@@ -110,7 +111,7 @@ def get_series(
         cache=cache,
     )
     # ............ProxyManager................................
-    proxy_manager = ProxyManager(proxy=proxy, proxies=proxies)
+    proxy_manager = ProxyManager(proxy=proxy, proxies=proxies, no_proxy=no_proxy)
     # ............UrlBuilder..................................
     url_builder = UrlBuilder(config, url_type=None)
     # ............ApiRequester................................
