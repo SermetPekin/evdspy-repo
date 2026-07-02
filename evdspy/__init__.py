@@ -4,11 +4,7 @@
 #                           package: evdspy @2022
 # ------------------------------------------------------
 from evdspy.EVDSlocal.main_ import *
-from evdspy.EVDSlocal.index_requests.get_series_indexes import (
-
-    get_series, get_series2
-)
-
+from evdspy.EVDSlocal.index_requests.get_series_indexes import get_series
 from evdspy.EVDSlocal.index_requests.get_series_indexes_exp import get_series_exp, Result
 
 from evdspy.EVDSlocal.utils.utils_general import ls
