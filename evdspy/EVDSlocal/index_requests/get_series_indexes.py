@@ -129,7 +129,7 @@ def get_series(
 def convert(df):
     try : 
         df.reset_index(inplace=True) 
-        df["Tarih"] = df["Tarih"].dt.date 
+        df["index"] = df["index"].dt.date 
         df.drop(["Tarih_string"], inplace=True, axis=1)
         return df 
     except: 
