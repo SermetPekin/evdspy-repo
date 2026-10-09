@@ -22,23 +22,33 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
     default_end_date_fnc,
 )
 
+import pandas as pd
+from datetime import datetime
 
-def we_should_split(_df, start_date="01-01-2005"):
-    #
-    if _df is None or len(_df) < 2:
+def we_should_split(df: pd.DataFrame, start_date: str = "01-01-2000") -> bool:
+    """
+    Optimized check for missing weekly data. 
+    Avoids full-column conversion for maximum speed.
+    """
+    if not isinstance(df, pd.DataFrame) or len(df) < 2:
         return False
-    tarih_col = pd.to_datetime(_df["Tarih"])
-    is_weekly = (tarih_col.iloc[1] - tarih_col.iloc[0]).days == 7
 
-    if not is_weekly:
-        return False
-    start_ts = pd.to_datetime(start_date, dayfirst=True)
-    first_date = tarih_col.iloc[0]
-    diff = first_date - start_ts
+    try:
+        val0 = df["Tarih"].iloc[0]
+        val1 = df["Tarih"].iloc[1]
 
-    if diff.days < 6:
+        d0 = pd.to_datetime(val0)
+        d1 = pd.to_datetime(val1)
+
+        if (d1 - d0).days != 7:
+            return False
+
+        start_ts = pd.to_datetime(start_date, dayfirst=True)
+        return (d0 - start_ts).days >= 6
+
+    except Exception:
         return False
-    return True
+
 
 
 def get_series(
