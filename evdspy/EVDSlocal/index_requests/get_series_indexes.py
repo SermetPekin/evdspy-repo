@@ -1,4 +1,6 @@
 from typing import Union, Any, Optional, Tuple, Dict, Literal
+from datetime import datetime
+
 import pandas as pd
 
 from evdspy.EVDSlocal.index_requests.user_requests.Request_config import RequestConfig
@@ -19,6 +21,24 @@ from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
     default_start_date_fnc,
     default_end_date_fnc,
 )
+
+
+def we_should_split(_df, start_date="01-01-2005"):
+    #
+    if _df is None or len(_df) < 2:
+        return False
+    tarih_col = pd.to_datetime(_df["Tarih"])
+    is_weekly = (tarih_col.iloc[1] - tarih_col.iloc[0]).days == 7
+
+    if not is_weekly:
+        return False
+    start_ts = pd.to_datetime(start_date, dayfirst=True)
+    first_date = tarih_col.iloc[0]
+    diff = first_date - start_ts
+
+    if diff.days < 6:
+        return False
+    return True
 
 
 def get_series(
@@ -44,10 +64,80 @@ def get_series(
     cache: bool = False,
     proxy: Optional[str] = None,
     proxies: Optional[dict[str, str]] = None,
-    no_proxy: bool= False,   
+    no_proxy: bool = False,
     debug: bool = False,
     api_key: Optional[str] = None,
-    basic :bool = True, 
+    basic: bool = True,
+):
+
+    df = get_series_internal(
+        index=index,
+        start_date=start_date,
+        end_date=end_date,
+        frequency=frequency,
+        formulas=formulas,
+        aggregation=aggregation,
+        cache=cache,
+        proxy=proxy,
+        proxies=proxies,
+        no_proxy=no_proxy,
+        debug=debug,
+        api_key=api_key,
+        basic=basic,
+    )
+
+    if we_should_split(df):
+        # for now just weekly data case
+        f_date = df["Tarih"].iloc[0]
+        f_date = pd.to_datetime(f_date) - pd.Timedelta(days=7)
+        end_date = f_date.strftime("%d-%m-%Y")
+        df2 = get_series_internal(
+            index=index,
+            start_date=start_date,
+            end_date=end_date,
+            frequency=frequency,
+            formulas=formulas,
+            aggregation=aggregation,
+            cache=cache,
+            proxy=proxy,
+            proxies=proxies,
+            no_proxy=no_proxy,
+            debug=debug,
+            api_key=api_key,
+            basic=basic,
+        )
+        if df2 is not None and not isinstance(df, bool) and not df2.empty:
+            df = pd.concat([df2, df], ignore_index=True)
+    return df
+
+
+def get_series_internal(
+    index: Union[str, tuple[Any, ...]],
+    start_date: str = default_start_date_fnc(),
+    end_date: str = default_end_date_fnc(),
+    frequency: Union[
+        Literal[
+            "monthly",
+            "quarterly",
+            "weekly",
+            "annually",
+            "semimonthly",
+            "semiannually",
+            "business",
+            None,
+        ]
+    ] = None,
+    formulas: Union[Literal["level", "percentage_change", "difference"], None] = None,
+    aggregation: Union[
+        Literal["avg", "min", "max", "first", "last", "sum", None], None
+    ] = None,
+    cache: bool = False,
+    proxy: Optional[str] = None,
+    proxies: Optional[dict[str, str]] = None,
+    no_proxy: bool = False,
+    debug: bool = False,
+    api_key: Optional[str] = None,
+    basic: bool = True,
 ) -> Union[pd.DataFrame, RequestConfig]:
     """
     Retrieves economic data series from the specified API and returns it as a pandas DataFrame.
@@ -96,7 +186,7 @@ def get_series(
         UrlBuilder,
         DataProcessor,
     )
-    from evdspy.EVDSlocal.index_requests.user_requests.Api_requester import ApiRequester 
+    from evdspy.EVDSlocal.index_requests.user_requests.Api_requester import ApiRequester
 
     # ............initial_api_process_when_given...............
     initial_api_process_when_given(api_key)
@@ -116,26 +206,25 @@ def get_series(
     url_builder = UrlBuilder(config, url_type=None)
     # ............ApiRequester................................
     api_requester = ApiRequester(url_builder, proxy_manager)
-    
+
     if debug:
         return api_requester.dry_request()
     # ............DataProcessor................................
     data_processor = DataProcessor(api_requester(), config=config)
     df = data_processor()
-    if basic: 
+    if basic:
         df = convert(df)
-    return df 
+    return df
+
 
 def convert(df):
-    try : 
-        df.reset_index(inplace=True) 
-        # df["index"] = df["index"].dt.date 
+    try:
+        df.reset_index(inplace=True)
+        # df["index"] = df["index"].dt.date
         df.drop(["Tarih_string"], inplace=True, axis=1)
-        return df 
-    except: 
-        return df 
-        
-            
+        return df
+    except:
+        return df
 
 
 def test_get_series2(capsys):
