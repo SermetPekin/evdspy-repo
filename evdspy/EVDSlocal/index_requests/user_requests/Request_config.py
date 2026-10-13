@@ -4,12 +4,23 @@ from typing import Union, Optional
 
 # from evdspy import default_start_date_fnc, default_end_date_fnc
 from evdspy.EVDSlocal.components.excel_class import replace_all
-from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import freq_enum, correct_types, AggregationType, \
-    Formulas, default_start_date_fnc, default_end_date_fnc
+from evdspy.EVDSlocal.index_requests.get_series_indexes_utils import (
+    freq_enum,
+    correct_types,
+    AggregationType,
+    Formulas,
+    default_start_date_fnc,
+    default_end_date_fnc,
+)
 from evdspy.EVDSlocal.index_requests.user_requests.Serialize import Serialize
-from evdspy.EVDSlocal.index_requests.user_requests.User_req_typings import T_tuple_str_int_None, T_str_tuple_None, \
-    T_str_int_None
-from evdspy.EVDSlocal.index_requests.user_requests.User_request_utils import UserRequestUtils
+from evdspy.EVDSlocal.index_requests.user_requests.User_req_typings import (
+    T_tuple_str_int_None,
+    T_str_tuple_None,
+    T_str_int_None,
+)
+from evdspy.EVDSlocal.index_requests.user_requests.User_request_utils import (
+    UserRequestUtils,
+)
 
 
 @dataclass
@@ -70,7 +81,17 @@ class RequestConfig(Serialize):
     def correct_index(self):
         if "\n" in self.index or "\t" in self.index:
             self.index = self.template_to_tuple(self.index)
-        self.index = tuple([self.index]) if not isinstance(self.index, (tuple, list,)) else self.index
+        self.index = (
+            tuple([self.index])
+            if not isinstance(
+                self.index,
+                (
+                    tuple,
+                    list,
+                ),
+            )
+            else self.index
+        )
         self.clean()
         self.upper_index()
         self.check_index()
@@ -92,15 +113,21 @@ class RequestConfig(Serialize):
     @staticmethod
     def template_to_tuple(index: str) -> tuple:
         def clean(string: str):
-            return string.split("#")[0].strip() if len(string.split("#")) > 0 else None
+            parts = string.split("#")[0].split("\t")[0].strip()
+            return parts if len(parts) > 3 else None
 
-        index = replace_all(index, "\t", "\n")
         index_tuple = index.splitlines()
         t = tuple(clean(x) for x in index_tuple)
         return tuple(x for x in t if x is not None and len(x) > 3)
 
     def check_index(self) -> None:
-        if isinstance(self.index, (int, float,)):
+        if isinstance(
+            self.index,
+            (
+                int,
+                float,
+            ),
+        ):
             raise ValueError("index must be a string ot tuple of string ")
 
     def freq_str(self) -> str:
@@ -110,7 +137,9 @@ class RequestConfig(Serialize):
             return f"&frequency={self.frequency}"
         return freq_enum(self.frequency)
 
-    def agr_form_type_to_str(self, value: Optional[tuple], part_name="aggregationTypes"):
+    def agr_form_type_to_str(
+        self, value: Optional[tuple], part_name="aggregationTypes"
+    ):
         if value is None:
             return ""
         value = tuple(map(str, value))
@@ -131,7 +160,13 @@ class RequestConfig(Serialize):
         if self.aggregation is not None:
             assert len(self.aggregation) == len(self.index)
         if self.frequency is not None:
-            assert isinstance(self.frequency, (int, str,))
+            assert isinstance(
+                self.frequency,
+                (
+                    int,
+                    str,
+                ),
+            )
 
     def create_series_part(self) -> str:
         indexes = self.index
