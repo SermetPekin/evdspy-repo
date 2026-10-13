@@ -68,24 +68,28 @@ https_proxy=http://proxy.example.com:80
 > if `.env` file exists in the current working directory, function does not need `api_key` parameter.
 
 ```python
-from evdspy import get_series, default_start_date_fnc, default_end_date_fnc
-df1 = get_series("bie_gsyhgycf", cache=False, api_key="YOUR_API_KEY_HERE")
-template = """TP_GSYIH01_GY_CF
-        TP_GSYIH02_GY_CF
-        TP_GSYIH03_GY_CF
-        TP_GSYIH04_GY_CF
-        TP_GSYIH05_GY_CF
-        TP_GSYIH06_GY_CF
-        TP_GSYIH07_GY_CF
-        TP_GSYIH08_GY_CF
-        TP_GSYIH09_GY_CF
-        TP_GSYIH10_GY_CF
-        TP_GSYIH11_GY_CF
-        TP_GSYIH14_GY_CF
-        TP_GSYIH15_GY_CF
-        TP_GSYIH16_GY_CF
+from evdspy import get_series 
+
+template = """
+TP.TSANAY2021.BCD
+TP.TSANAY2021.MIGING
+TP.TSANAY2021.MIGDCOG
+TP.TSANAY2021.MIGNDCOG
+TP.TSANAY2021.MIGNRGXE
+TP.TSANAY2021.MIGCAG
+TP.TSANAY2021.CHTCM
+TP.TSANAY2021.CHTC
+TP.TSANAY2021.CLTCM
+TP.TSANAY2021.CLTC
+
+
 """
-df2 = get_series(template, debug=False, cache=False)
+df = get_series(template, api_key="YOUR_API_KEY")
+
+print(df)
+
+"""
+
 ```
 ```python
 
