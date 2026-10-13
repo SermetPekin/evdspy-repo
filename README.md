@@ -151,14 +151,15 @@ for index in [cpi_table, inf_exp_table, reserves_table]:
 ```python
 from evdspy import get_series
 template = '''
-    TP.ODEMGZS.BDTTOPLAM
     TP.ODEMGZS.ABD
     TP.ODEMGZS.ARJANTIN
+    TP.ODEMGZS.BREZILYA
+
     '''
 df = get_series(index=template)
 df1 = get_series(index=template, start_date="01-01-2000", frequency="monthly")
-df2a = get_series(index='TP.ODEMGZS.BDTTOPLAM', start_date="01-01-2000", frequency="monthly", cache=True)
-df2b = get_series(index=('TP.ODEMGZS.BDTTOPLAM', 'TP.ODEMGZS.ARJANTIN',),
+df2a = get_series(index='TP.ODEMGZS.ABD', start_date="01-01-2000", frequency="monthly", cache=True)
+df2b = get_series(index=('TP.ODEMGZS.ABD', 'TP.ODEMGZS.ARJANTIN',),
                   start_date="01-01-2000",
                   frequency="monthly",
                   cache=True)
