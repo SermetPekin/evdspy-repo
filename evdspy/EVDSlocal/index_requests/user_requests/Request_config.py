@@ -113,7 +113,7 @@ class RequestConfig(Serialize):
     @staticmethod
     def template_to_tuple(index: str) -> tuple:
         def clean(string: str):
-            string_  = string.split("#")[0].split(" ")[0].split("\t")[0].strip() 
+            string_  = string.strip().split("#")[0].split(" ")[0].split("\t")[0].strip() 
             return string_ if len(string_) > 3 else None
             
         t = tuple(clean(x) for x in index.splitlines())
