@@ -39,6 +39,24 @@ except ImportError:
     pass
 
 
+
+def test_config_splits(capsys):
+    with capsys.disabled():
+        indexes  = """
+        A.B.C #
+        X.Y.Z    something else 
+        A.d.z -> another 
+
+        """
+        u1 = RequestConfig(
+                indexes,
+            )
+
+        answer = ('A.B.C', 'X.Y.Z', 'A.D.Z')
+        assert u1.index == answer 
+        u2 = RequestConfig(answer) 
+        assert u2.index == u1.index 
+
 @skip_if_gthub
 def test_get_apikey_while_testing():
 
